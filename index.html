@@ -7,7 +7,7 @@
 
   <!-- FAVICON (SVG em data-uri) -->
   <link rel="icon" type="image/svg+xml"
-    href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2064%2064'%3E%3Cdefs%3E%3ClinearGradient%20id='g'%20x1='0'%20y1='0'%20x2='1'%20y2='1'%3E%3Cstop%20offset='0'%20stop-color='%237c3aed'/%3E%3Cstop%20offset='0.55'%20stop-color='%23a855f7'/%3E%3Cstop%20offset='1'%20stop-color='%23e9d5ff'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle%20cx='32'%20cy='32'%20r='22'%20fill='none'%20stroke='url(%23g)'%20stroke-width='10'%20stroke-linecap='round'/%3E%3Cpath%20d='M46%2017%20l7%200%20l0%207'%20fill='none'%20stroke='url(%23g)'%20stroke-width='6'%20stroke-linecap='round'%20stroke-linejoin='round'/%3E%3Cpath%20d='M53%2017%20C49%2012%2042%208%2034%208'%20fill='none'%20stroke='url(%23g)'%20stroke-width='6'%20stroke-linecap='round'/%3E%3C/svg%3E" />
+    href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2064%2064'%3E%3Cdefs%3E%3ClinearGradient%20id='g'%20x1='0'%20y1='0'%20x2='1'%20y2='1'%3E%3Cstop%20offset='0'%20stop-color='%237c3aed'/%3E%3Cstop%20offset='0.55'%20stop-color='%23a855f7'/%3E%3Cstop%20offset='1'%20stop-color='%23e9d5ff'/%3E%3C/defs%3E%3Ccircle%20cx='32'%20cy='32'%20r='22'%20fill='none'%20stroke='url(%23g)'%20stroke-width='10'%20stroke-linecap='round'/%3E%3Cpath%20d='M46%2017%20l7%200%20l0%207'%20fill='none'%20stroke='url(%23g)'%20stroke-width='6'%20stroke-linecap='round'%20stroke-linejoin='round'/%3E%3Cpath%20d='M53%2017%20C49%2012%2042%208%2034%208'%20fill='none'%20stroke='url(%23g)'%20stroke-width='6'%20stroke-linecap='round'/%3E%3C/svg%3E" />
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
@@ -70,32 +70,32 @@
       opacity:.9;
     }
 
-    /* HEADER */
+    /* HEADER (2 linhas) */
     header{
       position:sticky; top:0; z-index:98;
       background: rgba(7,7,11,.62);
       backdrop-filter: blur(10px);
       border-bottom:1px solid var(--line);
     }
+
     .navWrap{
-  max-width:1100px;
-  margin:0 auto;
-  padding:0 20px;
-}
+      max-width:1100px;
+      margin:0 auto;
+      padding:0 20px;
+    }
 
-/* Linha 1 */
-.navTop{
-  padding:12px 0;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:14px;
+    .navTop{
+      padding:12px 0;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+    }
 
-  /* Linha 2 (faixa do menu) */
-.navBottom{
-  padding:10px 0 12px;
-  border-top:1px solid rgba(255,255,255,.06);
-  background: rgba(0,0,0,.08);
+    .navBottom{
+      padding:10px 0 12px;
+      border-top:1px solid rgba(255,255,255,.06);
+      background: rgba(0,0,0,.08);
     }
 
     .left{
@@ -135,30 +135,27 @@
       opacity:.95;
     }
 
-/* Menu na linha de baixo */
-.linksBottom{
-  display:flex;
-  gap:10px;
-  flex-wrap:wrap;
-  align-items:center;
-  justify-content:flex-end; /* se quiser centralizar, troque por center */
-}
+    .linksBottom{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+      justify-content:flex-end; /* troque por center se quiser centralizado */
+    }
 
-.linksBottom a{
-  font-size:13px;
-  color: var(--muted);
-  padding:6px 10px;
-  border-radius:999px;
-  transition: background .15s ease, color .15s ease;
-}
-.linksBottom a:hover{
-  color: var(--fg);
-  background: rgba(255,255,255,.05);
-
-}
+    .linksBottom a{
+      font-size:13px;
+      color: var(--muted);
+      padding:6px 10px;
+      border-radius:999px;
+      transition: background .15s ease, color .15s ease;
+    }
+    .linksBottom a:hover{
+      color: var(--fg);
+      background: rgba(255,255,255,.05);
+    }
 
     .ctaTop{
-      margin-left: 4px;
       border: 1px solid rgba(192,132,252,.35);
       background: linear-gradient(180deg, rgba(124,58,237,.26), rgba(168,85,247,.14));
       color: var(--fg);
@@ -176,6 +173,10 @@
       background: linear-gradient(180deg, rgba(124,58,237,.34), rgba(168,85,247,.18));
     }
     .ctaTop:active{transform: translateY(0px)}
+
+    @media (max-width: 900px){
+      .pilot{display:none}
+    }
 
     main{
       max-width:1100px;
@@ -217,7 +218,6 @@
     @media (max-width: 900px){
       .intro h1{ font-size: 32px; }
       .intro-grid{ grid-template-columns: 1fr; }
-      .pilot{display:none}
     }
 
     .infoCard{
@@ -404,43 +404,43 @@
   <div class="topbar"><div class="progress" id="progress"></div></div>
 
   <header>
-  <div class="navWrap">
-    <!-- Linha 1 -->
-    <div class="navTop">
-      <div class="left">
-        <div class="brand">
-          <svg class="logoIcon" viewBox="0 0 64 64" aria-hidden="true">
-            <defs>
-              <linearGradient id="lg" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0" stop-color="var(--violet1)"/>
-                <stop offset="0.55" stop-color="var(--violet2)"/>
-                <stop offset="1" stop-color="var(--violet3)"/>
-              </linearGradient>
-            </defs>
-            <circle cx="32" cy="32" r="22" fill="none" stroke="url(#lg)" stroke-width="10" stroke-linecap="round"/>
-            <path d="M46 17 l7 0 l0 7" fill="none" stroke="url(#lg)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M53 17 C49 12 42 8 34 8" fill="none" stroke="url(#lg)" stroke-width="6" stroke-linecap="round"/>
-          </svg>
+    <div class="navWrap">
+      <!-- Linha 1: logo + piloto + CTA -->
+      <div class="navTop">
+        <div class="left">
+          <div class="brand">
+            <svg class="logoIcon" viewBox="0 0 64 64" aria-hidden="true">
+              <defs>
+                <linearGradient id="lg" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0" stop-color="var(--violet1)"/>
+                  <stop offset="0.55" stop-color="var(--violet2)"/>
+                  <stop offset="1" stop-color="var(--violet3)"/>
+                </linearGradient>
+              </defs>
+              <circle cx="32" cy="32" r="22" fill="none" stroke="url(#lg)" stroke-width="10" stroke-linecap="round"/>
+              <path d="M46 17 l7 0 l0 7" fill="none" stroke="url(#lg)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M53 17 C49 12 42 8 34 8" fill="none" stroke="url(#lg)" stroke-width="6" stroke-linecap="round"/>
+            </svg>
 
-          <div class="brandText">
-            <span class="brandName">DHO 360º</span>
-            <span class="pilot">Piloto | versão 0.1</span>
+            <div class="brandText">
+              <span class="brandName">DHO 360º</span>
+              <span class="pilot">Piloto | versão 0.1</span>
+            </div>
           </div>
         </div>
+
+        <a class="ctaTop" href="#onda2">Participar da Onda 2</a>
       </div>
 
-      <a class="ctaTop" href="#onda2">Participar da Onda 2</a>
+      <!-- Linha 2: menu -->
+      <div class="navBottom">
+        <nav class="linksBottom">
+          <a href="#intro">Introdução</a>
+          <a href="#b1">Bloco 1</a>
+        </nav>
+      </div>
     </div>
-
-    <!-- Linha 2 (menu desce para a faixa vermelha) -->
-    <div class="navBottom">
-      <nav class="linksBottom">
-        <a href="#intro">Introdução</a>
-        <a href="#b1">Bloco 1</a>
-      </nav>
-    </div>
-  </div>
-</header>
+  </header>
 
   <main>
     <!-- INTRO -->
@@ -511,7 +511,7 @@
       </section>
     </article>
 
-    <!-- placeholder temporário só para o botão do topo não “quebrar” -->
+    <!-- marcador da Onda 2 (CTA final virá depois) -->
     <div style="height:22px"></div>
     <section id="onda2" style="margin-top:26px;border-top:1px solid rgba(255,255,255,.09);padding-top:18px;color:#b7b7c6">
       <div style="max-width:80ch">
