@@ -5,6 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>DHO 360º</title>
 
+  <!-- FAVICON (SVG em data-uri) -->
+  <link rel="icon" type="image/svg+xml"
+    href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2064%2064'%3E%3Cdefs%3E%3ClinearGradient%20id='g'%20x1='0'%20y1='0'%20x2='1'%20y2='1'%3E%3Cstop%20offset='0'%20stop-color='%237c3aed'/%3E%3Cstop%20offset='0.55'%20stop-color='%23a855f7'/%3E%3Cstop%20offset='1'%20stop-color='%23e9d5ff'/%3E%3C/defs%3E%3Ccircle%20cx='32'%20cy='32'%20r='22'%20fill='none'%20stroke='url(%23g)'%20stroke-width='10'%20stroke-linecap='round'/%3E%3Cpath%20d='M46%2017%20l7%200%20l0%207'%20fill='none'%20stroke='url(%23g)'%20stroke-width='6'%20stroke-linecap='round'%20stroke-linejoin='round'/%3E%3Cpath%20d='M53%2017%20C49%2012%2042%208%2034%208'%20fill='none'%20stroke='url(%23g)'%20stroke-width='6'%20stroke-linecap='round'%20stroke-linecap='round'/%3E%3C/svg%3E" />
+
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <style>
@@ -13,12 +17,15 @@
       --fg:#f4f4f8;
       --muted:#c7c7d6;
       --body: rgba(244,244,248,.84);
+
       --card: rgba(255,255,255,.035);
       --card2: rgba(255,255,255,.025);
       --line: rgba(255,255,255,.09);
+
       --violet1:#7c3aed;
       --violet2:#a855f7;
       --violet3:#e9d5ff;
+
       --radius: 18px;
       --shadow: 0 18px 60px rgba(0,0,0,.55);
     }
@@ -32,6 +39,147 @@
       color: var(--fg);
       overflow-x:hidden;
     }
+    a{color:var(--fg);text-decoration:none;opacity:.9}
+    a:hover{opacity:1}
+
+    /* Fundo com glow roxo/lilás */
+    .bgfx{
+      position:fixed; inset:0;
+      pointer-events:none;
+      z-index:-1;
+      background:
+        radial-gradient(900px 520px at 12% 10%, rgba(168,85,247,.22), transparent 60%),
+        radial-gradient(840px 520px at 88% 20%, rgba(124,58,237,.18), transparent 62%),
+        radial-gradient(760px 520px at 50% 92%, rgba(233,213,255,.10), transparent 65%),
+        radial-gradient(900px 700px at 40% 55%, rgba(124,58,237,.08), transparent 60%);
+    }
+    .bgfx::after{
+      content:"";
+      position:absolute; inset:-80px;
+      background:
+        radial-gradient(520px 520px at 15% 25%, rgba(168,85,247,.10), transparent 60%),
+        radial-gradient(560px 560px at 85% 65%, rgba(124,58,237,.10), transparent 62%);
+      filter: blur(18px);
+      opacity:.9;
+    }
+
+    /* Progresso topo */
+    .topbar{position:fixed;top:0;left:0;right:0;height:3px;z-index:99}
+    .progress{
+      height:3px;width:0%;
+      background: linear-gradient(90deg, var(--violet1), var(--violet2), var(--violet3));
+      opacity:.9;
+    }
+
+    /* HEADER (2 linhas) */
+    header{
+      position:sticky; top:0; z-index:98;
+      background: rgba(7,7,11,.62);
+      backdrop-filter: blur(10px);
+      border-bottom:1px solid var(--line);
+    }
+
+    .navWrap{
+      max-width:1100px;
+      margin:0 auto;
+      padding:0 20px;
+    }
+
+    .navTop{
+      padding:12px 0;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+    }
+
+    .navBottom{
+      padding:10px 0 12px;
+      border-top:1px solid rgba(255,255,255,.06);
+      background: rgba(0,0,0,.08);
+    }
+
+    .left{
+      display:flex;
+      gap:12px;
+      align-items:center;
+      min-width: 260px;
+    }
+
+    .brand{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      font-weight:800;
+      letter-spacing:.02em;
+      line-height:1;
+    }
+
+    .logoIcon{
+      width:22px;height:22px; flex:0 0 22px;
+      filter: drop-shadow(0 10px 18px rgba(124,58,237,.22));
+    }
+
+    .brandText{
+      display:flex;
+      gap:10px;
+      align-items:baseline;
+      flex-wrap:wrap;
+    }
+    .brandName{
+      font-size:16px;
+      font-weight:800;
+    }
+    .pilot{
+      font-size:12px;
+      color: var(--muted);
+      letter-spacing:.03em;
+      opacity:.95;
+      font-weight:400;
+    }
+
+    .linksBottom{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+      justify-content:flex-end;
+    }
+
+    .linksBottom a{
+      font-size:13px;
+      color: var(--muted);
+      padding:6px 10px;
+      border-radius:999px;
+      transition: background .15s ease, color .15s ease;
+    }
+    .linksBottom a:hover{
+      color: var(--fg);
+      background: rgba(255,255,255,.05);
+    }
+
+    .ctaTop{
+      border: 1px solid rgba(192,132,252,.35);
+      background: linear-gradient(180deg, rgba(124,58,237,.26), rgba(168,85,247,.14));
+      color: var(--fg);
+      padding: 8px 12px;
+      border-radius: 12px;
+      font-size: 13px;
+      cursor: pointer;
+      box-shadow: 0 10px 25px rgba(124,58,237,.16);
+      transition: transform .12s ease, background .15s ease, border-color .15s ease;
+      white-space:nowrap;
+    }
+    .ctaTop:hover{
+      transform: translateY(-1px);
+      border-color: rgba(233,213,255,.55);
+      background: linear-gradient(180deg, rgba(124,58,237,.34), rgba(168,85,247,.18));
+    }
+    .ctaTop:active{transform: translateY(0px)}
+
+    @media (max-width: 900px){
+      .pilot{display:none}
+    }
 
     main{
       max-width:1100px;
@@ -39,122 +187,563 @@
       padding:22px 20px 64px;
     }
 
-    /* =========================
-       TEXTO — AJUSTE PRINCIPAL
-       ========================= */
+    /* INTRO */
+    .intro{
+      padding: 10px 6px 10px;
+      margin-bottom: 18px;
+    }
 
-    .intro-body,
-    .intro-text,
-    .block p,
-    .rhLead,
-    .rhBulletText{
+    .intro-kicker{
+      margin: 0 0 10px;
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing: .10em;
+      text-transform: uppercase;
+    }
+
+    .intro h1{
+      margin: 0 0 10px;
+      font-size: 40px;
+      line-height: 1.05;
+      font-weight: 740;
+      letter-spacing: -0.02em;
+    }
+
+    .intro-grid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px 18px;
+    }
+    @media (max-width: 900px){
+      .intro h1{ font-size: 32px; }
+      .intro-grid{ grid-template-columns: 1fr; }
+    }
+
+    .infoCard{
+      background: var(--card2);
+      border:1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 14px 14px;
+      box-shadow: 0 10px 30px rgba(0,0,0,.25);
+      position:relative;
+      overflow:hidden;
+    }
+    .infoCard::before{
+      content:"";
+      position:absolute; inset:-2px;
+      background: radial-gradient(420px 120px at 15% 0%, rgba(168,85,247,.12), transparent 55%);
+      pointer-events:none;
+    }
+    .intro-label{
+      margin: 0 0 6px;
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      position:relative;
+      z-index:1;
+    }
+
+    /* AJUSTE: texto ocupa toda a largura (remove max-width) */
+    .intro-text{
+      margin: 0;
+      color: var(--body);
+      font-size: 14px;
+      line-height: 1.55;
+      text-align: justify;
+      text-justify: inter-word;
+      hyphens: none;
+      max-width: none;       /* <<< */
+      width: 100%;           /* <<< */
+      position:relative;
+      z-index:1;
+    }
+
+    /* Byline */
+    .byline{
+      margin: 14px 0 18px;
+      padding: 14px 14px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(255,255,255,.02);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+    }
+
+    .byline-left{
+      display:flex;
+      align-items:center;
+      gap:14px;
+      min-width: 0;
+    }
+
+    .avatarWrap{
+      width: 81px;
+      height: 81px;
+      border-radius: 999px;
+      border: 2px solid rgba(233,213,255,.35);
+      background: radial-gradient(90px 90px at 30% 30%, rgba(168,85,247,.18), rgba(0,0,0,.20));
+      overflow:hidden;
+      flex: 0 0 81px;
+    }
+
+    .avatar{
       width:100%;
-      max-width:none;            /* remove coluna curta */
+      height:100%;
+      object-fit:cover;
+      display:block;
+    }
+
+    .byline-text{ min-width: 0; }
+
+    .byline-name{
+      font-weight: 750;
+      font-size: 14px;
+      line-height: 1.2;
+    }
+
+    .byline-desc{
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.3;
+    }
+
+    .byline-link{
+      margin-top: 4px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .byline-link a{
+      color: var(--violet3);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      opacity: .95;
+    }
+
+    .byline-right{
+      flex: 0 0 auto;
+      color: var(--muted);
+      font-size: 12px;
+      letter-spacing:.04em;
+      white-space: nowrap;
+    }
+
+    /* AJUSTE: texto ocupa toda a largura (remove max-width) */
+    .intro-body{
+      margin: 0 auto 18px;
+      color: var(--body);
+      font-size: 15px;
+      line-height: 1.7;
+      max-width: none;       /* <<< */
+      width: 100%;           /* <<< */
+      text-align: justify;
+      text-justify: inter-word;
+      hyphens: none;
+    }
+    .intro-body p{ margin: 0 0 12px; }
+    .intro-body p:last-child{ margin-bottom: 0; }
+
+    @media (max-width: 700px){
+      .byline{
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .byline-right{
+        white-space: normal;
+      }
+    }
+
+    /* >>> REMOVIDO o trecho que forçava texto à esquerda no mobile.
+       Agora no mobile permanece JUSTIFICADO e sem hifenização (pedido). */
+
+    /* BLOCO 0: amostra e método */
+    .metaGrid{
+      margin-top: 14px;
+      display:grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 12px;
+      position:relative;
+      z-index:1;
+    }
+
+    .metaCard{
+      background: rgba(255,255,255,.02);
+      border: 1px solid rgba(255,255,255,.10);
+      border-radius: 14px;
+      padding: 12px;
+      overflow:hidden;
+    }
+
+    .metaLabel{
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing: .10em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .metaBig{
+      font-size: 34px;
+      font-weight: 780;
+      letter-spacing: -0.02em;
+      line-height: 1.05;
+    }
+
+    .metaSmall{
+      margin-top: 6px;
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.4;
+    }
+
+    .metaList{
+      display:grid;
+      gap: 8px;
+      font-size: 14px;
+      color: var(--body);
+      line-height: 1.3;
+    }
+
+    .metaPct{
+      color: var(--muted);
+      font-size: 13px;
+      margin-left: 6px;
+    }
+
+    .dot{
+      width:10px;
+      height:10px;
+      border-radius:999px;
+      display:inline-block;
+      margin-right:8px;
+      transform: translateY(1px);
+      border: 1px solid rgba(255,255,255,.14);
+      box-shadow: 0 8px 18px rgba(0,0,0,.35);
+    }
+
+    .dot.pro{ background: rgba(233,213,255,.28); }
+    .dot.lid{ background: rgba(168,85,247,.26); }
+    .dot.neg{ background: rgba(124,58,237,.26); }
+    .dot.rh{  background: rgba(192,132,252,.20); }
+
+    .dot.clt{ background: rgba(233,213,255,.24); }
+    .dot.pj{  background: rgba(168,85,247,.20); }
+    .dot.mov{ background: rgba(124,58,237,.18); }
+
+    .curiosityBtn{
+      position:relative;
+      overflow:hidden;
+    }
+
+    .curiosityBtn::before{
+      content:"";
+      position:absolute;
+      inset:-2px;
+      background: radial-gradient(240px 80px at 20% 50%, rgba(233,213,255,.22), transparent 60%);
+      opacity:.9;
+      pointer-events:none;
+    }
+
+    .curiosityBtn::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background: linear-gradient(90deg, transparent, rgba(233,213,255,.14), transparent);
+      transform: translateX(-120%);
+      animation: shimmer 3.2s ease-in-out infinite;
+      pointer-events:none;
+      opacity:.55;
+    }
+
+    @keyframes shimmer{
+      0%{ transform: translateX(-120%); }
+      45%{ transform: translateX(120%); }
+      100%{ transform: translateX(120%); }
+    }
+
+    .rhReveal{
+      margin-top: 14px;
+      border-top: 1px solid var(--line);
+      padding-top: 14px;
+
+      max-height:0;
+      opacity:0;
+      overflow:hidden;
+      transition: max-height .35s ease, opacity .25s ease;
+      position:relative;
+      z-index:1;
+    }
+
+    .rhReveal.open{
+      max-height: 980px;
+      opacity:1;
+    }
+
+    /* AJUSTE: remove espaço feio à direita (empilha) */
+    .rhHeader{
+      display:flex;
+      flex-direction: column;     /* <<< */
+      align-items:flex-start;     /* <<< */
+      justify-content:flex-start; /* <<< */
+      gap:6px;                    /* <<< */
+      margin-bottom: 10px;
+    }
+
+    .rhTitle{
+      margin:0;
+      font-size: 13px;
+      color: var(--muted);
+      font-weight: 650;
+      letter-spacing:.02em;
+    }
+
+    .rhHint{
+      margin:0;
+      font-size: 12px;
+      color: var(--muted);
+      opacity:.9;
+    }
+
+    /* AJUSTE: texto ocupa toda a largura (remove max-width) */
+    .rhLead{
+      margin: 0 0 12px;
+      font-size: 14px;
+      color: var(--body);
+      line-height: 1.6;
+      max-width: none;   /* <<< */
+      width: 100%;       /* <<< */
+      text-align: justify;
+      text-justify: inter-word;
+      hyphens: none;
+      position:relative;
+      z-index:1;
+    }
+
+    .rhNumbers{
+      display:grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .rhNumberCard{
+      background: rgba(0,0,0,.16);
+      border:1px solid rgba(255,255,255,.08);
+      border-radius: 14px;
+      padding: 12px;
+    }
+
+    .rhNum{
+      font-size: 26px;
+      font-weight: 780;
+      letter-spacing: -0.02em;
+    }
+
+    .rhNumLabel{
+      margin-top: 6px;
+      font-size: 12px;
+      color: var(--body);
+    }
+
+    .rhNumSub{
+      margin-top: 3px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .rhBullets{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    .rhBullet{
+      background: rgba(255,255,255,.02);
+      border: 1px solid rgba(255,255,255,.09);
+      border-radius: 14px;
+      padding: 12px;
+    }
+
+    .rhBulletTitle{
+      font-size: 13px;
+      font-weight: 720;
+      color: var(--fg);
+      margin-bottom: 6px;
+    }
+
+    /* AJUSTE: garante largura total + justificado (sem hifenização) */
+    .rhBulletText{
+      font-size: 14px;
+      color: var(--body);
+      line-height: 1.55;
       text-align: justify;
       text-justify: inter-word;
       hyphens: none;
     }
 
-    /* =========================
-       INTRO
-       ========================= */
-
-    .intro-body{
-      font-size:15px;
-      line-height:1.7;
-      margin-bottom:18px;
-    }
-
-    .intro-text{
-      font-size:14px;
-      line-height:1.55;
-    }
-
-    /* =========================
-       BLOCO PADRÃO
-       ========================= */
-
+    /* BLOCO 1 */
     .block{
       background: var(--card);
       border:1px solid var(--line);
       border-radius: var(--radius);
-      padding:18px;
+      padding: 18px;
       box-shadow: var(--shadow);
+      position:relative;
+      overflow:hidden;
+    }
+    .block::before{
+      content:"";
+      position:absolute; inset:-2px;
+      background:
+        radial-gradient(520px 220px at 0% 0%, rgba(124,58,237,.14), transparent 55%),
+        radial-gradient(480px 260px at 100% 30%, rgba(168,85,247,.10), transparent 58%);
+      pointer-events:none;
     }
 
+    .kicker{
+      font-size:12px;
+      color: var(--muted);
+      letter-spacing:.10em;
+      text-transform:uppercase;
+      position:relative;
+      z-index:1;
+    }
     .block h2{
-      margin:10px 0;
-      font-size:30px;
+      margin: 10px 0 10px;
+      font-size: 30px;
+      line-height: 1.12;
+      letter-spacing:-0.01em;
+      position:relative;
+      z-index:1;
     }
 
+    /* AJUSTE: corpo do bloco ocupa toda a largura (remove max-width) */
     .block p{
+      margin:0;
+      color: var(--body);
       font-size:15px;
       line-height:1.6;
+      max-width: none;    /* <<< */
+      width: 100%;        /* <<< */
+      text-align: justify;
+      text-justify: inter-word;
+      hyphens: none;
+      position:relative;
+      z-index:1;
     }
 
-    /* =========================
-       AMOSTRA
-       ========================= */
-
-    .metaGrid{
-      margin-top:14px;
-      display:grid;
-      grid-template-columns:repeat(3,1fr);
-      gap:12px;
-    }
-
-    .metaCard{
-      background: rgba(255,255,255,.02);
-      border:1px solid rgba(255,255,255,.1);
-      border-radius:14px;
-      padding:12px;
-    }
-
-    /* =========================
-       RH — AJUSTES IMPORTANTES
-       ========================= */
-
-    .rhHeader{
+    .row{
+      margin-top: 14px;
       display:flex;
-      flex-direction:column;   /* elimina espaço vazio */
-      align-items:flex-start;
-      gap:6px;
-      margin-bottom:10px;
+      gap:12px;
+      align-items:center;
+      flex-wrap:wrap;
+      position:relative;
+      z-index:1;
     }
 
-    .rhLead{
-      font-size:14px;
-      line-height:1.6;
-      margin-bottom:12px;
-    }
-
-    .rhBullets{
-      display:grid;
-      gap:10px;
-    }
-
-    .rhBullet{
+    .pill{
+      font-size:12px;
+      color: var(--muted);
+      border:1px solid var(--line);
+      padding:6px 10px;
+      border-radius:999px;
       background: rgba(255,255,255,.02);
-      border:1px solid rgba(255,255,255,.09);
-      border-radius:14px;
-      padding:12px;
     }
 
-    .rhBulletTitle{
-      font-size:13px;
-      font-weight:700;
-      margin-bottom:6px;
-    }
-
-    .rhBulletText{
+    button{
+      appearance:none;
+      border: 1px solid rgba(192,132,252,.35);
+      background: linear-gradient(180deg, rgba(124,58,237,.32), rgba(168,85,247,.18));
+      color: var(--fg);
+      padding:10px 12px;
+      border-radius: 12px;
+      cursor:pointer;
       font-size:14px;
-      line-height:1.55;
+      box-shadow: 0 10px 25px rgba(124,58,237,.18);
+      transition: transform .12s ease, background .15s ease, border-color .15s ease;
+    }
+    button:hover{
+      transform: translateY(-1px);
+      border-color: rgba(233,213,255,.55);
+      background: linear-gradient(180deg, rgba(124,58,237,.40), rgba(168,85,247,.22));
+    }
+    button:active{transform: translateY(0px)}
+
+    .reveal{
+      margin-top: 14px;
+      border-top: 1px solid var(--line);
+      padding-top: 14px;
+
+      max-height:0;
+      opacity:0;
+      overflow:hidden;
+      transition: max-height .35s ease, opacity .25s ease;
+      position:relative;
+      z-index:1;
+    }
+    .reveal.open{
+      max-height: 680px;
+      opacity:1;
     }
 
-    /* =========================
-       MOBILE — TEXTO LIMPO
-       ========================= */
+    .chartHeader{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-end;
+      gap:12px;
+      flex-wrap:wrap;
+      margin-bottom: 10px;
+    }
+    .chartTitle{
+      margin:0;
+      font-size: 13px;
+      color: var(--muted);
+      font-weight: 650;
+      letter-spacing:.02em;
+    }
+    .chartHint{
+      margin:0;
+      font-size: 12px;
+      color: var(--muted);
+      opacity:.9;
+    }
 
+    .chartWrap{
+      height: 380px;
+      background: rgba(0,0,0,.16);
+      border:1px solid rgba(255,255,255,.08);
+      border-radius: 14px;
+      padding: 12px;
+      overflow:hidden;
+    }
+    .chartWrap canvas{
+      width:100% !important;
+      height:100% !important;
+    }
+
+    .note{
+      margin-top:10px;
+      font-size:12px;
+      color: var(--muted);
+    }
+
+    @media (max-width: 600px){
+      .block h2{font-size:26px}
+      .chartWrap{height: 340px}
+      .reveal.open{max-height: 760px}
+    }
+
+    /* Responsivo do bloco amostra + RH */
+    @media (max-width: 900px){
+      .metaGrid{ grid-template-columns: 1fr; }
+      .rhNumbers{ grid-template-columns: 1fr; }
+    }
+
+    /* MOBILE: manter justificado e sem hifenização (pedido explícito) */
     @media (max-width: 700px){
       .intro-body,
       .intro-text,
@@ -163,96 +752,413 @@
       .rhBulletText{
         text-align: justify;
         text-justify: inter-word;
-        hyphens: none;          /* sem hifenização */
-      }
-
-      .metaGrid{
-        grid-template-columns:1fr;
+        hyphens: none;
       }
     }
   </style>
 </head>
 
 <body>
+  <div class="bgfx"></div>
+  <div class="topbar"><div class="progress" id="progress"></div></div>
 
-<main>
+  <header>
+    <div class="navWrap">
+      <div class="navTop">
+        <div class="left">
+          <div class="brand">
+            <svg class="logoIcon" viewBox="0 0 64 64" aria-hidden="true">
+              <defs>
+                <linearGradient id="lg" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0" stop-color="var(--violet1)"/>
+                  <stop offset="0.55" stop-color="var(--violet2)"/>
+                  <stop offset="1" stop-color="var(--violet3)"/>
+                </linearGradient>
+              </defs>
+              <circle cx="32" cy="32" r="22" fill="none" stroke="url(#lg)" stroke-width="10" stroke-linecap="round"/>
+              <path d="M46 17 l7 0 l0 7" fill="none" stroke="url(#lg)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M53 17 C49 12 42 8 34 8" fill="none" stroke="url(#lg)" stroke-width="6" stroke-linecap="round"/>
+            </svg>
 
-  <section class="intro">
-    <div class="intro-body">
-      <p>
-        Este piloto combinou dois formatos: survey (n=29) e entrevistas (n=3).
-        O objetivo não é cravar verdades em pedra, e sim capturar sinais:
-        tensões recorrentes, padrões e contradições úteis para orientar a Onda 2.
-        Um detalhe chama atenção — e vale ser lido com cuidado: o RH apareceu pouco na amostra.
-      </p>
-    </div>
-  </section>
-
-  <article class="block" id="amostra">
-    <h2>Quem respondeu e como a pesquisa foi feita</h2>
-
-    <div class="metaGrid">
-      <div class="metaCard">
-        <strong>Respondentes</strong><br>
-        32<br>
-        Survey: 29 | Entrevistas: 3
-      </div>
-
-      <div class="metaCard">
-        <strong>Público</strong><br>
-        Profissionais no Geral 56%<br>
-        Líderes 19%<br>
-        Negócio 19%<br>
-        RH 6%
-      </div>
-
-      <div class="metaCard">
-        <strong>Situação de trabalho</strong><br>
-        CLT 41%<br>
-        PJ 19%<br>
-        Transição 40%
-      </div>
-    </div>
-
-    <section class="rhReveal open">
-      <div class="rhHeader">
-        <div class="rhTitle">Contexto do engajamento de RH</div>
-        <div class="rhHint">Uma leitura mais sensível do “porquê”.</div>
-      </div>
-
-      <p class="rhLead">
-        Para compreender a baixa adesão dos profissionais de RH à pesquisa,
-        eles foram contatados individualmente pelo LinkedIn.
-        O convite partiu de uma reflexão sobre o engajamento desses profissionais
-        em comunidades de troca, boas práticas e apoio mútuo.
-      </p>
-
-      <div class="rhBullets">
-        <div class="rhBullet">
-          <div class="rhBulletTitle">Excesso de abordagens comerciais</div>
-          <div class="rhBulletText">
-            Convites legítimos de cooperação acabam parecendo apenas mais uma tentativa de venda.
+            <div class="brandText">
+              <span class="brandName">DHO 360º</span>
+              <span class="pilot">Piloto | versão 0.1</span>
+            </div>
           </div>
         </div>
 
-        <div class="rhBullet">
-          <div class="rhBulletTitle">Rotina em modo de urgência</div>
-          <div class="rhBulletText">
-            Pouco tempo disponível para reflexão, troca e construção coletiva.
+        <a class="ctaTop" href="#onda2">Participar da Onda 2</a>
+      </div>
+
+      <div class="navBottom">
+        <nav class="linksBottom">
+          <a href="#intro">Introdução</a>
+          <a href="#amostra">Amostra</a>
+          <a href="#b1">Bloco 1</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="intro" id="intro">
+      <p class="intro-kicker">DHO 360º - Futuro do Trabalho em Foco</p>
+
+      <h1>Pessoas e Negócios: a coerência como ativo na relação de trabalho.</h1>
+
+      <div class="byline">
+        <div class="byline-left">
+          <div class="avatarWrap">
+            <img class="avatar" src="assets/lisandra.jpg" alt="Lisandra Lencina">
+          </div>
+
+          <div class="byline-text">
+            <div class="byline-name">Por Lisandra Lencina</div>
+            <div class="byline-desc">Administradora de Negócios com ênfase em Desenvolvimento Humano</div>
+            <div class="byline-link">
+              LinkedIn:
+              <a href="https://www.linkedin.com/in/lisandralencina/" target="_blank" rel="noopener">/in/lisandralencina</a>
+            </div>
           </div>
         </div>
 
-        <div class="rhBullet">
-          <div class="rhBulletTitle">Pesquisas que não retornam valor</div>
-          <div class="rhBulletText">
-            Quando os resultados não retornam a quem participa, o engajamento cai.
-          </div>
+        <div class="byline-right">
+          <div class="byline-date">02/02/2026 | 06h00</div>
+        </div>
+      </div>
+
+      <div class="intro-body">
+        <p>
+          A pesquisa piloto DHO 360º - Futuro do Trabalho em Foco nasceu da observação das dores dos negócios e das pessoas nas relações de trabalho:
+          quando o acordo entre negócio e trabalhador falha, os dois lados relatam sintomas parecidos.
+        </p>
+
+        <p>
+          De um lado os donos e decisores do negócio sentem a sobrecarga das falhas na força de trabalho. Do outro, trabalhadores sentem sobrecarga por
+          pressão por resultado e esgotamento. As causas parecem diferentes, mas elas surgem a partir de um mesmo ponto: Desenvolvimento Humano.
+        </p>
+
+        <p>
+          A pesquisa tem como objetivo entender quais aspectos desse pilar são mais demandados e como integrá-los para sustentar resultados e qualidade vida
+          e estabelecer uma coerência entre trabalho e negócios.
+        </p>
+      </div>
+
+      <div class="intro-grid">
+        <div class="infoCard">
+          <p class="intro-label">O que você encontrará nesta página</p>
+          <p class="intro-text">
+            Serão apresentados os resultados da pesquisa a partir de recortes objetivos das tensões mais citadas pelos respondentes. O foco será despertar
+            reflexões a respeito dos pontos que unem trabalhadores e negócios, e o que os levam para lados extremos das situações, e ainda dar pistas de qual é
+            o papel da liderança e do RH para construir essa coerência no dia a dia.
+          </p>
+        </div>
+
+        <div class="infoCard">
+          <p class="intro-label">Como ler</p>
+          <p class="intro-text">
+            Ao rolar a página você encontrará as 10 tensões mais citadas pelos respondentes com um enunciado curto, um gráfico e uma pergunta reflexiva.
+            Em alguns, você poderá abrir detalhes, filtrar ou interagir para explorar conforme a sua necessidade.
+          </p>
+        </div>
+
+        <div class="infoCard">
+          <p class="intro-label">Quem conduziu</p>
+          <p class="intro-text">
+            Lisandra Lencina, Administradora de Negócios com ênfase em Desenvolvimento Humano, que de forma independente construiu um piloto para transformar
+            percepções recorrentes em dados organizados e abrir conversa com quem decide e com quem faz a o negócio girar.
+          </p>
+        </div>
+
+        <div class="infoCard">
+          <p class="intro-label">Limites do piloto</p>
+          <p class="intro-text">
+            O “n” (Número de Respondentes) varia por pergunta. Por isso os resultados devem ser aproveitados de forma mais qualitativa e utilizados como bússola
+            para identificar tensões e hipóteses e não como conclusão definitiva. A Onda 2 abre em julho de 2026 e vai ampliar a base.
+          </p>
         </div>
       </div>
     </section>
-  </article>
 
-</main>
+    <article class="block" id="amostra">
+      <div class="kicker">BASE DO PILOTO</div>
+      <h2>Quem respondeu e como a pesquisa foi feita</h2>
 
+      <p>
+        Este piloto combinou dois formatos: survey (n=29) e entrevistas (n=3).
+        O objetivo não é cravar verdades em pedra, e sim capturar sinais: tensões recorrentes, padrões e contradições úteis para orientar a Onda 2.
+        Um detalhe chama atenção — e vale ser lido com cuidado: o RH apareceu pouco na amostra.
+      </p>
+
+      <div class="metaGrid">
+        <div class="metaCard">
+          <div class="metaLabel">Respondentes</div>
+          <div class="metaBig">32</div>
+          <div class="metaSmall">Survey: 29 | Entrevistas: 3</div>
+        </div>
+
+        <div class="metaCard">
+          <div class="metaLabel">Público</div>
+          <div class="metaList">
+            <div><span class="dot pro"></span>Profissionais no Geral (PRO) <span class="metaPct">56%</span></div>
+            <div><span class="dot lid"></span>Líderes (LID) <span class="metaPct">19%</span></div>
+            <div><span class="dot neg"></span>Responsáveis pelo Negócio (NEG) <span class="metaPct">19%</span></div>
+            <div><span class="dot rh"></span>Profissionais de RH (RH) <span class="metaPct">6%</span></div>
+          </div>
+        </div>
+
+        <div class="metaCard">
+          <div class="metaLabel">Situação de trabalho</div>
+          <div class="metaList">
+            <div><span class="dot clt"></span>CLT <span class="metaPct">41%</span></div>
+            <div><span class="dot pj"></span>PJ <span class="metaPct">19%</span></div>
+            <div><span class="dot mov"></span>Transição <span class="metaPct">40%</span></div>
+          </div>
+          <div class="metaSmall">Negócio próprio, autônomo, recolocação, desemprego</div>
+        </div>
+      </div>
+
+      <div class="row" style="margin-top:16px">
+        <button id="toggleRhBtn" class="curiosityBtn" type="button" aria-controls="rhDetails" aria-expanded="false">
+          Por que o RH apareceu pouco?
+        </button>
+        <span class="pill">Clique para ver o contexto</span>
+      </div>
+
+      <section class="rhReveal" id="rhDetails" aria-hidden="true">
+        <div class="rhHeader">
+          <p class="rhTitle">Contexto do engajamento de RH</p>
+          <p class="rhHint">Uma leitura mais sensível do “porquê”.</p>
+        </div>
+
+        <p class="rhLead">
+          Para compreender a baixa adesão dos profissionais de RH à pesquisa, eles foram contatados individualmente pelo LinkedIn, por meio de mensagens privadas.
+          O convite partiu de uma reflexão sobre o nível de engajamento desses profissionais em comunidades ou fóruns de troca, voltados ao compartilhamento
+          de experiências, à disseminação de boas práticas e ao apoio mútuo na evolução dos modos de trabalho.
+        </p>
+
+        <div class="rhNumbers">
+          <div class="rhNumberCard">
+            <div class="rhNum">100</div>
+            <div class="rhNumLabel">Abordagens no LinkedIn</div>
+            <div class="rhNumSub">(Desde analistas a C-level)</div>
+          </div>
+          <div class="rhNumberCard">
+            <div class="rhNum">9</div>
+            <div class="rhNumLabel">Devolutivas</div>
+            <div class="rhNumSub">retornos efetivos</div>
+          </div>
+          <div class="rhNumberCard">
+            <div class="rhNum">6%</div>
+            <div class="rhNumLabel">Participação RH</div>
+            <div class="rhNumSub">na amostra do piloto</div>
+          </div>
+        </div>
+
+        <div class="rhBullets">
+          <div class="rhBullet">
+            <div class="rhBulletTitle">Excesso de abordagens comerciais</div>
+            <div class="rhBulletText">
+              O RH está sendo muito abordado por vendedores, e então convites reais de cooperação podem parecer, à primeira vista, mais uma venda.
+            </div>
+          </div>
+
+          <div class="rhBullet">
+            <div class="rhBulletTitle">Rotina em modo de urgência</div>
+            <div class="rhBulletText">
+              Muitos profissionais relataram sobrecarga apagando incêndio, com pouco tempo para iniciativas de comunidade e boas práticas.
+            </div>
+          </div>
+
+          <div class="rhBullet">
+            <div class="rhBulletTitle">Grupos seniores seletivos</div>
+            <div class="rhBulletText">
+              RH seniores tendem a participar de grupos pequenos, com entrada restrita, para preservar confiança do networking e qualidade nas trocas de informações.
+            </div>
+          </div>
+
+          <div class="rhBullet">
+            <div class="rhBulletTitle">Pesquisas que não retornam o que prometem</div>
+            <div class="rhBulletText">
+              Há uma convergência: quando quem participa não recebe de volta os resultados, a expectativa quebra — e o engajamento cai na próxima.
+            </div>
+          </div>
+        </div>
+
+        <div class="note">
+          Reflexão: a baixa presença do RH é um reflexo da história atual, onde esses profissionais procuram se blindar para manter foco no trabalho e garantir entrega.
+        </div>
+      </section>
+    </article>
+
+    <div style="height:16px"></div>
+
+    <article class="block" id="b1">
+      <div class="kicker">BLOCO 1</div>
+      <h2>O problema não é falta de esforço. É falta de coerência.</h2>
+      <p>Quando todo mundo sabe o que importa, o caos vira escolha. E escolha tem dono.</p>
+
+      <div class="row">
+        <button id="toggleChartBtn" type="button">Ver gráfico</button>
+        <span class="pill" id="metaPill">Piloto | n = 29 | MQ0063</span>
+      </div>
+
+      <section class="reveal" id="revealArea" aria-hidden="true">
+        <div class="chartHeader">
+          <p class="chartTitle" id="chartTitle">MQ0063 | Consenso do piloto (top 6)</p>
+          <p class="chartHint">Passe o mouse para ver o texto completo</p>
+        </div>
+
+        <div class="chartWrap">
+          <canvas id="chart"></canvas>
+        </div>
+
+        <div class="note">Leitura inicial de um piloto. Indica sinais, não verdades finais.</div>
+      </section>
+    </article>
+
+    <div style="height:22px"></div>
+
+    <section id="onda2" style="margin-top:26px;border-top:1px solid rgba(255,255,255,.09);padding-top:18px;color:var(--muted)">
+      <div style="max-width:80ch">
+        <div style="letter-spacing:.10em;text-transform:uppercase;font-size:12px;margin-bottom:8px">Onda 2</div>
+        <div style="font-size:14px;line-height:1.6;color:var(--body)">
+          CTA será finalizada no fechamento do site. Este bloco é apenas um marcador para o botão do topo.
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    window.addEventListener("scroll", () => {
+      const h = document.documentElement;
+      const sc = (h.scrollTop) / (h.scrollHeight - h.clientHeight);
+      document.getElementById("progress").style.width =
+        `${Math.max(0, Math.min(1, sc))*100}%`;
+    });
+
+    const bloco1 = {
+      title: "MQ0063 | Consenso do piloto (top 6)",
+      n: 29,
+      xMax: 7,
+      datasetLabel: "Score (ranking invertido)",
+      labels: [
+        "Corpo/Ambiente: verificar se tenho as condições e recursos adequados (saúde, local, tempo, ferramentas, rede de apoio), para agir.",
+        "Habilidades: adquirir mais conhecimento sobre mim, sobre o mundo e sobre como fazer coisas no geral, e aprender a aplicá-los na vida real.",
+        "Comportamento: descobrir como meus comportamentos me ajudam a realizar tarefas e ações melhores, com mais produtividade ou até mesmo realizar coisas novas.",
+        "Crenças e Valores: clarear minhas crenças e valores para agir de acordo com o que acredito e valorizo.",
+        "Visão/Missão: descobrir meu propósito, definir um futuro desejado, e viver tudo isso.",
+        "Legado: gerar impacto positivo e duradouro nos meios que faço parte, para as pessoas e sociedade."
+      ],
+      values: [5.28, 5.17, 4.69, 3.72, 3.17, 3.00]
+    };
+
+    const btn = document.getElementById("toggleChartBtn");
+    const reveal = document.getElementById("revealArea");
+    const title = document.getElementById("chartTitle");
+
+    let chartInstance = null;
+
+    function truncateLabel(s, max=58){
+      if(!s) return s;
+      return s.length > max ? (s.slice(0, max-3) + "...") : s;
+    }
+
+    function buildChart(){
+      const ctx = document.getElementById("chart");
+
+      chartInstance = new Chart(ctx, {
+        type: "bar",
+        data: {
+          labels: bloco1.labels.map(x => truncateLabel(x)),
+          datasets: [{
+            label: bloco1.datasetLabel,
+            data: bloco1.values,
+            borderWidth: 1
+          }]
+        },
+        options: {
+          indexAxis: "y",
+          responsive: true,
+          maintainAspectRatio: false,
+          animation: { duration: 450 },
+          plugins: {
+            legend: {
+              display: true,
+              labels: { color: "#c7c7d6" }
+            },
+            tooltip: {
+              callbacks: {
+                title: (items) => {
+                  const idx = items[0].dataIndex;
+                  return bloco1.labels[idx];
+                }
+              }
+            }
+          },
+          scales: {
+            x: {
+              suggestedMax: bloco1.xMax,
+              ticks: { color: "#c7c7d6" },
+              grid: { color: "rgba(255,255,255,.08)" }
+            },
+            y: {
+              ticks: { color: "#c7c7d6" },
+              grid: { color: "rgba(255,255,255,.08)" }
+            }
+          }
+        }
+      });
+    }
+
+    function openReveal(){
+      title.textContent = bloco1.title;
+
+      reveal.classList.add("open");
+      reveal.setAttribute("aria-hidden", "false");
+      btn.textContent = "Ocultar gráfico";
+
+      if(!chartInstance){
+        buildChart();
+      }else{
+        chartInstance.resize();
+      }
+    }
+
+    function closeReveal(){
+      reveal.classList.remove("open");
+      reveal.setAttribute("aria-hidden", "true");
+      btn.textContent = "Ver gráfico";
+    }
+
+    btn.addEventListener("click", () => {
+      const isOpen = reveal.classList.contains("open");
+      if(isOpen) closeReveal();
+      else openReveal();
+    });
+
+    // Toggle do bloco RH (curiosidade)
+    const rhBtn = document.getElementById("toggleRhBtn");
+    const rhDetails = document.getElementById("rhDetails");
+
+    if (rhBtn && rhDetails){
+      rhBtn.addEventListener("click", () => {
+        const isOpen = rhDetails.classList.contains("open");
+
+        if (isOpen){
+          rhDetails.classList.remove("open");
+          rhDetails.setAttribute("aria-hidden", "true");
+          rhBtn.setAttribute("aria-expanded", "false");
+          rhBtn.textContent = "Por que o RH apareceu pouco?";
+        } else {
+          rhDetails.classList.add("open");
+          rhDetails.setAttribute("aria-hidden", "false");
+          rhBtn.setAttribute("aria-expanded", "true");
+          rhBtn.textContent = "Ocultar contexto do RH";
+          rhDetails.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      });
+    }
+  </script>
 </body>
 </html>
