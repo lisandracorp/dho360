@@ -3,169 +3,444 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>DHO360 - Teste (Intro + Bloco 1)</title>
+  <title>DHO360 | Piloto</title>
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <style>
     :root{
-      --bg:#0b0c0f;
-      --fg:#f2f2f2;
-      --muted:#b8b8b8;
-      --card:#12141a;
-      --line:#232632;
+      --bg:#07070b;
+      --fg:#f4f4f8;
+      --muted:#b7b7c6;
+
+      --card: rgba(255,255,255,.035);
+      --card2: rgba(255,255,255,.025);
+      --line: rgba(255,255,255,.09);
+
+      --violet1:#7c3aed;  /* violeta */
+      --violet2:#a855f7;  /* lilás */
+      --violet3:#c084fc;  /* lilás claro */
+      --ink:#0b0c12;
+
+      --radius: 18px;
+      --shadow: 0 18px 60px rgba(0,0,0,.55);
     }
+
     *{box-sizing:border-box}
-    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;background:var(--bg);color:var(--fg)}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;
+      background: var(--bg);
+      color: var(--fg);
+      overflow-x:hidden;
+    }
     a{color:var(--fg);text-decoration:none;opacity:.9}
     a:hover{opacity:1}
 
+    /* Fundo com "glow" roxo */
+    .bgfx{
+      position:fixed; inset:0;
+      pointer-events:none;
+      z-index:-1;
+      background:
+        radial-gradient(900px 520px at 12% 10%, rgba(168,85,247,.22), transparent 60%),
+        radial-gradient(840px 520px at 88% 20%, rgba(124,58,237,.18), transparent 62%),
+        radial-gradient(760px 520px at 50% 92%, rgba(192,132,252,.12), transparent 65%),
+        radial-gradient(900px 700px at 40% 55%, rgba(124,58,237,.08), transparent 60%);
+      filter: blur(0px);
+    }
+    .bgfx::after{
+      content:"";
+      position:absolute; inset:-80px;
+      background:
+        radial-gradient(520px 520px at 15% 25%, rgba(168,85,247,.10), transparent 60%),
+        radial-gradient(560px 560px at 85% 65%, rgba(124,58,237,.10), transparent 62%);
+      filter: blur(18px);
+      opacity:.9;
+    }
+
+    /* Top progress */
+    .topbar{position:fixed;top:0;left:0;right:0;height:3px;z-index:99}
+    .progress{
+      height:3px;width:0%;
+      background: linear-gradient(90deg, var(--violet1), var(--violet2), var(--violet3));
+      opacity:.9;
+    }
+
     header{
       position:sticky; top:0; z-index:98;
-      background:rgba(11,12,15,.75);
+      background: rgba(7,7,11,.62);
       backdrop-filter: blur(10px);
       border-bottom:1px solid var(--line);
     }
     .nav{
-      max-width:1000px;margin:0 auto;padding:12px 20px;
-      display:flex;gap:14px;align-items:center;justify-content:space-between;
+      max-width:1100px;
+      margin:0 auto;
+      padding:12px 20px;
+      display:flex;
+      gap:14px;
+      align-items:center;
+      justify-content:space-between;
     }
-    .tag{font-size:12px;color:var(--muted);border:1px solid var(--line);padding:6px 10px;border-radius:999px}
+    .left{
+      display:flex; gap:12px; align-items:center;
+      min-width: 220px;
+    }
+    .brand{
+      display:flex; gap:10px; align-items:center;
+      font-weight:700;
+      letter-spacing:.02em;
+    }
+    .tag{
+      font-size:12px;
+      color: var(--muted);
+      border:1px solid var(--line);
+      padding:6px 10px;
+      border-radius:999px;
+      background: rgba(255,255,255,.02);
+    }
+    .links{
+      display:flex; gap:12px; flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+    .links a{
+      font-size:13px;
+      color: var(--muted);
+      padding:6px 10px;
+      border-radius:999px;
+      transition: background .15s ease, color .15s ease;
+    }
+    .links a:hover{
+      color: var(--fg);
+      background: rgba(255,255,255,.05);
+    }
 
-    main{max-width:1000px;margin:0 auto;padding:22px 20px 60px}
+    main{
+      max-width:1100px;
+      margin:0 auto;
+      padding:22px 20px 64px;
+    }
 
-    /* INTRO */
+    /* INTRO (mantida do primeiro teste) */
     .intro{
-      padding: 10px 6px 14px;
-      margin-bottom: 14px;
+      padding: 10px 6px 10px;
+      margin-bottom: 18px;
     }
     .intro-kicker{
       margin: 0 0 10px;
       font-size: 12px;
       color: var(--muted);
-      letter-spacing: .08em;
+      letter-spacing: .10em;
       text-transform: uppercase;
     }
     .intro h1{
       margin: 0 0 10px;
-      font-size: 36px;
+      font-size: 40px;
       line-height: 1.05;
+      font-weight: 800;
+      letter-spacing: -0.02em;
     }
     .intro-lead{
-      margin: 0 0 12px;
+      margin: 0 0 18px;
       color: var(--muted);
       font-size: 16px;
-      line-height: 1.6;
-      max-width: 85ch;
+      line-height: 1.65;
+      max-width: 90ch;
     }
 
-    /* BLOCO */
-    .step{
-      background:rgba(255,255,255,.03);
+    .intro-grid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px 18px;
+    }
+    @media (max-width: 900px){
+      .intro h1{ font-size: 32px; }
+      .intro-grid{ grid-template-columns: 1fr; }
+    }
+
+    .infoCard{
+      background: var(--card2);
       border:1px solid var(--line);
-      border-radius:16px;
-      padding:18px;
+      border-radius: var(--radius);
+      padding: 14px 14px;
+      box-shadow: 0 10px 30px rgba(0,0,0,.25);
+      position:relative;
+      overflow:hidden;
     }
-    .kicker{font-size:12px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase}
-    .step h2{margin:10px 0 8px;font-size:28px;line-height:1.1}
-    .step p{margin:0;color:var(--muted);font-size:15px;line-height:1.55;max-width:75ch}
+    .infoCard::before{
+      content:"";
+      position:absolute; inset:-2px;
+      background: radial-gradient(420px 120px at 15% 0%, rgba(168,85,247,.12), transparent 55%);
+      pointer-events:none;
+    }
+    .intro-label{
+      margin: 0 0 6px;
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+    .intro-text{
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.55;
+      max-width: 78ch;
+    }
 
-    /* BOTÃO */
-    .btnRow{margin-top:14px;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+    /* BLOCO 1 (card) */
+    .block{
+      background: var(--card);
+      border:1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 18px;
+      box-shadow: var(--shadow);
+      position:relative;
+      overflow:hidden;
+    }
+    .block::before{
+      content:"";
+      position:absolute; inset:-2px;
+      background:
+        radial-gradient(520px 220px at 0% 0%, rgba(124,58,237,.14), transparent 55%),
+        radial-gradient(480px 260px at 100% 30%, rgba(168,85,247,.10), transparent 58%);
+      pointer-events:none;
+    }
+
+    .kicker{
+      font-size:12px;
+      color: var(--muted);
+      letter-spacing:.10em;
+      text-transform:uppercase;
+      position:relative;
+      z-index:1;
+    }
+
+    .block h2{
+      margin: 10px 0 10px;
+      font-size: 30px;
+      line-height: 1.12;
+      letter-spacing:-0.01em;
+      position:relative;
+      z-index:1;
+    }
+
+    .block p{
+      margin:0;
+      color: var(--muted);
+      font-size:15px;
+      line-height:1.6;
+      max-width: 80ch;
+      position:relative;
+      z-index:1;
+    }
+
+    .row{
+      margin-top: 14px;
+      display:flex;
+      gap:12px;
+      align-items:center;
+      flex-wrap:wrap;
+      position:relative;
+      z-index:1;
+    }
+
+    .pill{
+      font-size:12px;
+      color: var(--muted);
+      border:1px solid var(--line);
+      padding:6px 10px;
+      border-radius:999px;
+      background: rgba(255,255,255,.02);
+    }
+
+    /* BOTÃO roxo */
     button{
       appearance:none;
-      border:1px solid var(--line);
-      background:rgba(255,255,255,.04);
-      color:var(--fg);
+      border: 1px solid rgba(192,132,252,.35);
+      background:
+        linear-gradient(180deg, rgba(124,58,237,.32), rgba(168,85,247,.18));
+      color: var(--fg);
       padding:10px 12px;
-      border-radius:12px;
+      border-radius: 12px;
       cursor:pointer;
       font-size:14px;
+      box-shadow: 0 10px 25px rgba(124,58,237,.18);
+      transition: transform .12s ease, background .15s ease, border-color .15s ease;
     }
-    button:hover{background:rgba(255,255,255,.07)}
-    .meta{font-size:12px;color:var(--muted)}
+    button:hover{
+      transform: translateY(-1px);
+      border-color: rgba(192,132,252,.55);
+      background:
+        linear-gradient(180deg, rgba(124,58,237,.40), rgba(168,85,247,.22));
+    }
+    button:active{transform: translateY(0px)}
 
-    /* CONTEÚDO REVELADO */
+    /* REVEAL */
     .reveal{
-      margin-top:14px;
-      border-top:1px solid var(--line);
-      padding-top:14px;
+      margin-top: 14px;
+      border-top: 1px solid var(--line);
+      padding-top: 14px;
 
       max-height:0;
       opacity:0;
       overflow:hidden;
       transition: max-height .35s ease, opacity .25s ease;
+      position:relative;
+      z-index:1;
     }
     .reveal.open{
-      max-height: 520px; /* suficiente p/ 6 barras */
+      max-height: 680px;
       opacity:1;
     }
 
-    .chartTitle{margin:0 0 6px;font-size:13px;color:var(--muted);font-weight:600}
+    .chartHeader{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-end;
+      gap:12px;
+      flex-wrap:wrap;
+      margin-bottom: 10px;
+    }
+    .chartTitle{
+      margin:0;
+      font-size: 13px;
+      color: var(--muted);
+      font-weight: 650;
+      letter-spacing:.02em;
+    }
+    .chartHint{
+      margin:0;
+      font-size: 12px;
+      color: var(--muted);
+      opacity:.9;
+    }
+
     .chartWrap{
-      height: 360px;
-      background:rgba(0,0,0,.12);
-      border:1px solid var(--line);
-      border-radius:14px;
-      padding:10px;
+      height: 380px;
+      background: rgba(0,0,0,.16);
+      border:1px solid rgba(255,255,255,.08);
+      border-radius: 14px;
+      padding: 12px;
+      overflow:hidden;
     }
     .chartWrap canvas{
       width:100% !important;
       height:100% !important;
     }
 
+    .note{
+      margin-top:10px;
+      font-size:12px;
+      color: var(--muted);
+    }
+
     @media (max-width: 600px){
-      .intro h1{font-size:28px}
-      .chartWrap{height:320px}
-      .reveal.open{max-height:560px}
+      .block h2{font-size:26px}
+      .chartWrap{height: 340px}
+      .reveal.open{max-height: 760px}
     }
   </style>
 </head>
 
 <body>
+  <div class="bgfx"></div>
+  <div class="topbar"><div class="progress" id="progress"></div></div>
+
   <header>
     <div class="nav">
-      <div style="display:flex;gap:12px;align-items:center">
-        <strong>DHO360</strong>
-        <span class="tag">Teste: botão revela gráfico</span>
+      <div class="left">
+        <div class="brand">DHO360</div>
+        <span class="tag">Piloto | versão 0.1</span>
       </div>
+      <nav class="links">
+        <a href="#intro">Introdução</a>
+        <a href="#b1">Bloco 1</a>
+      </nav>
     </div>
   </header>
 
   <main>
-    <!-- INTRO -->
+    <!-- INTRO (mantida do primeiro teste) -->
     <section class="intro" id="intro">
       <p class="intro-kicker">DHO360 | Pesquisa piloto</p>
       <h1>Trabalhador x Negócio: onde o acordo quebra</h1>
+
       <p class="intro-lead">
-        Este relatório organiza sinais iniciais (piloto) sobre desalinhamentos entre expectativas de negócios e trabalhadores,
-        e o papel de liderança e RH na sustentação desse acordo.
+        Esta pesquisa nasceu de conversas reais com trabalhadores e decisores, onde o mesmo tema se repetia:
+        expectativas desalinhadas, fricção no dia a dia e a sensação de que a promessa não vira prática.
       </p>
+
+      <div class="intro-grid">
+        <div class="infoCard">
+          <p class="intro-label">Por que existe</p>
+          <p class="intro-text">
+            Mapear dores e entraves do alinhamento entre pessoas e negócios, e observar o peso da coerência
+            (liderança e RH) na sustentação desse acordo.
+          </p>
+        </div>
+
+        <div class="infoCard">
+          <p class="intro-label">Como ler</p>
+          <p class="intro-text">
+            Os gráficos mostram sinais de um piloto. O tamanho da amostra (n) aparece em cada bloco e pode variar por pergunta.
+            Use como diagnóstico inicial, não como verdade definitiva.
+          </p>
+        </div>
+
+        <div class="infoCard">
+          <p class="intro-label">Quem conduziu</p>
+          <p class="intro-text">
+            Edite este trecho com o nome da consultoria/autoria e uma linha curta sobre o contexto do estudo.
+          </p>
+        </div>
+
+        <div class="infoCard">
+          <p class="intro-label">Objetivo público</p>
+          <p class="intro-text">
+            Provocar reflexão e abrir conversa com trabalhadores e decisores sobre como construir acordos mais justos e viáveis para ambos.
+          </p>
+        </div>
+      </div>
     </section>
 
     <!-- BLOCO 1 -->
-    <article class="step" id="b1">
+    <article class="block" id="b1">
       <div class="kicker">BLOCO 1</div>
       <h2>O problema não é falta de esforço. É falta de coerência.</h2>
       <p>Quando todo mundo sabe o que importa, o caos vira escolha. E escolha tem dono.</p>
 
-      <div class="btnRow">
+      <div class="row">
         <button id="toggleChartBtn" type="button">Ver gráfico</button>
-        <span class="meta" id="chartMeta">Piloto | n = 29 | MQ0063</span>
+        <span class="pill" id="metaPill">Piloto | n = 29 | MQ0063</span>
       </div>
 
-      <!-- Conteúdo revelado -->
       <section class="reveal" id="revealArea" aria-hidden="true">
-        <p class="chartTitle" id="chartTitle">MQ0063 | Consenso do piloto (top 6)</p>
+        <div class="chartHeader">
+          <p class="chartTitle" id="chartTitle">MQ0063 | Consenso do piloto (top 6)</p>
+          <p class="chartHint">Passe o mouse para ver o texto completo</p>
+        </div>
+
         <div class="chartWrap">
           <canvas id="chart"></canvas>
         </div>
+
+        <div class="note">Leitura inicial de um piloto. Indica sinais, não verdades finais.</div>
       </section>
     </article>
   </main>
 
   <script>
-    // Dados do Bloco 1 (mesmo exemplo do seu teste)
+    // Barra de progresso no topo
+    window.addEventListener("scroll", () => {
+      const h = document.documentElement;
+      const sc = (h.scrollTop) / (h.scrollHeight - h.clientHeight);
+      document.getElementById("progress").style.width =
+        `${Math.max(0, Math.min(1, sc))*100}%`;
+    });
+
+    // Dados do Bloco 1 (substituível depois pelos seus agregados reais)
     const bloco1 = {
       title: "MQ0063 | Consenso do piloto (top 6)",
       n: 29,
@@ -182,19 +457,20 @@
       values: [5.28, 5.17, 4.69, 3.72, 3.17, 3.00]
     };
 
-    function truncateLabel(s, max=58){
-      if(!s) return s;
-      return s.length > max ? (s.slice(0, max-3) + "...") : s;
-    }
-
     const btn = document.getElementById("toggleChartBtn");
     const reveal = document.getElementById("revealArea");
     const title = document.getElementById("chartTitle");
 
     let chartInstance = null;
 
+    function truncateLabel(s, max=58){
+      if(!s) return s;
+      return s.length > max ? (s.slice(0, max-3) + "...") : s;
+    }
+
     function buildChart(){
       const ctx = document.getElementById("chart");
+
       chartInstance = new Chart(ctx, {
         type: "bar",
         data: {
@@ -211,7 +487,10 @@
           maintainAspectRatio: false,
           animation: { duration: 450 },
           plugins: {
-            legend: { display: true },
+            legend: {
+              display: true,
+              labels: { color: "#b7b7c6" }
+            },
             tooltip: {
               callbacks: {
                 title: (items) => {
@@ -224,12 +503,12 @@
           scales: {
             x: {
               suggestedMax: bloco1.xMax,
-              ticks: { color: "#b8b8b8" },
-              grid: { color: "#232632" }
+              ticks: { color: "#b7b7c6" },
+              grid: { color: "rgba(255,255,255,.08)" }
             },
             y: {
-              ticks: { color: "#b8b8b8" },
-              grid: { color: "#232632" }
+              ticks: { color: "#b7b7c6" },
+              grid: { color: "rgba(255,255,255,.08)" }
             }
           }
         }
@@ -238,11 +517,11 @@
 
     function openReveal(){
       title.textContent = bloco1.title;
+
       reveal.classList.add("open");
       reveal.setAttribute("aria-hidden", "false");
       btn.textContent = "Ocultar gráfico";
 
-      // cria o gráfico só na primeira abertura
       if(!chartInstance){
         buildChart();
       }else{
