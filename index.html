@@ -206,13 +206,14 @@
       text-transform: uppercase;
     }
 
-    .intro h1{
-      margin: 0 0 10px;
-      font-size: 40px;
-      line-height: 1.05;
-      font-weight: 800;
-      letter-spacing: -0.02em;
-    }
+.intro h1{
+  margin: 0 0 10px;
+  font-size: 40px;
+  line-height: 1.05;
+  font-weight: 740; /* antes 800 */
+  letter-spacing: -0.02em;
+}
+
 
     .intro-grid{
       display:grid;
@@ -257,7 +258,7 @@
       line-height: 1.55;
       text-align: justify;
       text-justify: inter-word;
-      hyphens: auto;
+      hyphens: none;
       max-width: 78ch;
       position:relative;
       z-index:1;
@@ -349,14 +350,14 @@
 
     /* Lead / corpo: mais contraste + justificado */
     .intro-body{
-      margin: 0 0 18px;
+      margin: 0 auto 18px;
       color: var(--body);
       font-size: 15px;
       line-height: 1.7;
       max-width: 92ch;
       text-align: justify;
       text-justify: inter-word;
-      hyphens: auto;
+      hyphens: none;
     }
     .intro-body p{ margin: 0 0 12px; }
     .intro-body p:last-child{ margin-bottom: 0; }
@@ -370,6 +371,16 @@
         white-space: normal;
       }
     }
+
+    @media (max-width: 700px){
+  .intro-body,
+  .intro-text,
+  .block p{
+    text-align: left;   /* evita espaçamentos feios */
+    text-justify: auto; /* neutraliza */
+  }
+}
+
 
     /* BLOCO 1 */
     .block{
@@ -416,7 +427,7 @@
       max-width: 80ch;
       text-align: justify;
       text-justify: inter-word;
-      hyphens: auto;
+      hyphens: none;
       position:relative;
       z-index:1;
     }
