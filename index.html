@@ -3,16 +3,269 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>DHO360</title>
+  <title>DHO360 - Scrollytelling (teste)</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
   <style>
-    body{font-family:system-ui,Segoe UI,Roboto,Arial;margin:40px;line-height:1.5}
-    .box{max-width:900px}
+    :root{
+      --bg:#0b0c0f;
+      --fg:#f2f2f2;
+      --muted:#b8b8b8;
+      --card:#12141a;
+      --line:#232632;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;background:var(--bg);color:var(--fg)}
+    a{color:var(--fg);text-decoration:none;opacity:.9}
+    a:hover{opacity:1}
+
+    .topbar{position:fixed;top:0;left:0;right:0;height:4px;z-index:99}
+    .progress{height:4px;width:0%;background:var(--fg);opacity:.85}
+
+    header{
+      position:sticky; top:0; z-index:98;
+      background:rgba(11,12,15,.75);
+      backdrop-filter: blur(10px);
+      border-bottom:1px solid var(--line);
+    }
+    .nav{
+      max-width:1200px;margin:0 auto;padding:12px 20px;
+      display:flex;gap:14px;align-items:center;justify-content:space-between;
+    }
+    .nav .left{display:flex;gap:14px;align-items:center}
+    .tag{font-size:12px;color:var(--muted);border:1px solid var(--line);padding:6px 10px;border-radius:999px}
+    .links{display:flex;gap:12px;flex-wrap:wrap}
+    .links a{font-size:13px;color:var(--muted)}
+    .links a:hover{color:var(--fg)}
+
+    .wrap{
+      display:grid;grid-template-columns: 1.05fr .95fr;gap:22px;
+      max-width:1200px;margin:0 auto;padding:22px 20px 60px;
+    }
+    @media (max-width: 900px){
+      .wrap{grid-template-columns:1fr}
+      .sticky{position:relative;top:auto}
+    }
+
+    .steps{display:flex;flex-direction:column;gap:18px}
+    .step{
+      background:rgba(255,255,255,.03);
+      border:1px solid var(--line);
+      border-radius:16px;
+      padding:18px;
+      min-height:55vh;
+      transition: outline .2s ease;
+    }
+    .kicker{font-size:12px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase}
+    .step h2{margin:10px 0 8px;font-size:28px;line-height:1.1}
+    .step p{margin:0;color:var(--muted);font-size:15px;line-height:1.55;max-width:70ch}
+    .active{outline:2px solid rgba(242,242,242,.22)}
+
+    .sticky{
+      position:sticky; top:86px; align-self:start;
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:16px;
+      padding:16px;
+    }
+    .sticky .title{margin:0 0 6px;font-size:14px;color:var(--muted);font-weight:600;letter-spacing:.02em}
+    .sticky .n{margin:0 0 14px;font-size:12px;color:var(--muted)}
+    .note{margin-top:10px;font-size:12px;color:var(--muted)}
+    .hint{margin-top:8px;font-size:12px;color:var(--muted)}
   </style>
 </head>
+
 <body>
-  <div class="box">
-    <h1>DHO360</h1>
-    <p>Se você está vendo esta página, o GitHub Pages está funcionando.</p>
-  </div>
+  <div class="topbar"><div class="progress" id="progress"></div></div>
+
+  <header>
+    <div class="nav">
+      <div class="left">
+        <strong>DHO360</strong>
+        <span class="tag">Scrollytelling - teste</span>
+      </div>
+      <nav class="links">
+        <a href="#b1">Bloco 1</a>
+        <a href="#b2">Bloco 2</a>
+        <a href="#b3">Bloco 3</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="steps" id="steps">
+      <article class="step" id="b1" data-step="1">
+        <div class="kicker">BLOCO 1</div>
+        <h2>O problema não é falta de esforço. É falta de coerência.</h2>
+        <p>Quando todo mundo sabe o que importa, o caos vira escolha. E escolha tem dono.</p>
+        <p class="hint">Role a página e veja o gráfico mudar a cada bloco.</p>
+      </article>
+
+      <article class="step" id="b2" data-step="2">
+        <div class="kicker">BLOCO 2</div>
+        <h2>Negócio quer crescimento. Mas entrega depende de confiança.</h2>
+        <p>Crescer não é errado. O erro é crescer sem pacto. Aqui, um recorte do que o público NEG marcou como prioridade.</p>
+      </article>
+
+      <article class="step" id="b3" data-step="3">
+        <div class="kicker">BLOCO 3</div>
+        <h2>A pessoa não pede demissão do trabalho. Pede demissão do combinado.</h2>
+        <p>Quando o que foi dito não vira prática, o contrato invisível quebra. Recorte do público PRO sobre fatores de saída (ranking).</p>
+      </article>
+    </section>
+
+    <aside class="sticky">
+      <p class="title" id="chartTitle">Bloco 1</p>
+      <p class="n" id="chartN">Piloto | n =</p>
+      <canvas id="chart" height="340"></canvas>
+      <div class="note">Leitura inicial de um piloto. Indica sinais, não verdades finais.</div>
+    </aside>
+  </main>
+
+  <script>
+    // Dados agregados reais do Excel v4 (somente para testar o mecanismo)
+    // Bloco 1: MQ0063 (n=29) top 6 por score (ranking invertido)
+    // Bloco 2: MQ0024 NEG (n=3) top 6 por % de seleção
+    // Bloco 3: MQ0084 PRO (n=12) top 6 por score (ranking invertido)
+
+    const stepData = {
+      1: {
+        title: "MQ0063 | Consenso do piloto (top 6)",
+        n: 29,
+        xMax: 7,
+        datasetLabel: "Score (ranking invertido)",
+        labels: [
+          "Corpo/Ambiente: verificar se tenho as condições e recursos adequados (saúde, local, tempo, ferramentas, rede de apoio), para agir.",
+          "Habilidades: adquirir mais conhecimento sobre mim, sobre o mundo e sobre como fazer coisas no geral, e aprender a aplicá-los na vida real.",
+          "Comportamento: descobrir como meus comportamentos me ajudam a realizar tarefas e ações melhores, com mais produtividade ou até mesmo realizar coisas novas.",
+          "Crenças e Valores: clarear minhas crenças e valores para agir de acordo com o que acredito e valorizo.",
+          "Visão/Missão: descobrir meu propósito, definir um futuro desejado, e viver tudo isso.",
+          "Legado: gerar impacto positivo e duradouro nos meios que faço parte, para as pessoas e sociedade."
+        ],
+        values: [5.28, 5.17, 4.69, 3.72, 3.17, 3.00]
+      },
+      2: {
+        title: "MQ0024 | Prioridades do NEG (top 6)",
+        n: 3,
+        xMax: 100,
+        datasetLabel: "% de respondentes (multiselect)",
+        labels: [
+          "Aquisição de clientes e novos canais",
+          "Crescimento de receita orgânica",
+          "Caixa e capital de giro",
+          "Lucratividade e eficiência operacional",
+          "Digitalização e automação de processos",
+          "Expansão geográfica ou novos mercados"
+        ],
+        values: [100.0, 100.0, 66.7, 66.7, 33.3, 33.3]
+      },
+      3: {
+        title: "MQ0084 | Fatores de saída (PRO, top 6)",
+        n: 12,
+        xMax: 7,
+        datasetLabel: "Score (ranking invertido)",
+        labels: [
+          "Pacote de Compensação (Salário, Bônus, PLR)",
+          "Segurança Psicológica (Burnout, Assédio Moral, Falta de Autonomia, Conflito de Valores, Insegurança de Estabilidade)",
+          "Home Office (Trabalhar em casa)",
+          "Relevância do Trabalho (o que eu faço precisa respeitar valores e propósito e contribuir para meu crescimento pessoal)",
+          "Benefícios (Vale-Refeição, Vale-Alimentação, Seguro Médico, Seguro Dental, Seguro de Vida)",
+          "Flexibilidade de Horário (Entrada e saída ajustáveis, Semana Compacta, Autogestão de horários)"
+        ],
+        values: [5.58, 4.75, 3.92, 3.83, 3.58, 3.50]
+      }
+    };
+
+    const ctx = document.getElementById("chart");
+    let chart;
+
+    function truncateLabel(s, max=48){
+      if(!s) return s;
+      return s.length > max ? (s.slice(0, max-3) + "...") : s;
+    }
+
+    function makeConfig(step){
+      const d = stepData[step];
+      return {
+        type: "bar",
+        data: {
+          labels: d.labels.map(x => truncateLabel(x)),
+          datasets: [{
+            label: d.datasetLabel,
+            data: d.values,
+            borderWidth: 1
+          }]
+        },
+        options: {
+          indexAxis: "y",
+          responsive: true,
+          maintainAspectRatio: false,
+          animation: { duration: 450 },
+          plugins: {
+            legend: { display: true },
+            tooltip: {
+              callbacks: {
+                title: (items) => {
+                  const idx = items[0].dataIndex;
+                  return d.labels[idx];
+                }
+              }
+            }
+          },
+          scales: {
+            x: {
+              suggestedMax: d.xMax,
+              ticks: { color: "#b8b8b8" },
+              grid: { color: "#232632" }
+            },
+            y: {
+              ticks: { color: "#b8b8b8" },
+              grid: { color: "#232632" }
+            }
+          }
+        }
+      };
+    }
+
+    function setStep(step){
+      const d = stepData[step];
+      document.getElementById("chartTitle").textContent = d.title;
+      document.getElementById("chartN").textContent = `Piloto | n = ${d.n}`;
+
+      const cfg = makeConfig(step);
+      if(!chart){
+        chart = new Chart(ctx, cfg);
+      }else{
+        chart.data.labels = cfg.data.labels;
+        chart.data.datasets[0].label = cfg.data.datasets[0].label;
+        chart.data.datasets[0].data = cfg.data.datasets[0].data;
+        chart.options.scales.x.suggestedMax = cfg.options.scales.x.suggestedMax;
+        chart.update();
+      }
+    }
+
+    // Observa os blocos e atualiza o gráfico
+    const steps = [...document.querySelectorAll(".step")];
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if(e.isIntersecting){
+          steps.forEach(s => s.classList.remove("active"));
+          e.target.classList.add("active");
+          setStep(Number(e.target.dataset.step));
+        }
+      });
+    }, { threshold: 0.6 });
+
+    steps.forEach(s => io.observe(s));
+    setStep(1);
+
+    // Barra de progresso
+    window.addEventListener("scroll", () => {
+      const h = document.documentElement;
+      const sc = (h.scrollTop) / (h.scrollHeight - h.clientHeight);
+      document.getElementById("progress").style.width = `${Math.max(0, Math.min(1, sc))*100}%`;
+    });
+  </script>
 </body>
 </html>
