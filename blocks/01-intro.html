@@ -1,19 +1,22 @@
 <!-- =========================
-     INTRODUCAO – AJUSTES 1, 2 e 3 (corrigido para imagem nao estourar)
+     INTRO - Split imagem + texto alinhados + cards + botoes
+     (versao isolada para evitar conflito de CSS antigo)
 ========================= -->
 
 <style>
   :root{
-    --introMediaH: clamp(280px, 34vw, 420px); /* controla altura e evita "estouro" */
+    --introMediaH: clamp(280px, 32vw, 420px);
+    --line: rgba(255,255,255,.10);
+    --text: rgba(244,244,248,.84);
   }
 
-  /* ===== SPLIT imagem + texto ===== */
+  /* ===== SPLIT ===== */
   .intro-split{
     display:grid;
-    grid-template-columns: 0.9fr 1.1fr;
+    grid-template-columns: 0.95fr 1.05fr;
     gap: 20px;
-    align-items: start;  /* evita esticar a altura */
-    margin-bottom: 18px;
+    align-items: start;
+    margin-bottom: 16px;
   }
 
   @media (max-width: 900px){
@@ -22,13 +25,14 @@
     }
   }
 
+  /* Card da imagem */
   .intro-media{
-    background: rgba(255,255,255,.025);
-    border: 1px solid rgba(255,255,255,.09);
+    height: var(--introMediaH);
     border-radius: 20px;
     overflow:hidden;
-    display:flex;
-    height: var(--introMediaH); /* altura controlada no container */
+    border: 1px solid var(--line);
+    background: rgba(255,255,255,.02);
+    box-shadow: 0 10px 30px rgba(0,0,0,.25);
   }
 
   .intro-media img{
@@ -38,38 +42,49 @@
     display:block;
   }
 
-  .intro-body{
+  /* Caixa do texto (altura igual a da imagem) */
+  .intro-copy{
+    height: var(--introMediaH);
+    border-radius: 20px;
+    border: 1px solid var(--line);
+    background: rgba(255,255,255,.02);
+    box-shadow: 0 10px 30px rgba(0,0,0,.20);
+    padding: 14px 16px;
+    overflow: hidden; /* garante que nao estoura */
     display:flex;
     flex-direction:column;
     justify-content:flex-start;
-    min-height: var(--introMediaH); /* garante alinhamento com a imagem */
-    color: rgba(244,244,248,.84);
+  }
+
+  .intro-copy p{
+    margin: 0 0 12px;
+    color: var(--text);
     font-size: 15px;
     line-height: 1.7;
     text-align: justify;
+    text-justify: inter-word;
+    hyphens: none;
   }
+  .intro-copy p:last-child{ margin-bottom: 0; }
 
+  /* No mobile, deixa a caixa crescer naturalmente */
   @media (max-width: 900px){
-    .intro-body{
-      min-height: auto; /* no mobile nao precisa forcar altura */
+    .intro-copy{
+      height: auto;
+      overflow: visible;
     }
   }
-
-  .intro-body p{ margin-bottom:12px; }
-  .intro-body p:last-child{ margin-bottom:0; }
 
   /* ===== CARDS LILAS (Ajuste 2) ===== */
   .intro-cards{
     display:grid;
     grid-template-columns: 1fr 1fr;
-    gap:16px;
+    gap: 16px;
     margin-bottom: 14px;
   }
 
   @media (max-width: 900px){
-    .intro-cards{
-      grid-template-columns: 1fr;
-    }
+    .intro-cards{ grid-template-columns: 1fr; }
   }
 
   .intro-card{
@@ -77,34 +92,33 @@
     border-radius: 16px;
     padding: 16px 18px;
     color: #fff;
-    box-shadow: 0 12px 36px rgba(0,0,0,.35);
+    border: 1px solid rgba(255,255,255,.12);
+    box-shadow: 0 12px 36px rgba(0,0,0,.30);
   }
 
   .intro-card h3{
-    margin:0 0 8px;
-    font-size: 14px;
+    margin: 0 0 8px;
+    font-size: 13px;
     font-weight: 760;
     text-transform: uppercase;
-    letter-spacing:.04em;
+    letter-spacing: .05em;
   }
 
   .intro-card p{
-    margin:0;
+    margin: 0;
     font-size: 14px;
     line-height: 1.6;
   }
 
-  /* ===== BOTOES ESCUROS (Ajuste 3) ===== */
+  /* ===== BOTOES (Ajuste 3) ===== */
   .intro-acc{
     display:grid;
     grid-template-columns: 1fr 1fr;
-    gap:14px;
+    gap: 14px;
   }
 
   @media (max-width: 900px){
-    .intro-acc{
-      grid-template-columns: 1fr;
-    }
+    .intro-acc{ grid-template-columns: 1fr; }
   }
 
   details.acc{
@@ -112,7 +126,7 @@
     overflow:hidden;
     border: 1px solid rgba(255,255,255,.10);
     background: rgba(255,255,255,.02);
-    box-shadow: 0 10px 28px rgba(0,0,0,.28);
+    box-shadow: 0 10px 28px rgba(0,0,0,.25);
   }
 
   summary.acc-btn{
@@ -121,27 +135,28 @@
     display:flex;
     justify-content:space-between;
     align-items:center;
-    background: linear-gradient(90deg, rgba(46,16,101,.98), rgba(76,29,149,.98), rgba(109,40,217,.98));
+    background: linear-gradient(90deg, rgba(35,12,80,.98), rgba(58,20,125,.98), rgba(85,33,170,.98));
     color:#fff;
-    font-weight:720;
+    font-weight:740;
     text-transform: uppercase;
     font-size: 13px;
-    letter-spacing:.03em;
+    letter-spacing:.04em;
   }
-
   summary.acc-btn::-webkit-details-marker{ display:none; }
 
   .acc-body{
     padding: 14px 16px;
     background: rgba(255,255,255,.02);
     color: rgba(244,244,248,.84);
-    font-size:14px;
-    line-height:1.6;
+    font-size: 14px;
+    line-height: 1.6;
     text-align: justify;
+    text-justify: inter-word;
+    hyphens: none;
   }
 </style>
 
-<!-- ===== HTML ===== -->
+<!-- ===== SPLIT (imagem + texto) ===== -->
 <div class="intro-split">
   <div class="intro-media">
     <img
@@ -151,7 +166,7 @@
     >
   </div>
 
-  <div class="intro-body">
+  <div class="intro-copy">
     <p>
       A pesquisa piloto DHO 360º - Futuro do Trabalho em Foco nasceu da observação das dores dos negócios e das pessoas nas relações de trabalho:
       quando o acordo entre negócio e trabalhador falha, os dois lados relatam sintomas parecidos.
@@ -164,7 +179,7 @@
   </div>
 </div>
 
-<!-- ===== CARDS ===== -->
+<!-- ===== CARDS (o que encontrara + como ler) ===== -->
 <div class="intro-cards">
   <div class="intro-card">
     <h3>O que você encontrará nesta página</h3>
@@ -183,7 +198,7 @@
   </div>
 </div>
 
-<!-- ===== BOTOES ===== -->
+<!-- ===== BOTOES (quem conduziu + limites) ===== -->
 <div class="intro-acc">
   <details class="acc">
     <summary class="acc-btn">Quem conduziu</summary>
