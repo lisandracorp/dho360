@@ -1,1 +1,691 @@
+<!-- =========================
+     SEÇÃO: METODOLOGIA
+     ========================= -->
+<section id="metodologia" class="sec-metodologia" aria-labelledby="metodologia-title">
+  <div class="met-wrap">
 
+    <header class="met-header">
+      <div>
+        <p class="met-kicker">DHO 360º | PILOTO</p>
+        <h2 id="metodologia-title" class="met-title">Metodologia do Piloto</h2>
+        <p class="met-subtitle">
+          Este piloto combinou survey e entrevistas para capturar sinais iniciais, padrões recorrentes e hipóteses de desenvolvimento a serem aprofundadas na próxima fase.
+        </p>
+      </div>
+    </header>
+
+    <!-- KPIs -->
+    <div class="met-kpis" role="list">
+      <article class="met-card" role="listitem">
+        <div class="met-card-top">
+          <p class="met-card-label">Respondentes totais</p>
+        </div>
+        <div class="met-big">
+          <span class="met-number">32</span>
+        </div>
+        <p class="met-small">
+          Survey: <strong>29</strong> <span class="met-dot">•</span> Entrevistas: <strong>3</strong>
+        </p>
+      </article>
+
+      <article class="met-card" role="listitem">
+        <div class="met-card-top">
+          <p class="met-card-label">Público</p>
+        </div>
+
+        <div class="met-mini-grid" aria-label="Distribuição por público">
+          <div class="met-mini-item">
+            <span class="met-pill">PRO</span>
+            <span class="met-mini-val">56%</span>
+          </div>
+          <div class="met-mini-item">
+            <span class="met-pill">LID</span>
+            <span class="met-mini-val">19%</span>
+          </div>
+          <div class="met-mini-item">
+            <span class="met-pill">NEG</span>
+            <span class="met-mini-val">19%</span>
+          </div>
+          <div class="met-mini-item">
+            <span class="met-pill">RH</span>
+            <span class="met-mini-val">6%</span>
+          </div>
+        </div>
+
+        <p class="met-small met-muted">
+          Base do piloto, para leitura exploratória.
+        </p>
+      </article>
+
+      <article class="met-card" role="listitem">
+        <div class="met-card-top">
+          <p class="met-card-label">Camadas metodológicas</p>
+        </div>
+
+        <ul class="met-bullets" aria-label="Componentes do piloto">
+          <li><strong>Survey</strong> para escala e priorização</li>
+          <li><strong>Entrevistas</strong> para contexto e nuances</li>
+          <li><strong>Checagens</strong> para refinar hipóteses</li>
+        </ul>
+
+        <p class="met-small met-muted">
+          Combinação pensada para velocidade com qualidade.
+        </p>
+      </article>
+    </div>
+
+    <!-- Grid: gráfico + gráfico -->
+    <div class="met-grid">
+      <!-- Composição da amostra -->
+      <article class="met-panel">
+        <div class="met-panel-head">
+          <h3 class="met-h3">Composição da amostra</h3>
+          <p class="met-p">Distribuição por público (PRO, LID, NEG, RH).</p>
+        </div>
+
+        <div class="met-chart-row">
+          <div class="met-chart">
+            <canvas id="chartAmostraDonut" aria-label="Gráfico de rosca da composição da amostra" role="img"></canvas>
+          </div>
+
+          <div class="met-legend" aria-label="Legenda do gráfico">
+            <div class="met-legend-item">
+              <span class="met-swatch sw-pro"></span>
+              <div>
+                <div class="met-legend-top">
+                  <span class="met-legend-name">PRO</span>
+                  <span class="met-legend-val">56%</span>
+                </div>
+                <p class="met-legend-desc">Profissionais</p>
+              </div>
+            </div>
+
+            <div class="met-legend-item">
+              <span class="met-swatch sw-lid"></span>
+              <div>
+                <div class="met-legend-top">
+                  <span class="met-legend-name">LID</span>
+                  <span class="met-legend-val">19%</span>
+                </div>
+                <p class="met-legend-desc">Lideranças</p>
+              </div>
+            </div>
+
+            <div class="met-legend-item">
+              <span class="met-swatch sw-neg"></span>
+              <div>
+                <div class="met-legend-top">
+                  <span class="met-legend-name">NEG</span>
+                  <span class="met-legend-val">19%</span>
+                </div>
+                <p class="met-legend-desc">Negócios</p>
+              </div>
+            </div>
+
+            <div class="met-legend-item">
+              <span class="met-swatch sw-rh"></span>
+              <div>
+                <div class="met-legend-top">
+                  <span class="met-legend-name">RH</span>
+                  <span class="met-legend-val">6%</span>
+                </div>
+                <p class="met-legend-desc">Recursos Humanos</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Contexto de trabalho -->
+      <article class="met-panel">
+        <div class="met-panel-head">
+          <h3 class="met-h3">Situação de trabalho dos respondentes</h3>
+          <p class="met-p">Contexto declarado no momento do piloto.</p>
+        </div>
+
+        <div class="met-chart">
+          <canvas id="chartTrabalhoBar" aria-label="Gráfico de barras horizontais da situação de trabalho" role="img"></canvas>
+        </div>
+
+        <p class="met-note">
+          Nota: o “n” pode variar por pergunta. Resultados devem ser aproveitados qualitativamente como bússola para identificar tensões e hipóteses, não como conclusão definitiva.
+        </p>
+      </article>
+    </div>
+
+    <!-- Acordeão: RH no LinkedIn -->
+    <div class="met-accordion">
+      <button class="met-acc-btn" type="button" aria-expanded="false" aria-controls="met-acc-panel" id="met-acc-trigger">
+        <span>Por que o RH participou pouco da pesquisa?</span>
+        <span class="met-acc-icon" aria-hidden="true">+</span>
+      </button>
+
+      <div class="met-acc-panel" id="met-acc-panel" role="region" aria-labelledby="met-acc-trigger" hidden>
+        <div class="met-acc-content">
+          <p class="met-p">
+            Em resposta à baixa adesão de RH no piloto, profissionais foram abordados no LinkedIn para entender limites de engajamento e coletar devolutivas qualitativas (de analistas a C-level).
+          </p>
+
+          <div class="met-acc-kpis" role="list" aria-label="Amostragem complementar de RH no LinkedIn">
+            <div class="met-acc-kpi" role="listitem">
+              <span class="met-acc-kpi-label">Abordagens no LinkedIn</span>
+              <span class="met-acc-kpi-val">100</span>
+            </div>
+            <div class="met-acc-kpi" role="listitem">
+              <span class="met-acc-kpi-label">Devolutivas recebidas</span>
+              <span class="met-acc-kpi-val">9</span>
+            </div>
+          </div>
+
+          <p class="met-small met-muted">
+            Objetivo: entender barreiras de engajamento e ajustar a estratégia de amostragem na próxima fase.
+          </p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- Chart.js (remova se já existir no seu projeto) -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
+<style>
+  /* =========================
+     METODOLOGIA (SCOPED)
+     ========================= */
+  .sec-metodologia{
+    --bg0: #23142f;
+    --bg1: #2a1637;
+    --card: rgba(255,255,255,0.06);
+    --card2: rgba(255,255,255,0.08);
+    --stroke: rgba(255,255,255,0.10);
+    --text: rgba(255,255,255,0.92);
+    --muted: rgba(255,255,255,0.72);
+    --muted2: rgba(255,255,255,0.60);
+
+    --pro: #c08ad6;
+    --lid: #8d5aa6;
+    --neg: #5b2e73;
+    --rh:  #e2c6ec;
+
+    --radius: 18px;
+    --shadow: 0 14px 40px rgba(0,0,0,0.25);
+
+    padding: 28px 18px;
+  }
+
+  .sec-metodologia .met-wrap{
+    max-width: 1080px;
+    margin: 0 auto;
+    background: linear-gradient(180deg, var(--bg1), var(--bg0));
+    border: 1px solid var(--stroke);
+    border-radius: 22px;
+    box-shadow: var(--shadow);
+    padding: 26px 22px 22px;
+    color: var(--text);
+  }
+
+  .sec-metodologia .met-header{
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+    margin-bottom: 18px;
+  }
+
+  .sec-metodologia .met-kicker{
+    margin: 0 0 6px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-size: 12px;
+    color: var(--muted2);
+  }
+
+  .sec-metodologia .met-title{
+    margin: 0;
+    font-size: 34px;
+    line-height: 1.12;
+    letter-spacing: -0.02em;
+  }
+
+  .sec-metodologia .met-subtitle{
+    margin: 10px 0 0;
+    max-width: 72ch;
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.55;
+  }
+
+  /* KPIs */
+  .sec-metodologia .met-kpis{
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 12px;
+    margin-top: 16px;
+    margin-bottom: 16px;
+  }
+
+  .sec-metodologia .met-card{
+    border: 1px solid var(--stroke);
+    border-radius: var(--radius);
+    background: var(--card);
+    padding: 14px 14px 12px;
+    min-height: 120px;
+  }
+
+  .sec-metodologia .met-card:nth-child(1){ grid-column: span 4; }
+  .sec-metodologia .met-card:nth-child(2){ grid-column: span 4; }
+  .sec-metodologia .met-card:nth-child(3){ grid-column: span 4; }
+
+  .sec-metodologia .met-card-top{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 8px;
+  }
+
+  .sec-metodologia .met-card-label{
+    margin: 0;
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  .sec-metodologia .met-big{
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    margin-top: 8px;
+  }
+
+  .sec-metodologia .met-number{
+    font-size: 44px;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+  }
+
+  .sec-metodologia .met-small{
+    margin: 8px 0 0;
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.45;
+  }
+
+  .sec-metodologia .met-dot{
+    margin: 0 6px;
+    color: var(--muted2);
+  }
+
+  .sec-metodologia .met-muted{ color: var(--muted2); }
+
+  .sec-metodologia .met-mini-grid{
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 10px;
+    margin-top: 10px;
+  }
+
+  .sec-metodologia .met-mini-item{
+    border: 1px solid var(--stroke);
+    background: rgba(0,0,0,0.10);
+    border-radius: 14px;
+    padding: 10px 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+  }
+
+  .sec-metodologia .met-pill{
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text);
+    background: rgba(255,255,255,0.10);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 999px;
+    padding: 5px 8px;
+  }
+
+  .sec-metodologia .met-mini-val{
+    font-weight: 750;
+    font-size: 14px;
+  }
+
+  .sec-metodologia .met-bullets{
+    margin: 10px 0 0;
+    padding-left: 18px;
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  .sec-metodologia .met-bullets li{ margin: 6px 0; }
+
+  /* Grid principal */
+  .sec-metodologia .met-grid{
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 12px;
+    margin-top: 12px;
+  }
+
+  .sec-metodologia .met-panel{
+    grid-column: span 6;
+    border: 1px solid var(--stroke);
+    border-radius: var(--radius);
+    background: var(--card2);
+    padding: 16px 14px 14px;
+  }
+
+  .sec-metodologia .met-panel-head{ margin-bottom: 10px; }
+  .sec-metodologia .met-h3{
+    margin: 0;
+    font-size: 16px;
+    letter-spacing: -0.01em;
+  }
+
+  .sec-metodologia .met-p{
+    margin: 6px 0 0;
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  .sec-metodologia .met-chart-row{
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 14px;
+    align-items: center;
+    margin-top: 12px;
+  }
+
+  .sec-metodologia .met-chart{
+    width: 100%;
+    height: 260px;
+    position: relative;
+  }
+
+  .sec-metodologia .met-chart canvas{
+    width: 100% !important;
+    height: 100% !important;
+  }
+
+  /* Legenda ao lado do donut */
+  .sec-metodologia .met-legend{
+    display: grid;
+    gap: 10px;
+  }
+
+  .sec-metodologia .met-legend-item{
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 10px 10px;
+    border-radius: 14px;
+    border: 1px solid rgba(255,255,255,0.10);
+    background: rgba(0,0,0,0.10);
+  }
+
+  .sec-metodologia .met-swatch{
+    width: 12px;
+    height: 12px;
+    border-radius: 4px;
+    margin-top: 4px;
+    flex: 0 0 12px;
+  }
+
+  .sec-metodologia .sw-pro{ background: var(--pro); }
+  .sec-metodologia .sw-lid{ background: var(--lid); }
+  .sec-metodologia .sw-neg{ background: var(--neg); }
+  .sec-metodologia .sw-rh{  background: var(--rh); }
+
+  .sec-metodologia .met-legend-top{
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    align-items: baseline;
+  }
+
+  .sec-metodologia .met-legend-name{
+    font-weight: 700;
+    font-size: 13px;
+  }
+
+  .sec-metodologia .met-legend-val{
+    font-weight: 800;
+    font-size: 13px;
+    color: var(--text);
+  }
+
+  .sec-metodologia .met-legend-desc{
+    margin: 4px 0 0;
+    font-size: 12px;
+    color: var(--muted2);
+  }
+
+  .sec-metodologia .met-note{
+    margin: 10px 0 0;
+    font-size: 12px;
+    color: var(--muted2);
+    line-height: 1.5;
+  }
+
+  /* Acordeão */
+  .sec-metodologia .met-accordion{
+    margin-top: 12px;
+    border: 1px solid var(--stroke);
+    border-radius: var(--radius);
+    background: rgba(255,255,255,0.06);
+    overflow: hidden;
+  }
+
+  .sec-metodologia .met-acc-btn{
+    width: 100%;
+    appearance: none;
+    border: 0;
+    background: transparent;
+    color: var(--text);
+    padding: 14px 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 14px;
+  }
+
+  .sec-metodologia .met-acc-btn:hover{
+    background: rgba(255,255,255,0.06);
+  }
+
+  .sec-metodologia .met-acc-icon{
+    width: 30px;
+    height: 30px;
+    border-radius: 999px;
+    border: 1px solid rgba(255,255,255,0.14);
+    background: rgba(0,0,0,0.12);
+    display: grid;
+    place-items: center;
+    font-size: 18px;
+    line-height: 1;
+  }
+
+  .sec-metodologia .met-acc-panel{
+    border-top: 1px solid rgba(255,255,255,0.10);
+  }
+
+  .sec-metodologia .met-acc-content{
+    padding: 14px 14px 14px;
+  }
+
+  .sec-metodologia .met-acc-kpis{
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    margin-top: 10px;
+  }
+
+  .sec-metodologia .met-acc-kpi{
+    border: 1px solid rgba(255,255,255,0.10);
+    border-radius: 14px;
+    background: rgba(0,0,0,0.10);
+    padding: 10px 10px;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 10px;
+  }
+
+  .sec-metodologia .met-acc-kpi-label{
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  .sec-metodologia .met-acc-kpi-val{
+    font-size: 18px;
+    font-weight: 850;
+    letter-spacing: -0.02em;
+  }
+
+  /* Responsivo */
+  @media (max-width: 980px){
+    .sec-metodologia .met-card:nth-child(1),
+    .sec-metodologia .met-card:nth-child(2),
+    .sec-metodologia .met-card:nth-child(3){
+      grid-column: span 12;
+    }
+
+    .sec-metodologia .met-panel{ grid-column: span 12; }
+
+    .sec-metodologia .met-chart-row{
+      grid-template-columns: 1fr;
+    }
+
+    .sec-metodologia .met-chart{
+      height: 240px;
+    }
+
+    .sec-metodologia .met-mini-grid{
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+</style>
+
+<script>
+  (function(){
+    // Accordion behavior
+    const btn = document.getElementById('met-acc-trigger');
+    const panel = document.getElementById('met-acc-panel');
+    if (btn && panel){
+      btn.addEventListener('click', () => {
+        const expanded = btn.getAttribute('aria-expanded') === 'true';
+        btn.setAttribute('aria-expanded', String(!expanded));
+        panel.hidden = expanded;
+
+        const icon = btn.querySelector('.met-acc-icon');
+        if (icon) icon.textContent = expanded ? '+' : '−';
+      });
+    }
+
+    // Guard: Chart.js available
+    if (!window.Chart) return;
+
+    // Theme helpers
+    const getVar = (name) => getComputedStyle(document.querySelector('.sec-metodologia')).getPropertyValue(name).trim();
+
+    const colors = {
+      pro: getVar('--pro') || '#c08ad6',
+      lid: getVar('--lid') || '#8d5aa6',
+      neg: getVar('--neg') || '#5b2e73',
+      rh:  getVar('--rh')  || '#e2c6ec',
+      text: getVar('--text') || 'rgba(255,255,255,0.92)',
+      muted: getVar('--muted2') || 'rgba(255,255,255,0.60)',
+      grid: 'rgba(255,255,255,0.10)'
+    };
+
+    // Donut: composição da amostra
+    const donutEl = document.getElementById('chartAmostraDonut');
+    if (donutEl){
+      new Chart(donutEl, {
+        type: 'doughnut',
+        data: {
+          labels: ['PRO', 'LID', 'NEG', 'RH'],
+          datasets: [{
+            data: [56, 19, 19, 6],
+            backgroundColor: [colors.pro, colors.lid, colors.neg, colors.rh],
+            borderWidth: 0,
+            hoverOffset: 6,
+            cutout: '62%'
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              callbacks: {
+                label: (ctx) => `${ctx.label}: ${ctx.parsed}%`
+              }
+            }
+          }
+        }
+      });
+    }
+
+    // Barras horizontais: situação de trabalho
+    const barEl = document.getElementById('chartTrabalhoBar');
+    if (barEl){
+      new Chart(barEl, {
+        type: 'bar',
+        data: {
+          labels: [
+            'Empregado regime CLT',
+            'Empregado regime PJ',
+            'Implantando meu próprio negócio',
+            'Autônomo',
+            'Em busca de recolocação',
+            'Desempregado'
+          ],
+          datasets: [{
+            label: 'Percentual',
+            data: [41, 19, 16, 9, 9, 6],
+            borderWidth: 0,
+            borderRadius: 10,
+            backgroundColor: colors.pro
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          indexAxis: 'y',
+          scales: {
+            x: {
+              beginAtZero: true,
+              max: 50,
+              grid: { color: colors.grid },
+              ticks: {
+                color: colors.muted,
+                callback: (v) => v + '%'
+              }
+            },
+            y: {
+              grid: { display: false },
+              ticks: { color: colors.muted }
+            }
+          },
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              callbacks: {
+                label: (ctx) => `${ctx.parsed.x}%`
+              }
+            }
+          }
+        }
+      });
+    }
+  })();
+</script>
