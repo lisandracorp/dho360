@@ -1,55 +1,31 @@
-<!-- =========================
-     SEÇÃO: METODOLOGIA (DHO 360)
-     ========================= -->
-<section id="metodologia" class="dho-met" aria-labelledby="dho-met-title">
+<section class="dho-met" aria-labelledby="dho-met-title">
   <div class="dho-met-wrap">
 
     <header class="dho-met-header">
-      <div>
-        <p class="dho-met-kicker">DHO 360º | PILOTO</p>
-        <h2 id="dho-met-title" class="dho-met-title">Metodologia do Piloto</h2>
-        <p class="dho-met-subtitle">
-          Este piloto combinou survey e entrevistas para capturar sinais iniciais, padrões recorrentes e hipóteses de desenvolvimento a serem aprofundadas na próxima fase.
-        </p>
-      </div>
+      <p class="dho-met-kicker">DHO 360º | PILOTO</p>
+      <h2 id="dho-met-title" class="dho-met-title">Metodologia do Piloto</h2>
+      <p class="dho-met-subtitle">
+        Este piloto combinou survey e entrevistas para capturar sinais iniciais, padrões recorrentes e hipóteses de desenvolvimento a serem aprofundadas na próxima fase.
+      </p>
     </header>
 
-    <!-- KPIs -->
     <div class="dho-met-kpis" role="list">
       <article class="dho-met-card" role="listitem">
-        <div class="dho-met-card-top">
-          <p class="dho-met-card-label">Respondentes totais</p>
-        </div>
-        <div class="dho-met-big">
-          <span class="dho-met-number">32</span>
-        </div>
+        <p class="dho-met-card-label">Respondentes totais</p>
+        <div class="dho-met-number">32</div>
         <p class="dho-met-small">
           Survey: <strong>29</strong> <span class="dho-met-dot">•</span> Entrevistas: <strong>3</strong>
         </p>
       </article>
 
       <article class="dho-met-card" role="listitem">
-        <div class="dho-met-card-top">
-          <p class="dho-met-card-label">Público</p>
-        </div>
+        <p class="dho-met-card-label">Público</p>
 
         <div class="dho-met-mini-grid" aria-label="Distribuição por público">
-          <div class="dho-met-mini-item">
-            <span class="dho-met-pill">PRO</span>
-            <span class="dho-met-mini-val">56%</span>
-          </div>
-          <div class="dho-met-mini-item">
-            <span class="dho-met-pill">LID</span>
-            <span class="dho-met-mini-val">19%</span>
-          </div>
-          <div class="dho-met-mini-item">
-            <span class="dho-met-pill">NEG</span>
-            <span class="dho-met-mini-val">19%</span>
-          </div>
-          <div class="dho-met-mini-item">
-            <span class="dho-met-pill">RH</span>
-            <span class="dho-met-mini-val">6%</span>
-          </div>
+          <div class="dho-met-mini-item"><span class="dho-met-pill">PRO</span><span class="dho-met-mini-val">56%</span></div>
+          <div class="dho-met-mini-item"><span class="dho-met-pill">LID</span><span class="dho-met-mini-val">19%</span></div>
+          <div class="dho-met-mini-item"><span class="dho-met-pill">NEG</span><span class="dho-met-mini-val">19%</span></div>
+          <div class="dho-met-mini-item"><span class="dho-met-pill">RH</span><span class="dho-met-mini-val">6%</span></div>
         </div>
 
         <p class="dho-met-small dho-met-muted">
@@ -58,25 +34,19 @@
       </article>
 
       <article class="dho-met-card" role="listitem">
-        <div class="dho-met-card-top">
-          <p class="dho-met-card-label">Camadas metodológicas</p>
-        </div>
-
+        <p class="dho-met-card-label">Camadas metodológicas</p>
         <ul class="dho-met-bullets" aria-label="Componentes do piloto">
           <li><strong>Survey</strong> para escala e priorização</li>
           <li><strong>Entrevistas</strong> para contexto e nuances</li>
           <li><strong>Checagens</strong> para refinar hipóteses</li>
         </ul>
-
         <p class="dho-met-small dho-met-muted">
           Combinação pensada para velocidade com qualidade.
         </p>
       </article>
     </div>
 
-    <!-- Grid: gráfico + gráfico -->
     <div class="dho-met-grid">
-      <!-- Composição da amostra -->
       <article class="dho-met-panel">
         <div class="dho-met-panel-head">
           <h3 class="dho-met-h3">Composição da amostra</h3>
@@ -85,58 +55,18 @@
 
         <div class="dho-met-chart-row">
           <div class="dho-met-chart dho-met-chart-donut">
-            <canvas id="dhoChartAmostraDonut" aria-label="Gráfico de rosca da composição da amostra" role="img"></canvas>
+            <canvas id="dhoChartAmostraDonut" role="img" aria-label="Gráfico donut: composição da amostra"></canvas>
           </div>
 
           <div class="dho-met-legend" aria-label="Legenda do gráfico">
-            <div class="dho-met-legend-item">
-              <span class="dho-met-swatch dho-met-sw-pro"></span>
-              <div>
-                <div class="dho-met-legend-top">
-                  <span class="dho-met-legend-name">PRO</span>
-                  <span class="dho-met-legend-val">56%</span>
-                </div>
-                <p class="dho-met-legend-desc">Profissionais</p>
-              </div>
-            </div>
-
-            <div class="dho-met-legend-item">
-              <span class="dho-met-swatch dho-met-sw-lid"></span>
-              <div>
-                <div class="dho-met-legend-top">
-                  <span class="dho-met-legend-name">LID</span>
-                  <span class="dho-met-legend-val">19%</span>
-                </div>
-                <p class="dho-met-legend-desc">Lideranças</p>
-              </div>
-            </div>
-
-            <div class="dho-met-legend-item">
-              <span class="dho-met-swatch dho-met-sw-neg"></span>
-              <div>
-                <div class="dho-met-legend-top">
-                  <span class="dho-met-legend-name">NEG</span>
-                  <span class="dho-met-legend-val">19%</span>
-                </div>
-                <p class="dho-met-legend-desc">Negócios</p>
-              </div>
-            </div>
-
-            <div class="dho-met-legend-item">
-              <span class="dho-met-swatch dho-met-sw-rh"></span>
-              <div>
-                <div class="dho-met-legend-top">
-                  <span class="dho-met-legend-name">RH</span>
-                  <span class="dho-met-legend-val">6%</span>
-                </div>
-                <p class="dho-met-legend-desc">Recursos Humanos</p>
-              </div>
-            </div>
+            <div class="dho-met-legend-item"><span class="dho-met-swatch dho-met-sw-pro"></span><div><div class="dho-met-legend-top"><span class="dho-met-legend-name">PRO</span><span class="dho-met-legend-val">56%</span></div><p class="dho-met-legend-desc">Profissionais</p></div></div>
+            <div class="dho-met-legend-item"><span class="dho-met-swatch dho-met-sw-lid"></span><div><div class="dho-met-legend-top"><span class="dho-met-legend-name">LID</span><span class="dho-met-legend-val">19%</span></div><p class="dho-met-legend-desc">Lideranças</p></div></div>
+            <div class="dho-met-legend-item"><span class="dho-met-swatch dho-met-sw-neg"></span><div><div class="dho-met-legend-top"><span class="dho-met-legend-name">NEG</span><span class="dho-met-legend-val">19%</span></div><p class="dho-met-legend-desc">Negócios</p></div></div>
+            <div class="dho-met-legend-item"><span class="dho-met-swatch dho-met-sw-rh"></span><div><div class="dho-met-legend-top"><span class="dho-met-legend-name">RH</span><span class="dho-met-legend-val">6%</span></div><p class="dho-met-legend-desc">Recursos Humanos</p></div></div>
           </div>
         </div>
       </article>
 
-      <!-- Contexto de trabalho -->
       <article class="dho-met-panel">
         <div class="dho-met-panel-head">
           <h3 class="dho-met-h3">Situação de trabalho dos respondentes</h3>
@@ -144,7 +74,7 @@
         </div>
 
         <div class="dho-met-chart dho-met-chart-bar">
-          <canvas id="dhoChartTrabalhoBar" aria-label="Gráfico de barras horizontais da situação de trabalho" role="img"></canvas>
+          <canvas id="dhoChartTrabalhoBar" role="img" aria-label="Gráfico barras: situação de trabalho"></canvas>
         </div>
 
         <p class="dho-met-note">
@@ -153,47 +83,38 @@
       </article>
     </div>
 
-    <!-- Acordeão: RH no LinkedIn -->
-    <div class="dho-met-accordion">
-      <button class="dho-met-acc-btn" type="button" aria-expanded="false" aria-controls="dho-met-acc-panel" id="dho-met-acc-trigger">
+    <details class="dho-met-details">
+      <summary class="dho-met-summary">
         <span>Por que o RH participou pouco da pesquisa?</span>
-        <span class="dho-met-acc-icon" aria-hidden="true">+</span>
-      </button>
+        <span class="dho-met-summary-icon" aria-hidden="true"></span>
+      </summary>
 
-      <div class="dho-met-acc-panel" id="dho-met-acc-panel" role="region" aria-labelledby="dho-met-acc-trigger" hidden>
-        <div class="dho-met-acc-content">
-          <p class="dho-met-p">
-            Em resposta à baixa adesão de RH no piloto, profissionais foram abordados no LinkedIn para entender limites de engajamento e coletar devolutivas qualitativas (de analistas a C-level).
-          </p>
+      <div class="dho-met-details-body">
+        <p class="dho-met-p">
+          Em resposta à baixa adesão de RH no piloto, profissionais foram abordados no LinkedIn para entender limites de engajamento e coletar devolutivas qualitativas (de analistas a C-level).
+        </p>
 
-          <div class="dho-met-acc-kpis" role="list" aria-label="Amostragem complementar de RH no LinkedIn">
-            <div class="dho-met-acc-kpi" role="listitem">
-              <span class="dho-met-acc-kpi-label">Abordagens no LinkedIn</span>
-              <span class="dho-met-acc-kpi-val">100</span>
-            </div>
-            <div class="dho-met-acc-kpi" role="listitem">
-              <span class="dho-met-acc-kpi-label">Devolutivas recebidas</span>
-              <span class="dho-met-acc-kpi-val">9</span>
-            </div>
+        <div class="dho-met-details-kpis" role="list" aria-label="Amostragem complementar de RH no LinkedIn">
+          <div class="dho-met-details-kpi" role="listitem">
+            <span class="dho-met-details-kpi-label">Abordagens no LinkedIn</span>
+            <span class="dho-met-details-kpi-val">100</span>
           </div>
-
-          <p class="dho-met-small dho-met-muted">
-            Objetivo: entender barreiras de engajamento e ajustar a estratégia de amostragem na próxima fase.
-          </p>
+          <div class="dho-met-details-kpi" role="listitem">
+            <span class="dho-met-details-kpi-label">Devolutivas recebidas</span>
+            <span class="dho-met-details-kpi-val">9</span>
+          </div>
         </div>
+
+        <p class="dho-met-small dho-met-muted">
+          Objetivo: entender barreiras de engajamento e ajustar a estratégia de amostragem na próxima fase.
+        </p>
       </div>
-    </div>
+    </details>
 
   </div>
 </section>
 
-<!-- Chart.js (remova só se você já carrega Chart.js no projeto) -->
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
-
 <style>
-  /* =========================
-     METODOLOGIA (SCOPED)
-     ========================= */
   .dho-met{
     --bg0: #23142f;
     --bg1: #2a1637;
@@ -212,35 +133,23 @@
     --radius: 18px;
     --shadow: 0 14px 40px rgba(0,0,0,0.25);
 
-    padding: 28px 18px;
+    padding: 24px 16px;
   }
 
+  .dho-met *{ box-sizing: border-box; }
+
   .dho-met .dho-met-wrap{
-    max-width: 980px; /* largura reduzida */
+    max-width: 980px;
     margin: 0 auto;
     background: linear-gradient(180deg, var(--bg1), var(--bg0));
     border: 1px solid var(--stroke);
     border-radius: 22px;
     box-shadow: var(--shadow);
-    padding: 26px 22px 22px;
+    padding: 24px 20px 18px;
     color: var(--text);
   }
 
-  /* Blindagem extra contra CSS global */
-  .dho-met .dho-met-header,
-  .dho-met .dho-met-header *{
-    background: transparent !important;
-    filter: none !important;
-    text-shadow: none !important;
-  }
-
-  .dho-met .dho-met-header{
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 10px;
-    margin-bottom: 18px;
-  }
-
+  .dho-met .dho-met-header{ margin-bottom: 14px; }
   .dho-met .dho-met-kicker{
     margin: 0 0 6px;
     letter-spacing: 0.12em;
@@ -248,7 +157,6 @@
     font-size: 12px;
     color: var(--muted2);
   }
-
   .dho-met .dho-met-title{
     margin: 0;
     font-size: 34px;
@@ -256,7 +164,6 @@
     letter-spacing: -0.02em;
     color: var(--text);
   }
-
   .dho-met .dho-met-subtitle{
     margin: 10px 0 0;
     max-width: 72ch;
@@ -265,66 +172,27 @@
     line-height: 1.55;
   }
 
-  /* KPIs */
   .dho-met .dho-met-kpis{
     display: grid;
     grid-template-columns: repeat(12, 1fr);
     gap: 12px;
-    margin-top: 16px;
-    margin-bottom: 16px;
+    margin: 14px 0 12px;
   }
-
   .dho-met .dho-met-card{
     border: 1px solid var(--stroke);
     border-radius: var(--radius);
     background: var(--card);
     padding: 14px 14px 12px;
-    min-height: 120px;
+    min-height: 118px;
   }
-
   .dho-met .dho-met-card:nth-child(1){ grid-column: span 4; }
   .dho-met .dho-met-card:nth-child(2){ grid-column: span 4; }
   .dho-met .dho-met-card:nth-child(3){ grid-column: span 4; }
 
-  .dho-met .dho-met-card-top{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 10px;
-    margin-bottom: 8px;
-  }
-
-  .dho-met .dho-met-card-label{
-    margin: 0;
-    font-size: 13px;
-    color: var(--muted);
-  }
-
-  .dho-met .dho-met-big{
-    display: flex;
-    align-items: baseline;
-    gap: 10px;
-    margin-top: 8px;
-  }
-
-  .dho-met .dho-met-number{
-    font-size: 44px;
-    font-weight: 800;
-    letter-spacing: -0.03em;
-  }
-
-  .dho-met .dho-met-small{
-    margin: 8px 0 0;
-    font-size: 13px;
-    color: var(--muted);
-    line-height: 1.45;
-  }
-
-  .dho-met .dho-met-dot{
-    margin: 0 6px;
-    color: var(--muted2);
-  }
-
+  .dho-met .dho-met-card-label{ margin: 0; font-size: 13px; color: var(--muted); }
+  .dho-met .dho-met-number{ margin-top: 10px; font-size: 44px; font-weight: 800; letter-spacing: -0.03em; }
+  .dho-met .dho-met-small{ margin: 8px 0 0; font-size: 13px; color: var(--muted); line-height: 1.45; }
+  .dho-met .dho-met-dot{ margin: 0 6px; color: var(--muted2); }
   .dho-met .dho-met-muted{ color: var(--muted2); }
 
   .dho-met .dho-met-mini-grid{
@@ -333,7 +201,6 @@
     gap: 10px;
     margin-top: 10px;
   }
-
   .dho-met .dho-met-mini-item{
     border: 1px solid var(--stroke);
     background: rgba(0,0,0,0.10);
@@ -344,7 +211,6 @@
     justify-content: space-between;
     gap: 10px;
   }
-
   .dho-met .dho-met-pill{
     font-size: 11px;
     letter-spacing: 0.08em;
@@ -355,11 +221,7 @@
     border-radius: 999px;
     padding: 5px 8px;
   }
-
-  .dho-met .dho-met-mini-val{
-    font-weight: 750;
-    font-size: 14px;
-  }
+  .dho-met .dho-met-mini-val{ font-weight: 750; font-size: 14px; }
 
   .dho-met .dho-met-bullets{
     margin: 10px 0 0;
@@ -368,17 +230,14 @@
     font-size: 13px;
     line-height: 1.5;
   }
-
   .dho-met .dho-met-bullets li{ margin: 6px 0; }
 
-  /* Grid principal */
   .dho-met .dho-met-grid{
     display: grid;
     grid-template-columns: repeat(12, 1fr);
     gap: 12px;
-    margin-top: 12px;
+    margin-top: 10px;
   }
-
   .dho-met .dho-met-panel{
     grid-column: span 6;
     border: 1px solid var(--stroke);
@@ -386,21 +245,9 @@
     background: var(--card2);
     padding: 16px 14px 14px;
   }
-
   .dho-met .dho-met-panel-head{ margin-bottom: 10px; }
-
-  .dho-met .dho-met-h3{
-    margin: 0;
-    font-size: 16px;
-    letter-spacing: -0.01em;
-  }
-
-  .dho-met .dho-met-p{
-    margin: 6px 0 0;
-    font-size: 13px;
-    color: var(--muted);
-    line-height: 1.5;
-  }
+  .dho-met .dho-met-h3{ margin: 0; font-size: 16px; letter-spacing: -0.01em; }
+  .dho-met .dho-met-p{ margin: 6px 0 0; font-size: 13px; color: var(--muted); line-height: 1.5; }
 
   .dho-met .dho-met-chart-row{
     display: grid;
@@ -410,26 +257,17 @@
     margin-top: 12px;
   }
 
-  /* Alturas explícitas para evitar canvas colapsar */
-  .dho-met .dho-met-chart{
-    width: 100%;
-    position: relative;
-  }
+  .dho-met .dho-met-chart{ width: 100%; position: relative; }
   .dho-met .dho-met-chart-donut{ height: 220px; }
   .dho-met .dho-met-chart-bar{ height: 300px; }
 
-  .dho-met .dho-met-chart canvas{
+  .dho-met canvas{
     display: block;
     width: 100% !important;
     height: 100% !important;
   }
 
-  /* Legenda ao lado do donut */
-  .dho-met .dho-met-legend{
-    display: grid;
-    gap: 10px;
-  }
-
+  .dho-met .dho-met-legend{ display: grid; gap: 10px; }
   .dho-met .dho-met-legend-item{
     display: flex;
     align-items: flex-start;
@@ -439,109 +277,76 @@
     border: 1px solid rgba(255,255,255,0.10);
     background: rgba(0,0,0,0.10);
   }
-
-  .dho-met .dho-met-swatch{
-    width: 12px;
-    height: 12px;
-    border-radius: 4px;
-    margin-top: 4px;
-    flex: 0 0 12px;
-  }
-
+  .dho-met .dho-met-swatch{ width: 12px; height: 12px; border-radius: 4px; margin-top: 4px; flex: 0 0 12px; }
   .dho-met .dho-met-sw-pro{ background: var(--pro); }
   .dho-met .dho-met-sw-lid{ background: var(--lid); }
   .dho-met .dho-met-sw-neg{ background: var(--neg); }
   .dho-met .dho-met-sw-rh{  background: var(--rh); }
 
-  .dho-met .dho-met-legend-top{
-    display: flex;
-    justify-content: space-between;
-    gap: 12px;
-    align-items: baseline;
-  }
+  .dho-met .dho-met-legend-top{ display: flex; justify-content: space-between; gap: 12px; align-items: baseline; }
+  .dho-met .dho-met-legend-name{ font-weight: 700; font-size: 13px; }
+  .dho-met .dho-met-legend-val{ font-weight: 800; font-size: 13px; color: var(--text); }
+  .dho-met .dho-met-legend-desc{ margin: 4px 0 0; font-size: 12px; color: var(--muted2); }
 
-  .dho-met .dho-met-legend-name{
-    font-weight: 700;
-    font-size: 13px;
-  }
+  .dho-met .dho-met-note{ margin: 10px 0 0; font-size: 12px; color: var(--muted2); line-height: 1.5; }
 
-  .dho-met .dho-met-legend-val{
-    font-weight: 800;
-    font-size: 13px;
-    color: var(--text);
-  }
-
-  .dho-met .dho-met-legend-desc{
-    margin: 4px 0 0;
-    font-size: 12px;
-    color: var(--muted2);
-  }
-
-  .dho-met .dho-met-note{
-    margin: 10px 0 0;
-    font-size: 12px;
-    color: var(--muted2);
-    line-height: 1.5;
-  }
-
-  /* Acordeão */
-  .dho-met .dho-met-accordion{
+  .dho-met .dho-met-details{
     margin-top: 12px;
     border: 1px solid var(--stroke);
     border-radius: var(--radius);
     background: rgba(255,255,255,0.06);
     overflow: hidden;
   }
-
-  .dho-met .dho-met-acc-btn{
-    width: 100%;
-    appearance: none;
-    border: 0;
-    background: transparent;
-    color: var(--text);
+  .dho-met .dho-met-summary{
+    list-style: none;
+    cursor: pointer;
     padding: 14px 14px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 12px;
-    cursor: pointer;
     font-weight: 700;
     font-size: 14px;
+    user-select: none;
   }
+  .dho-met .dho-met-summary::-webkit-details-marker{ display: none; }
 
-  .dho-met .dho-met-acc-btn:hover{
-    background: rgba(255,255,255,0.06);
-  }
-
-  .dho-met .dho-met-acc-icon{
+  .dho-met .dho-met-summary-icon{
     width: 30px;
     height: 30px;
     border-radius: 999px;
     border: 1px solid rgba(255,255,255,0.14);
     background: rgba(0,0,0,0.12);
-    display: grid;
-    place-items: center;
-    font-size: 18px;
-    line-height: 1;
-    user-select: none;
+    position: relative;
+    flex: 0 0 30px;
   }
+  .dho-met .dho-met-summary-icon::before,
+  .dho-met .dho-met-summary-icon::after{
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 12px;
+    height: 2px;
+    background: rgba(255,255,255,0.85);
+    transform: translate(-50%, -50%);
+  }
+  .dho-met .dho-met-summary-icon::after{
+    transform: translate(-50%, -50%) rotate(90deg);
+  }
+  .dho-met details[open] .dho-met-summary-icon::after{ opacity: 0; }
 
-  .dho-met .dho-met-acc-panel{
+  .dho-met .dho-met-details-body{
     border-top: 1px solid rgba(255,255,255,0.10);
-  }
-
-  .dho-met .dho-met-acc-content{
     padding: 14px 14px 14px;
   }
-
-  .dho-met .dho-met-acc-kpis{
+  .dho-met .dho-met-details-kpis{
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 10px;
     margin-top: 10px;
   }
-
-  .dho-met .dho-met-acc-kpi{
+  .dho-met .dho-met-details-kpi{
     border: 1px solid rgba(255,255,255,0.10);
     border-radius: 14px;
     background: rgba(0,0,0,0.10);
@@ -551,160 +356,119 @@
     justify-content: space-between;
     gap: 10px;
   }
+  .dho-met .dho-met-details-kpi-label{ font-size: 12px; color: var(--muted); }
+  .dho-met .dho-met-details-kpi-val{ font-size: 18px; font-weight: 850; letter-spacing: -0.02em; }
 
-  .dho-met .dho-met-acc-kpi-label{
-    font-size: 12px;
-    color: var(--muted);
-  }
-
-  .dho-met .dho-met-acc-kpi-val{
-    font-size: 18px;
-    font-weight: 850;
-    letter-spacing: -0.02em;
-  }
-
-  /* Responsivo */
   @media (max-width: 980px){
     .dho-met .dho-met-card:nth-child(1),
     .dho-met .dho-met-card:nth-child(2),
-    .dho-met .dho-met-card:nth-child(3){
-      grid-column: span 12;
-    }
-
+    .dho-met .dho-met-card:nth-child(3){ grid-column: span 12; }
     .dho-met .dho-met-panel{ grid-column: span 12; }
-
-    .dho-met .dho-met-chart-row{
-      grid-template-columns: 1fr;
-    }
-
-    .dho-met .dho-met-chart-donut{ height: 220px; }
+    .dho-met .dho-met-chart-row{ grid-template-columns: 1fr; }
     .dho-met .dho-met-chart-bar{ height: 280px; }
-
-    .dho-met .dho-met-mini-grid{
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
+    .dho-met .dho-met-mini-grid{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
   }
 </style>
 
 <script>
-  (function(){
-    function initMetodologia(){
-      // Accordion
-      const btn = document.getElementById('dho-met-acc-trigger');
-      const panel = document.getElementById('dho-met-acc-panel');
+  // Convencao do loader: initBloco_metodologia
+  window.initBloco_metodologia = async function(){
+    const root = document.querySelector("#metodologia .dho-met");
+    if(!root) return;
 
-      if (btn && panel){
-        btn.addEventListener('click', () => {
-          const expanded = btn.getAttribute('aria-expanded') === 'true';
-          btn.setAttribute('aria-expanded', String(!expanded));
-          panel.hidden = expanded;
+    const donutEl = root.querySelector("#dhoChartAmostraDonut");
+    const barEl = root.querySelector("#dhoChartTrabalhoBar");
+    if(!donutEl || !barEl) return;
 
-          const icon = btn.querySelector('.dho-met-acc-icon');
-          if (icon) icon.textContent = expanded ? '+' : '−';
-        });
-      }
-
-      // Charts
-      if (!window.Chart) {
-        // Se Chart.js ainda não carregou por algum motivo, tenta de novo em seguida
-        setTimeout(initMetodologia, 150);
-        return;
-      }
-
-      const root = document.querySelector('.dho-met');
-      const getVar = (name) => getComputedStyle(root).getPropertyValue(name).trim();
-
-      const colors = {
-        pro: getVar('--pro') || '#c08ad6',
-        lid: getVar('--lid') || '#8d5aa6',
-        neg: getVar('--neg') || '#5b2e73',
-        rh:  getVar('--rh')  || '#e2c6ec',
-        muted: getVar('--muted2') || 'rgba(255,255,255,0.60)',
-        grid: 'rgba(255,255,255,0.10)'
-      };
-
-      // Donut
-      const donutEl = document.getElementById('dhoChartAmostraDonut');
-      if (donutEl){
-        new Chart(donutEl, {
-          type: 'doughnut',
-          data: {
-            labels: ['PRO', 'LID', 'NEG', 'RH'],
-            datasets: [{
-              data: [56, 19, 19, 6],
-              backgroundColor: [colors.pro, colors.lid, colors.neg, colors.rh],
-              borderWidth: 0,
-              hoverOffset: 6,
-              cutout: '62%'
-            }]
-          },
-          options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-              legend: { display: false },
-              tooltip: {
-                callbacks: { label: (ctx) => `${ctx.label}: ${ctx.parsed}%` }
-              }
-            }
-          }
-        });
-      }
-
-      // Bar horizontal
-      const barEl = document.getElementById('dhoChartTrabalhoBar');
-      if (barEl){
-        new Chart(barEl, {
-          type: 'bar',
-          data: {
-            labels: [
-              'Empregado regime CLT',
-              'Empregado regime PJ',
-              'Implantando meu próprio negócio',
-              'Autônomo',
-              'Em busca de recolocação',
-              'Desempregado'
-            ],
-            datasets: [{
-              label: 'Percentual',
-              data: [41, 19, 16, 9, 9, 6],
-              borderWidth: 0,
-              borderRadius: 10,
-              backgroundColor: colors.pro
-            }]
-          },
-          options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            indexAxis: 'y',
-            scales: {
-              x: {
-                beginAtZero: true,
-                max: 50,
-                grid: { color: colors.grid },
-                ticks: {
-                  color: colors.muted,
-                  callback: (v) => v + '%'
-                }
-              },
-              y: {
-                grid: { display: false },
-                ticks: { color: colors.muted }
-              }
-            },
-            plugins: {
-              legend: { display: false },
-              tooltip: { callbacks: { label: (ctx) => `${ctx.parsed.x}%` } }
-            }
-          }
-        });
-      }
+    // Carrega Chart.js sob demanda (uma vez)
+    if(!window.Chart){
+      await new Promise((resolve, reject) => {
+        const s = document.createElement("script");
+        s.src = "https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js";
+        s.onload = resolve;
+        s.onerror = reject;
+        document.head.appendChild(s);
+      });
     }
 
-    if (document.readyState === 'loading'){
-      document.addEventListener('DOMContentLoaded', initMetodologia);
-    } else {
-      initMetodologia();
-    }
-  })();
+    // Evita duplicar gráficos se recarregar o bloco
+    if(donutEl.dataset.rendered === "1" || barEl.dataset.rendered === "1") return;
+
+    const css = getComputedStyle(root);
+    const colors = {
+      pro: css.getPropertyValue("--pro").trim() || "#c08ad6",
+      lid: css.getPropertyValue("--lid").trim() || "#8d5aa6",
+      neg: css.getPropertyValue("--neg").trim() || "#5b2e73",
+      rh:  css.getPropertyValue("--rh").trim()  || "#e2c6ec",
+      muted: css.getPropertyValue("--muted2").trim() || "rgba(255,255,255,0.60)",
+      grid: "rgba(255,255,255,0.10)"
+    };
+
+    new Chart(donutEl, {
+      type: "doughnut",
+      data: {
+        labels: ["PRO", "LID", "NEG", "RH"],
+        datasets: [{
+          data: [56, 19, 19, 6],
+          backgroundColor: [colors.pro, colors.lid, colors.neg, colors.rh],
+          borderWidth: 0,
+          hoverOffset: 6,
+          cutout: "62%"
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: { callbacks: { label: (ctx) => ctx.label + ": " + ctx.parsed + "%" } }
+        }
+      }
+    });
+
+    new Chart(barEl, {
+      type: "bar",
+      data: {
+        labels: [
+          "Empregado regime CLT",
+          "Empregado regime PJ",
+          "Implantando meu próprio negócio",
+          "Autônomo",
+          "Em busca de recolocação",
+          "Desempregado"
+        ],
+        datasets: [{
+          label: "Percentual",
+          data: [41, 19, 16, 9, 9, 6],
+          borderWidth: 0,
+          borderRadius: 10,
+          backgroundColor: colors.pro
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        indexAxis: "y",
+        scales: {
+          x: {
+            beginAtZero: true,
+            max: 50,
+            grid: { color: colors.grid },
+            ticks: { color: colors.muted, callback: (v) => v + "%" }
+          },
+          y: {
+            grid: { display: false },
+            ticks: { color: colors.muted }
+          }
+        },
+        plugins: {
+          legend: { display: false },
+          tooltip: { callbacks: { label: (ctx) => ctx.parsed.x + "%" } }
+        }
+      }
+    });
+
+    donutEl.dataset.rendered = "1";
+    barEl.dataset.rendered = "1";
+  };
 </script>
