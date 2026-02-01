@@ -184,6 +184,7 @@
       <div class="navBottom">
         <nav class="linksBottom">
           <a href="#intro">Introdução</a>
+          <a href="#metodologia">Metodologia</a>
           <a href="#amostra">Amostra</a>
           <a href="#b1">Bloco 1</a>
         </nav>
@@ -191,22 +192,30 @@
     </div>
   </header>
 
-  <!-- Placeholder para injetar o arquivo 01-intro.html -->
+  <!-- Bloco 01 - Introdução -->
   <div id="intro"></div>
 
+  <!-- Bloco 02 - Metodologia -->
+  <div id="metodologia"></div>
+
   <script>
-    (async function carregarIntro(){
-      const alvo = document.getElementById("intro");
+    async function carregarBloco(id, arquivo){
+      const alvo = document.getElementById(id);
       try{
-        const resp = await fetch("blocks/01-intro.html", { cache: "no-store" });
-        if(!resp.ok) throw new Error("Falha ao carregar 01-intro.html: " + resp.status);
-        const html = await resp.text();
-        alvo.innerHTML = html;
+        const resp = await fetch(arquivo, { cache: "no-store" });
+        if(!resp.ok) throw new Error("Falha ao carregar " + arquivo + ": " + resp.status);
+        alvo.innerHTML = await resp.text();
       }catch(err){
         console.error(err);
-        alvo.innerHTML = '<section style="max-width:1100px;margin:24px auto;padding:0 20px;color:var(--muted)">Não foi possível carregar o arquivo 01-intro.html.</section>';
+        alvo.innerHTML =
+          '<section style="max-width:1100px;margin:24px auto;padding:0 20px;color:var(--muted)">' +
+          'Não foi possível carregar o arquivo ' + arquivo +
+          '</section>';
       }
-    })();
+    }
+
+    carregarBloco("intro", "blocks/01-intro.html");
+    carregarBloco("metodologia", "blocks/02-metodologia.html");
   </script>
 
 </body>
