@@ -1,5 +1,6 @@
 <!-- =========================
-     INTRODUCAO (HTML + CSS + JS) - Carrossel dos cards (arrastavel)
+     INTRODUCAO (HTML + CSS) - Acordeoes clicaveis (abre e fecha)
+     Substitui o carrossel por botoes expansivos.
 ========================= -->
 
 <style>
@@ -176,154 +177,103 @@
   .intro-body p:last-child{ margin-bottom: 0; }
 
   /* =========================
-     CARROSSEL (substitui intro-grid)
+     ACORDEOES (botoes + conteudo)
   ========================= */
 
-  .carouselWrap{
-    position: relative;
+  .intro-acc{
     margin-top: 10px;
-    padding: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px 16px;
   }
 
-  /* seta fora do container, como no print */
-  .carArrow{
-    position:absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    border: 0;
-    background: transparent;
-    color: var(--fg);
-    font-size: 42px;
-    line-height: 1;
-    padding: 10px 14px;
+  @media (max-width: 900px){
+    .intro-acc{ grid-template-columns: 1fr; }
+  }
+
+  details.acc{
+    border-radius: 16px;
+    border: 1px solid rgba(255,255,255,.10);
+    background: rgba(255,255,255,.02);
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,.25);
+  }
+
+  /* Botao (summary) com degrade roxo */
+  summary.acc-btn{
+    list-style: none;
     cursor: pointer;
-    opacity: .75;
+    padding: 14px 14px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap: 12px;
+
+    color: #fff;
+    font-weight: 780;
+    letter-spacing: -0.01em;
+    font-size: 14px;
+    text-transform: uppercase;
+
+    background: linear-gradient(90deg, rgba(124,58,237,.86), rgba(168,85,247,.86));
+    border-bottom: 1px solid rgba(0,0,0,.25);
+  }
+
+  /* remove triangulo padrao */
+  summary.acc-btn::-webkit-details-marker{ display:none; }
+
+  /* seta */
+  .acc-arrow{
+    width: 28px;
+    height: 28px;
+    border-radius: 999px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex: 0 0 auto;
+    background: rgba(0,0,0,.22);
+    border: 1px solid rgba(255,255,255,.18);
+    color: rgba(255,255,255,.92);
+    font-size: 16px;
+    line-height: 1;
+    transition: transform .18s ease, background .18s ease;
     user-select:none;
   }
-  .carArrow:hover{ opacity: 1; }
-  .carArrow:active{ transform: translateY(-50%) scale(.98); }
 
-  .carArrow.left{ left: -62px; }
-  .carArrow.right{ right: -62px; }
-
-  @media (max-width: 980px){
-    .carArrow.left{ left: -10px; }
-    .carArrow.right{ right: -10px; }
-  }
-  @media (max-width: 700px){
-    .carArrow{ display:none; } /* no mobile, swipe resolve */
+  details.acc[open] .acc-arrow{
+    transform: rotate(90deg);
+    background: rgba(0,0,0,.30);
   }
 
-  /* container arredondado grande */
-  .carouselShell{
-    border-radius: 28px;
-    border: 1px solid rgba(233,213,255,.22);
-    box-shadow: 0 20px 70px rgba(0,0,0,.55);
-    background: radial-gradient(900px 500px at 15% 10%, rgba(168,85,247,.10), transparent 55%),
-                rgba(255,255,255,.02);
-    overflow: hidden;
-  }
-
-  /* topo com titulo */
-  .carTop{
-    padding: 16px 18px 10px;
-    text-align: center;
-    font-weight: 720;
-    font-size: 22px;
-    letter-spacing: -0.01em;
-  }
-
-  .carTop small{
-    display:block;
-    margin-top: 6px;
-    font-size: 12px;
-    color: var(--muted);
-    font-weight: 600;
-    letter-spacing: .06em;
-  }
-
-  /* viewport */
-  .carViewport{
-    position: relative;
-    overflow: hidden;
-    touch-action: pan-y; /* permite scroll vertical e swipe horizontal */
-    user-select: none;
-  }
-
-  .carTrack{
-    display: flex;
-    gap: 0;
-    will-change: transform;
-    transform: translate3d(0,0,0);
-  }
-
-  .carSlide{
-    flex: 0 0 100%;
-    padding: 10px 22px 22px;
-    box-sizing: border-box;
-  }
-
-  .carText{
-    margin: 0 auto;
-    max-width: 86ch;
+  .acc-body{
+    padding: 14px 14px 16px;
     color: var(--body);
-    font-size: 15px;
-    line-height: 1.7;
+    font-size: 14px;
+    line-height: 1.65;
     text-align: justify;
     text-justify: inter-word;
     hyphens: none;
+    position: relative;
   }
 
-  /* rodape estilo faixa roxa com proximo titulo */
-  .carBottom{
-    padding: 14px 18px;
-    background: linear-gradient(90deg, rgba(124,58,237,.82), rgba(168,85,247,.82));
-    color: #fff;
-    text-align: center;
-    font-weight: 740;
-    font-size: 20px;
-    letter-spacing: -0.01em;
+  .acc-body::before{
+    content:"";
+    position:absolute;
+    inset: -2px;
+    background: radial-gradient(420px 160px at 12% 0%, rgba(168,85,247,.12), transparent 58%);
+    pointer-events:none;
   }
 
-  .carBottom span{
-    opacity: .95;
-  }
-
-  .carBottom .hint{
-    font-weight: 650;
-    opacity: .9;
-  }
-
-  /* pontinhos opcionais */
-  .carDots{
-    display:flex;
-    justify-content:center;
-    gap:8px;
-    padding: 10px 0 0;
-    opacity: .8;
-  }
-  .carDot{
-    width: 6px;
-    height: 6px;
-    border-radius: 999px;
-    border: 1px solid rgba(255,255,255,.35);
-    background: transparent;
-  }
-  .carDot.active{
-    background: rgba(233,213,255,.85);
-    border-color: rgba(233,213,255,.85);
-  }
-
-  @media (max-width: 700px){
-    .carTop{ font-size: 18px; }
-    .carBottom{ font-size: 18px; }
-    .carSlide{ padding: 6px 16px 18px; }
+  .acc-body p{
+    margin: 0;
+    position: relative;
+    z-index: 1;
   }
 
   /* Mobile: mantém sem hifenizacao e justificado */
   @media (max-width: 700px){
     .intro-body,
-    .carText{
+    .acc-body{
       text-align: justify;
       text-justify: inter-word;
       hyphens: none;
@@ -331,6 +281,9 @@
   }
 </style>
 
+<!-- =========================
+     INTRO (HTML)
+========================= -->
 <section class="intro" id="intro">
   <div class="intro-inner">
     <p class="intro-kicker">DHO 360º - Futuro do Trabalho em Foco</p>
@@ -379,166 +332,61 @@
     </div>
 
     <!-- =========================
-         CARROSSEL - substitui o intro-grid
+         ACORDEOES (4 topicos)
     ========================= -->
-    <div class="carouselWrap" id="introCarousel">
-      <button class="carArrow left" type="button" aria-label="Voltar">&#60;</button>
-
-      <div class="carouselShell">
-        <div class="carTop">
-          <div id="carTitle">O que você encontrará nesta página?</div>
-          <small id="carCounter">1 de 4</small>
+    <div class="intro-acc">
+      <details class="acc">
+        <summary class="acc-btn">
+          <span>O que você encontrará nesta página</span>
+          <span class="acc-arrow">›</span>
+        </summary>
+        <div class="acc-body">
+          <p>
+            Serão apresentados os resultados da pesquisa a partir de recortes objetivos das tensões mais citadas pelos respondentes. O foco será despertar
+            reflexões a respeito dos pontos que unem trabalhadores e negócios, e o que os levam para lados extremos das situações, e ainda dar pistas de qual é
+            o papel da liderança e do RH para construir essa coerência no dia a dia.
+          </p>
         </div>
+      </details>
 
-        <div class="carViewport">
-          <div class="carTrack" id="carTrack">
-            <article class="carSlide" data-title="O que você encontrará nesta página?" data-next="Como ler?">
-              <p class="carText">
-                Serão apresentados os resultados da pesquisa a partir de recortes objetivos das tensões mais citadas pelos respondentes. O foco será despertar
-                reflexões a respeito dos pontos que unem trabalhadores e negócios, e o que os levam para lados extremos das situações, e ainda dar pistas de qual é
-                o papel da liderança e do RH para construir essa coerência no dia a dia.
-              </p>
-            </article>
-
-            <article class="carSlide" data-title="Como ler?" data-next="Quem conduziu?">
-              <p class="carText">
-                Ao rolar a página você encontrará as 10 tensões mais citadas pelos respondentes com um enunciado curto, um gráfico e uma pergunta reflexiva.
-                Em alguns, você poderá abrir detalhes, filtrar ou interagir para explorar conforme a sua necessidade.
-              </p>
-            </article>
-
-            <article class="carSlide" data-title="Quem conduziu?" data-next="Limites do piloto">
-              <p class="carText">
-                Lisandra Lencina, Administradora de Negócios com ênfase em Desenvolvimento Humano, que de forma independente construiu um piloto para transformar
-                percepções recorrentes em dados organizados e abrir conversa com quem decide e com quem faz a o negócio girar.
-              </p>
-            </article>
-
-            <article class="carSlide" data-title="Limites do piloto" data-next="O que você encontrará nesta página?">
-              <p class="carText">
-                O “n” (Número de Respondentes) varia por pergunta. Por isso os resultados devem ser aproveitados de forma mais qualitativa e utilizados como bússola
-                para identificar tensões e hipóteses e não como conclusão definitiva. A Onda 2 abre em julho de 2026 e vai ampliar a base.
-              </p>
-            </article>
-          </div>
+      <details class="acc">
+        <summary class="acc-btn">
+          <span>Como ler</span>
+          <span class="acc-arrow">›</span>
+        </summary>
+        <div class="acc-body">
+          <p>
+            Ao rolar a página você encontrará as 10 tensões mais citadas pelos respondentes com um enunciado curto, um gráfico e uma pergunta reflexiva.
+            Em alguns, você poderá abrir detalhes, filtrar ou interagir para explorar conforme a sua necessidade.
+          </p>
         </div>
+      </details>
 
-        <div class="carBottom">
-          <span id="carNext">Como ler?</span>
-          <span class="hint"> &nbsp;&gt;&gt;&gt; arraste para o lado</span>
+      <details class="acc">
+        <summary class="acc-btn">
+          <span>Quem conduziu</span>
+          <span class="acc-arrow">›</span>
+        </summary>
+        <div class="acc-body">
+          <p>
+            Lisandra Lencina, Administradora de Negócios com ênfase em Desenvolvimento Humano, que de forma independente construiu um piloto para transformar
+            percepções recorrentes em dados organizados e abrir conversa com quem decide e com quem faz a o negócio girar.
+          </p>
         </div>
-      </div>
+      </details>
 
-      <div class="carDots" id="carDots" aria-hidden="true"></div>
-
-      <button class="carArrow right" type="button" aria-label="Avançar">&#62;</button>
+      <details class="acc">
+        <summary class="acc-btn">
+          <span>Limites do piloto</span>
+          <span class="acc-arrow">›</span>
+        </summary>
+        <div class="acc-body">
+          <p>
+            O “n” (Número de Respondentes) varia por pergunta. Por isso os resultados devem ser aproveitados de forma mais qualitativa e utilizados como bússola
+            para identificar tensões e hipóteses e não como conclusão definitiva. A Onda 2 abre em julho de 2026 e vai ampliar a base.
+          </p>
+        </div>
+      </details>
     </div>
   </div>
 </section>
-
-<script>
-  (function(){
-    const root = document.getElementById("introCarousel");
-    if(!root) return;
-
-    const track = root.querySelector("#carTrack");
-    const slides = Array.from(track.querySelectorAll(".carSlide"));
-
-    const titleEl = root.querySelector("#carTitle");
-    const nextEl = root.querySelector("#carNext");
-    const counterEl = root.querySelector("#carCounter");
-
-    const btnPrev = root.querySelector(".carArrow.left");
-    const btnNext = root.querySelector(".carArrow.right");
-
-    const dotsWrap = root.querySelector("#carDots");
-
-    let index = 0;
-    let startX = 0;
-    let currentX = 0;
-    let isDragging = false;
-    let baseTranslate = 0;
-
-    function slideWidth(){
-      return root.querySelector(".carViewport").clientWidth;
-    }
-
-    function clamp(n, min, max){
-      return Math.max(min, Math.min(max, n));
-    }
-
-    function setUI(i){
-      const cur = slides[i];
-      const nextIdx = (i + 1) % slides.length;
-
-      titleEl.textContent = cur.getAttribute("data-title") || "";
-      nextEl.textContent = slides[nextIdx].getAttribute("data-title") || (cur.getAttribute("data-next") || "");
-      counterEl.textContent = (i + 1) + " de " + slides.length;
-
-      const dots = Array.from(dotsWrap.querySelectorAll(".carDot"));
-      dots.forEach((d, di) => d.classList.toggle("active", di === i));
-    }
-
-    function goTo(i, animate=true){
-      index = clamp(i, 0, slides.length - 1);
-      const x = -index * slideWidth();
-      baseTranslate = x;
-
-      track.style.transition = animate ? "transform 280ms ease" : "none";
-      track.style.transform = "translate3d(" + x + "px,0,0)";
-
-      setUI(index);
-    }
-
-    function buildDots(){
-      dotsWrap.innerHTML = "";
-      for(let i=0;i<slides.length;i++){
-        const d = document.createElement("div");
-        d.className = "carDot" + (i===0 ? " active" : "");
-        dotsWrap.appendChild(d);
-      }
-    }
-
-    function onPointerDown(e){
-      isDragging = true;
-      track.style.transition = "none";
-      startX = e.clientX;
-      currentX = startX;
-      track.setPointerCapture(e.pointerId);
-    }
-
-    function onPointerMove(e){
-      if(!isDragging) return;
-      currentX = e.clientX;
-      const dx = currentX - startX;
-      const x = baseTranslate + dx;
-      track.style.transform = "translate3d(" + x + "px,0,0)";
-    }
-
-    function onPointerUp(e){
-      if(!isDragging) return;
-      isDragging = false;
-
-      const dx = currentX - startX;
-      const threshold = Math.min(120, slideWidth() * 0.18);
-
-      if(dx < -threshold) goTo(index + 1, true);
-      else if(dx > threshold) goTo(index - 1, true);
-      else goTo(index, true);
-    }
-
-    btnPrev.addEventListener("click", () => goTo(index - 1, true));
-    btnNext.addEventListener("click", () => goTo(index + 1, true));
-
-    track.addEventListener("pointerdown", onPointerDown);
-    track.addEventListener("pointermove", onPointerMove);
-    track.addEventListener("pointerup", onPointerUp);
-    track.addEventListener("pointercancel", onPointerUp);
-    track.addEventListener("pointerleave", (e) => { if(isDragging) onPointerUp(e); });
-
-    window.addEventListener("resize", () => goTo(index, false));
-
-    buildDots();
-    goTo(0, false);
-  })();
-</script>
