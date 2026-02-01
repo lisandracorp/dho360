@@ -41,37 +41,3 @@
 
 
 
-
-<!-- =========================
-     CHAMAR O BLOCO 1 DE OUTRA PASTA
-     Exemplo de estrutura:
-       /index.html
-       /blocks/bloco1.html
-       /blocks/bloco1.css
-       /blocks/bloco1.js
-========================= -->
-
-<!-- 1) No <main> do index.html, crie um "slot" para o Bloco 1 -->
-<div id="slot-b1"></div>
-
-<!-- 2) No final do body (antes do </body>), carregue CSS e JS do bloco -->
-<link rel="stylesheet" href="blocks/bloco1.css">
-<script src="blocks/bloco1.js" defer></script>
-
-<!-- 3) Ainda no final do body, faça o include do HTML via fetch -->
-<script>
-  async function includeBlock(slotId, url){
-    const slot = document.getElementById(slotId);
-    if(!slot) return;
-
-    const res = await fetch(url, { cache: "no-store" });
-    if(!res.ok){
-      slot.innerHTML = `<div class="block"><p style="color:var(--muted)">Erro ao carregar ${url}</p></div>`;
-      return;
-    }
-    slot.innerHTML = await res.text();
-  }
-
-  // carrega o HTML do Bloco 1
-  includeBlock("slot-b1", "blocks/bloco1.html");
-</script>
