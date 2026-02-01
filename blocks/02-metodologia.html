@@ -2,8 +2,10 @@
   <div class="dho-met-wrap">
 
     <header class="dho-met-header">
-      <p class="dho-met-kicker">DHO 360º | PILOTO</p>
+      <!-- (1) Removido: "DHO 360º | PILOTO" -->
       <h2 id="dho-met-title" class="dho-met-title">Metodologia do Piloto</h2>
+
+      <!-- (3) Agora ocupa 100% da largura do quadro -->
       <p class="dho-met-subtitle">
         Este piloto combinou survey e entrevistas para capturar sinais iniciais, padrões recorrentes e hipóteses de desenvolvimento a serem aprofundadas na próxima fase.
       </p>
@@ -21,11 +23,39 @@
       <article class="dho-met-card" role="listitem">
         <p class="dho-met-card-label">Público</p>
 
-        <div class="dho-met-mini-grid" aria-label="Distribuição por público">
-          <div class="dho-met-mini-item"><span class="dho-met-pill">PRO</span><span class="dho-met-mini-val">56%</span></div>
-          <div class="dho-met-mini-item"><span class="dho-met-pill">LID</span><span class="dho-met-mini-val">19%</span></div>
-          <div class="dho-met-mini-item"><span class="dho-met-pill">NEG</span><span class="dho-met-mini-val">19%</span></div>
-          <div class="dho-met-mini-item"><span class="dho-met-pill">RH</span><span class="dho-met-mini-val">6%</span></div>
+        <!-- (4) Novo layout sem sobreposição: nome completo + abreviação + % -->
+        <div class="dho-met-publico" aria-label="Distribuição por público">
+          <div class="dho-met-publico-item dho-met-pro">
+            <div class="dho-met-publico-left">
+              <span class="dho-met-publico-name">Profissionais no geral</span>
+              <span class="dho-met-publico-tag">(PRO)</span>
+            </div>
+            <span class="dho-met-publico-val">56%</span>
+          </div>
+
+          <div class="dho-met-publico-item dho-met-lid">
+            <div class="dho-met-publico-left">
+              <span class="dho-met-publico-name">Lideranças</span>
+              <span class="dho-met-publico-tag">(LID)</span>
+            </div>
+            <span class="dho-met-publico-val">19%</span>
+          </div>
+
+          <div class="dho-met-publico-item dho-met-neg">
+            <div class="dho-met-publico-left">
+              <span class="dho-met-publico-name">Negócios</span>
+              <span class="dho-met-publico-tag">(NEG)</span>
+            </div>
+            <span class="dho-met-publico-val">19%</span>
+          </div>
+
+          <div class="dho-met-publico-item dho-met-rh">
+            <div class="dho-met-publico-left">
+              <span class="dho-met-publico-name">Recursos Humanos</span>
+              <span class="dho-met-publico-tag">(RH)</span>
+            </div>
+            <span class="dho-met-publico-val">6%</span>
+          </div>
         </div>
 
         <p class="dho-met-small dho-met-muted">
@@ -118,6 +148,11 @@
   .dho-met{
     --bg0: #23142f;
     --bg1: #2a1637;
+
+    /* (2) Ajuste do “quadro”: mais alinhado ao fundo, menos escuro */
+    --wrapTop: rgba(255,255,255,0.06);
+    --wrapBot: rgba(255,255,255,0.04);
+
     --card: rgba(255,255,255,0.06);
     --card2: rgba(255,255,255,0.08);
     --stroke: rgba(255,255,255,0.10);
@@ -141,22 +176,19 @@
   .dho-met .dho-met-wrap{
     max-width: 980px;
     margin: 0 auto;
-    background: linear-gradient(180deg, var(--bg1), var(--bg0));
+
+    /* (2) antes era um gradiente mais fechado; agora é um “glass” suave */
+    background: linear-gradient(180deg, var(--wrapTop), var(--wrapBot));
     border: 1px solid var(--stroke);
     border-radius: 22px;
     box-shadow: var(--shadow);
     padding: 24px 20px 18px;
     color: var(--text);
+    backdrop-filter: blur(6px);
   }
 
   .dho-met .dho-met-header{ margin-bottom: 14px; }
-  .dho-met .dho-met-kicker{
-    margin: 0 0 6px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    font-size: 12px;
-    color: var(--muted2);
-  }
+
   .dho-met .dho-met-title{
     margin: 0;
     font-size: 34px;
@@ -164,9 +196,12 @@
     letter-spacing: -0.02em;
     color: var(--text);
   }
+
+  /* (3) remove limite, ocupa toda extensão */
   .dho-met .dho-met-subtitle{
     margin: 10px 0 0;
-    max-width: 72ch;
+    max-width: none;
+    width: 100%;
     color: var(--muted);
     font-size: 14px;
     line-height: 1.55;
@@ -178,6 +213,7 @@
     gap: 12px;
     margin: 14px 0 12px;
   }
+
   .dho-met .dho-met-card{
     border: 1px solid var(--stroke);
     border-radius: var(--radius);
@@ -195,33 +231,58 @@
   .dho-met .dho-met-dot{ margin: 0 6px; color: var(--muted2); }
   .dho-met .dho-met-muted{ color: var(--muted2); }
 
-  .dho-met .dho-met-mini-grid{
+  /* (4) Público - novo layout */
+  .dho-met .dho-met-publico{
     display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 10px;
     margin-top: 10px;
   }
-  .dho-met .dho-met-mini-item{
-    border: 1px solid var(--stroke);
-    background: rgba(0,0,0,0.10);
-    border-radius: 14px;
-    padding: 10px 10px;
+
+  .dho-met .dho-met-publico-item{
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 10px;
+    gap: 12px;
+    padding: 10px 10px;
+    border-radius: 14px;
+    border: 1px solid rgba(255,255,255,0.10);
+    background: rgba(0,0,0,0.10);
   }
-  .dho-met .dho-met-pill{
-    font-size: 11px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
+
+  .dho-met .dho-met-publico-left{
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    min-width: 0;
+  }
+
+  .dho-met .dho-met-publico-name{
+    font-size: 13px;
     color: var(--text);
-    background: rgba(255,255,255,0.10);
-    border: 1px solid rgba(255,255,255,0.12);
-    border-radius: 999px;
-    padding: 5px 8px;
+    font-weight: 650;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
-  .dho-met .dho-met-mini-val{ font-weight: 750; font-size: 14px; }
+
+  .dho-met .dho-met-publico-tag{
+    font-size: 12px;
+    color: var(--muted2);
+    white-space: nowrap;
+  }
+
+  .dho-met .dho-met-publico-val{
+    font-size: 14px;
+    font-weight: 850;
+    letter-spacing: -0.01em;
+    white-space: nowrap;
+  }
+
+  /* borda/sutileza por grupo (opcional, ajuda leitura) */
+  .dho-met .dho-met-pro{ border-left: 3px solid var(--pro); }
+  .dho-met .dho-met-lid{ border-left: 3px solid var(--lid); }
+  .dho-met .dho-met-neg{ border-left: 3px solid var(--neg); }
+  .dho-met .dho-met-rh{  border-left: 3px solid var(--rh);  }
 
   .dho-met .dho-met-bullets{
     margin: 10px 0 0;
@@ -366,12 +427,10 @@
     .dho-met .dho-met-panel{ grid-column: span 12; }
     .dho-met .dho-met-chart-row{ grid-template-columns: 1fr; }
     .dho-met .dho-met-chart-bar{ height: 280px; }
-    .dho-met .dho-met-mini-grid{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
   }
 </style>
 
 <script>
-  // Convencao do loader: initBloco_metodologia
   window.initBloco_metodologia = async function(){
     const root = document.querySelector("#metodologia .dho-met");
     if(!root) return;
@@ -380,7 +439,6 @@
     const barEl = root.querySelector("#dhoChartTrabalhoBar");
     if(!donutEl || !barEl) return;
 
-    // Carrega Chart.js sob demanda (uma vez)
     if(!window.Chart){
       await new Promise((resolve, reject) => {
         const s = document.createElement("script");
@@ -391,7 +449,6 @@
       });
     }
 
-    // Evita duplicar gráficos se recarregar o bloco
     if(donutEl.dataset.rendered === "1" || barEl.dataset.rendered === "1") return;
 
     const css = getComputedStyle(root);
