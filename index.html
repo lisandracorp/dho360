@@ -16,44 +16,51 @@
       --violet2:#a855f7;
       --violet3:#e9d5ff;
 
-      /* extras para o fundo neon escuro */
+      /* fundo neon escuro */
       --bg0:#05050a;
       --bg1:#070712;
       --bg2:#0a0a1a;
       --neonV1: rgba(168,85,247,.18);
       --neonV2: rgba(124,58,237,.16);
       --neonP1: rgba(236,72,153,.10);
-      --ink: rgba(0,0,0,.78);
     }
 
-    /* ====== BASE mínima para o header “parecer o mesmo site” ====== */
+    html, body{
+      height:100%;
+    }
+
+    /* ====== BASE mínima ====== */
     body{
       margin:0;
       font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
       color: var(--fg);
 
-      /* Fundo roxo/lilás bem escuro, predominância de preto, leve neon */
+      /* IMPORTANT: deixa transparente para o backdrop aparecer sempre */
+      background: transparent !important;
+      overflow-x:hidden;
+    }
+
+    /* Camada fixa de fundo (não pode ser sobrescrita por CSS dos blocos) */
+    .siteBackdrop{
+      position: fixed;
+      inset: 0;
+      z-index: -999;
+      pointer-events: none;
+
       background:
         radial-gradient(900px 520px at 22% 12%, var(--neonP1), transparent 60%),
         radial-gradient(980px 560px at 72% 18%, var(--neonV1), transparent 62%),
         radial-gradient(860px 520px at 42% 82%, var(--neonV2), transparent 64%),
         linear-gradient(180deg, var(--bg0) 0%, var(--bg1) 40%, var(--bg2) 100%);
-      background-attachment: fixed;
-      overflow-x:hidden;
     }
 
-    /* camada extra para dar “profundidade” e vinheta suave */
-    body::before{
+    /* Vinheta/profundidade extra */
+    .siteBackdrop::after{
       content:"";
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      z-index: -1;
-
+      position:absolute;
+      inset:0;
       background:
-        radial-gradient(1200px 700px at 50% 0%, rgba(168,85,247,.10), transparent 65%),
-        radial-gradient(900px 700px at 50% 100%, rgba(124,58,237,.08), transparent 68%),
-        radial-gradient(1200px 900px at 50% 50%, rgba(0,0,0,.72), rgba(0,0,0,.90));
+        radial-gradient(1200px 900px at 50% 50%, rgba(0,0,0,.72), rgba(0,0,0,.92));
       mix-blend-mode: normal;
     }
 
@@ -64,7 +71,7 @@
     }
     a:hover{ opacity:1; }
 
-    /* ====== HEADER (igual ao seu original) ====== */
+    /* ====== HEADER ====== */
     header{
       position: sticky;
       top: 0;
@@ -189,6 +196,9 @@
 
 <body>
 
+  <!-- Fundo neon fixo do site -->
+  <div class="siteBackdrop" aria-hidden="true"></div>
+
   <header>
     <div class="navWrap">
       <div class="navTop">
@@ -241,12 +251,6 @@
   <div id="r_objetivosNeg"></div>
 
 <script>
-  // Loader robusto por bloco (padrão DHO 360):
-  // 1) injeta HTML
-  // 2) clona <style> para <head>
-  // 3) executa <script> na ordem (aguarda scripts com src)
-  // 4) destrói charts antigos do bloco (evita “sumir gráfico”)
-  // 5) chama init explicitamente após layout estabilizar
   async function carregarBloco({ url, targetId, initFnName }) {
     const host = document.getElementById(targetId);
     if (!host) {
@@ -256,11 +260,9 @@
 
     const marker = `data-bloco="${targetId}"`;
 
-    // remove versões antigas do bloco (styles e scripts marcados)
     document.querySelectorAll(`style[${marker}]`).forEach(el => el.remove());
     document.querySelectorAll(`script[${marker}]`).forEach(el => el.remove());
 
-    // destrói charts existentes dentro do host (evita conflitos Chart.js)
     try{
       if (window.Chart && typeof Chart.getChart === "function") {
         host.querySelectorAll("canvas").forEach((c) => {
@@ -281,7 +283,6 @@
         const s = document.createElement("script");
         s.setAttribute("data-bloco", targetId);
 
-        // mantém atributos
         for (const attr of scriptEl.attributes) s.setAttribute(attr.name, attr.value);
 
         if (scriptEl.src) {
@@ -291,7 +292,6 @@
           s.onerror = (err) => reject(err);
         } else {
           s.textContent = scriptEl.textContent || "";
-          // inline executa imediatamente ao anexar
           resolve();
         }
 
@@ -306,10 +306,8 @@
       const html = await res.text();
       const doc = new DOMParser().parseFromString(html, "text/html");
 
-      // injeta conteúdo do bloco
       host.innerHTML = doc.body.innerHTML;
 
-      // clona styles para o head
       doc.querySelectorAll("style").forEach(styleEl => {
         const s = document.createElement("style");
         s.setAttribute("data-bloco", targetId);
@@ -317,17 +315,14 @@
         document.head.appendChild(s);
       });
 
-      // executa scripts do bloco na ordem (aguarda scripts externos)
       const scripts = Array.from(doc.querySelectorAll("script"));
       for (const old of scripts) {
         await appendScriptAndWait(old);
       }
 
-      // espera o layout estabilizar (canvas responsivo agradece)
       await nextFrame();
       await nextFrame();
 
-      // chama init do bloco explicitamente
       const fn = window[initFnName];
       if (typeof fn === "function") {
         try { fn(); }
@@ -345,30 +340,10 @@
     }
   }
 
-  // Chamadas dos blocos
-  carregarBloco({
-    url: "blocks/01-intro.html",
-    targetId: "intro",
-    initFnName: "initBloco_intro"
-  });
-
-  carregarBloco({
-    url: "blocks/02-metodologia.html",
-    targetId: "metodologia",
-    initFnName: "initBloco_metodologia"
-  });
-
-  carregarBloco({
-    url: "blocks/03-R-objetivos.html",
-    targetId: "r_objetivos",
-    initFnName: "initBloco_objetivos"
-  });
-
-  carregarBloco({
-    url: "blocks/04-R-objetivosNeg.html",
-    targetId: "r_objetivosNeg",
-    initFnName: "initBloco_objetivosNeg"
-  });
+  carregarBloco({ url: "blocks/01-intro.html", targetId: "intro", initFnName: "initBloco_intro" });
+  carregarBloco({ url: "blocks/02-metodologia.html", targetId: "metodologia", initFnName: "initBloco_metodologia" });
+  carregarBloco({ url: "blocks/03-R-objetivos.html", targetId: "r_objetivos", initFnName: "initBloco_objetivos" });
+  carregarBloco({ url: "blocks/04-R-objetivosNeg.html", targetId: "r_objetivosNeg", initFnName: "initBloco_objetivosNeg" });
 </script>
 
 </body>
