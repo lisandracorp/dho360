@@ -6,7 +6,7 @@
   <title>DHO 360º | Piloto</title>
 
   <style>
-    /* ====== TOKENS (fallback) — se o :root do site não estiver carregado ====== */
+    /* ====== TOKENS (fallback) - se o :root do site não estiver carregado ====== */
     :root{
       --bg:#07070b;
       --fg:#f4f4f8;
@@ -150,7 +150,7 @@
     }
   </style>
 
-  <!-- Chart.js uma vez no index (padrão do projeto) -->
+  <!-- Chart.js garantido uma vez no index -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
@@ -205,102 +205,70 @@
   <div id="r_objetivos"></div>
 
 <script>
-  // Loader robusto por bloco:
-  // 1) injeta HTML
-  // 2) clona <style> para <head>
-  // 3) executa <script> (recriado no DOM)
-  // 4) chama init explicitamente
-  async function carregarBloco({ url, targetId, initFnName }) {
-    const host = document.getElementById(targetId);
-    if (!host) {
-      console.warn(`[loader] targetId não encontrado: ${targetId}`);
-      return;
-    }
+  async function carregarBloco(id, arquivo, initFnName){
+    const alvo = document.getElementById(id);
 
-    // evita duplicar styles/scripts do mesmo bloco em recargas
-    const marker = `data-bloco="${targetId}"`;
+    function executarScriptsDentro(container){
+      const scripts = Array.from(container.querySelectorAll("script"));
+      const promessas = [];
 
-    // remove versões antigas do bloco (styles e scripts marcados)
-    document.querySelectorAll(`style[${marker}]`).forEach(el => el.remove());
-    document.querySelectorAll(`script[${marker}]`).forEach(el => el.remove());
+      for(const oldScript of scripts){
+        const newScript = document.createElement("script");
 
-    try{
-      const res = await fetch(url, { cache: "no-store" });
-      if(!res.ok) throw new Error("Falha ao carregar " + url + ": " + res.status);
-
-      const html = await res.text();
-
-      // parse do HTML
-      const doc = new DOMParser().parseFromString(html, "text/html");
-
-      // 1) Injeta somente o body (conteúdo do bloco)
-      host.innerHTML = doc.body.innerHTML;
-
-      // 2) Clona <style> para o <head> para garantir aplicação
-      doc.querySelectorAll("style").forEach(styleEl => {
-        const s = document.createElement("style");
-        s.setAttribute("data-bloco", targetId);
-        s.textContent = styleEl.textContent || "";
-        document.head.appendChild(s);
-      });
-
-      // 3) Recria e executa <script>
-      const scripts = Array.from(doc.querySelectorAll("script"));
-      for (const old of scripts) {
-        const s = document.createElement("script");
-        s.setAttribute("data-bloco", targetId);
-
-        // mantém atributos se existirem
-        for (const attr of old.attributes) s.setAttribute(attr.name, attr.value);
-
-        if (old.src) {
-          s.src = old.src;
-          s.async = false;
-        } else {
-          s.textContent = old.textContent || "";
+        // Copia atributos
+        for(const attr of oldScript.attributes){
+          newScript.setAttribute(attr.name, attr.value);
         }
 
-        document.body.appendChild(s);
+        // Se tiver src, aguarda carregar
+        if(oldScript.src){
+          promessas.push(new Promise((resolve, reject) => {
+            newScript.onload = resolve;
+            newScript.onerror = reject;
+          }));
+          newScript.src = oldScript.src;
+        }else{
+          newScript.text = oldScript.textContent;
+        }
+
+        // Substitui para forçar execução
+        oldScript.parentNode.replaceChild(newScript, oldScript);
       }
 
-      // 4) Chama init explicitamente (se existir)
-      setTimeout(() => {
-        const fn = window[initFnName];
-        if (typeof fn === "function") {
-          try { fn(); }
-          catch (e) { console.error(`[loader] erro ao executar ${initFnName}:`, e); }
-        } else {
-          console.warn(`[loader] initFn não encontrada: ${initFnName}`);
-        }
-      }, 0);
+      return Promise.all(promessas);
+    }
+
+    try{
+      const resp = await fetch(arquivo, { cache: "no-store" });
+      if(!resp.ok) throw new Error("Falha ao carregar " + arquivo + ": " + resp.status);
+
+      alvo.innerHTML = await resp.text();
+
+      // Executa scripts que vierem dentro do bloco carregado
+      await executarScriptsDentro(alvo);
+
+      // Chama init do bloco:
+      // 1) se initFnName foi passado, usa ele
+      // 2) senão, usa a convenção initBloco_<id>
+      const initName = initFnName || ("initBloco_" + id);
+      if(typeof window[initName] === "function"){
+        window[initName]();
+      }
 
     }catch(err){
       console.error(err);
-      host.innerHTML =
+      alvo.innerHTML =
         '<section style="max-width:1100px;margin:24px auto;padding:0 20px;color:var(--muted)">' +
-        'Não foi possível carregar o arquivo ' + url +
+        'Não foi possível carregar o arquivo ' + arquivo +
         '</section>';
     }
   }
 
-  // Chamadas dos blocos
-  carregarBloco({
-    url: "blocks/01-intro.html",
-    targetId: "intro",
-    initFnName: "initBloco_intro"
-  });
+  carregarBloco("intro", "blocks/01-intro.html");
+  carregarBloco("metodologia", "blocks/02-metodologia.html");
 
-  carregarBloco({
-    url: "blocks/02-metodologia.html",
-    targetId: "metodologia",
-    initFnName: "initBloco_metodologia"
-  });
-
-  carregarBloco({
-    url: "blocks/03-R-objetivos.html",
-    targetId: "r_objetivos",
-    initFnName: "initBloco_objetivos"
-  });
+  // Bloco 03: usa init explícito (ajuste aqui se o nome for outro)
+  carregarBloco("r_objetivos", "blocks/03-R-objetivos.html", "initBloco_objetivos");
 </script>
 
 </body>
