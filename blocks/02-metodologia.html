@@ -122,12 +122,12 @@
       </summary>
 
       <div class="dho-met-details-body">
-        <!-- ENUNCIADO (100% largura) -->
+        <!-- ENUNCIADO (sem caixa) -->
         <div class="dho-met-rh-enunciado" aria-label="Enunciado da checagem complementar">
           Em resposta à baixa adesão de RH no piloto, realizamos uma checagem complementar no LinkedIn. Objetivo: entender barreiras de engajamento e ajustar a estratégia de amostragem na próxima fase.
         </div>
 
-        <!-- MÉTRICAS + NOTA -->
+        <!-- MÉTRICAS + NOTA (sem caixas; somente texto/números) -->
         <div class="dho-met-rh-toprow" aria-label="Métricas e nota">
           <div class="dho-met-rh-metricas" role="list" aria-label="Métricas da checagem no LinkedIn">
             <div class="dho-met-rh-metrica" role="listitem">
@@ -147,22 +147,27 @@
           </aside>
         </div>
 
-        <!-- FEEDBACKS 2x2 -->
+        <!-- SUBTÍTULO -->
+        <h4 class="dho-met-rh-subtitle">
+          O que os profissionais que retornaram relataram
+        </h4>
+
+        <!-- FEEDBACKS (única área com forma destacada) -->
         <div class="dho-met-rh-feedbacks" aria-label="Feedbacks qualitativos">
           <div class="dho-met-rh-feedback">
-            Os profissionais de RH estão sendo bombardeados por vendedores, e então propostas reais de cooperação são descartadas por serem na primeira impressão “mais uma venda”.
+            Há percepção recorrente de excesso de abordagens comerciais, o que faz com que propostas de cooperação legítimas sejam descartadas já na primeira impressão.
           </div>
 
           <div class="dho-met-rh-feedback">
-            Os profissionais de RH têm uma rotina muito sobrecarregada “apagando incêndio”, e não conseguem tempo para dedicar ao desenvolvimento da comunidade e boas práticas de gestão de pessoas.
+            A rotina é descrita como intensa e reativa, com pouco tempo disponível para iniciativas de comunidade e para o aprofundamento de boas práticas de gestão de pessoas.
           </div>
 
           <div class="dho-met-rh-feedback">
-            Os profissionais mais seniores participam ativamente de pequenos grupos de networking com outros profissionais seniores e, geralmente, “ultra-selecionam” membros para proteger o grupo de interesses puramente comerciais e preservar a qualidade do conteúdo.
+            Profissionais mais seniores tendem a participar de grupos menores e bem curados de networking, preservando a qualidade das trocas e evitando dinâmicas de interesse puramente comercial.
           </div>
 
           <div class="dho-met-rh-feedback">
-            Há convergência de que participam de pesquisas e não recebem de volta os resultados prometidos; assim, o engajamento nas próximas diminui.
+            Também aparece a frustração com pesquisas que não devolvem resultados prometidos, o que reduz a disposição para se engajar nas próximas iniciativas.
           </div>
         </div>
       </div>
@@ -349,6 +354,7 @@
     height: 100% !important;
   }
 
+  /* Legenda em grid 2x2 + fonte menor */
   .dho-met .dho-met-keylist{
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -477,47 +483,51 @@
     padding: 14px 14px 14px;
   }
 
-  /* RH: enunciado full width */
+  /* RH: enunciado sem caixa */
   .dho-met .dho-met-rh-enunciado{
     width: 100%;
-    padding: 12px 12px;
-    border-radius: 14px;
-    border: 1px solid rgba(255,255,255,0.10);
-    background: rgba(0,0,0,0.08);
+    padding: 0;
+    border: none;
+    background: transparent;
+    border-radius: 0;
+    box-shadow: none;
     font-size: 13px;
     color: var(--muted);
     line-height: 1.55;
   }
 
-  /* RH: métricas + nota */
+  /* RH: métricas + nota em layout limpo (sem caixas) */
   .dho-met .dho-met-rh-toprow{
     display: grid;
     grid-template-columns: 1fr 0.9fr;
     gap: 12px;
-    align-items: stretch;
+    align-items: center;
     margin-top: 12px;
   }
 
   .dho-met .dho-met-rh-metricas{
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 10px;
+    gap: 16px;
+    align-items: center;
   }
 
   .dho-met .dho-met-rh-metrica{
-    border: 1px solid rgba(255,255,255,0.10);
-    background: rgba(0,0,0,0.10);
-    border-radius: 14px;
-    padding: 12px 10px;
+    border: none;
+    background: transparent;
+    border-radius: 0;
+    padding: 0;
     text-align: center;
   }
 
   .dho-met .dho-met-rh-metrica-num{
     font-size: 34px;
-    font-weight: 900;
+    font-weight: 950;
     letter-spacing: -0.03em;
     line-height: 1.05;
-    color: var(--text);
+    background: linear-gradient(90deg, var(--pro), var(--rh));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
   }
 
   .dho-met .dho-met-rh-metrica-label{
@@ -528,13 +538,13 @@
   }
 
   .dho-met .dho-met-rh-nota{
-    border: 1px solid rgba(255,255,255,0.10);
-    background: rgba(0,0,0,0.08);
-    border-radius: 14px;
-    padding: 12px 12px;
+    border: none;
+    background: transparent;
+    padding: 0;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    gap: 6px;
   }
 
   .dho-met .dho-met-rh-nota-kicker{
@@ -542,8 +552,7 @@
     letter-spacing: 0.10em;
     text-transform: uppercase;
     color: var(--muted2);
-    font-weight: 800;
-    margin-bottom: 6px;
+    font-weight: 850;
   }
 
   .dho-met .dho-met-rh-nota-text{
@@ -552,22 +561,35 @@
     line-height: 1.5;
   }
 
-  /* RH: feedbacks 2x2 */
+  /* Subtítulo antes dos feedbacks */
+  .dho-met .dho-met-rh-subtitle{
+    margin: 16px 0 10px;
+    font-size: 14px;
+    font-weight: 750;
+    letter-spacing: -0.01em;
+    color: var(--text);
+  }
+
+  /* Feedbacks 2x2 (única área com forma destacada) */
   .dho-met .dho-met-rh-feedbacks{
-    margin-top: 12px;
+    margin-top: 0;
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 10px;
   }
 
   .dho-met .dho-met-rh-feedback{
-    border: 1px solid rgba(255,255,255,0.10);
-    background: rgba(0,0,0,0.08);
-    border-radius: 14px;
-    padding: 12px 12px;
+    border: 1px solid rgba(192,138,214,0.35);
+    background: linear-gradient(
+      135deg,
+      rgba(192,138,214,0.10),
+      rgba(226,198,236,0.06)
+    );
+    border-radius: 16px;
+    padding: 14px 14px;
     font-size: 13px;
-    color: var(--muted);
-    line-height: 1.55;
+    color: var(--text);
+    line-height: 1.6;
   }
 
   @media (max-width: 680px){
@@ -580,9 +602,12 @@
     }
     .dho-met .dho-met-rh-toprow{
       grid-template-columns: 1fr;
+      align-items: start;
     }
     .dho-met .dho-met-rh-metricas{
-      grid-template-columns: 1fr;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      justify-items: center;
+      gap: 12px;
     }
     .dho-met .dho-met-rh-feedbacks{
       grid-template-columns: 1fr;
@@ -595,6 +620,15 @@
     .dho-met .dho-met-card:nth-child(3){ grid-column: span 12; }
     .dho-met .dho-met-panel{ grid-column: span 12; }
     .dho-met .dho-met-chart-bar{ height: 280px; }
+  }
+
+  /* FORÇA: header do título sem “caixa” */
+  #metodologia .dho-met .dho-met-header{
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    padding: 0 !important;
   }
 </style>
 
