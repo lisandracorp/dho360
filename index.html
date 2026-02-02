@@ -6,7 +6,7 @@
   <title>DHO 360º | Piloto</title>
 
   <style>
-    /* ====== TOKENS (fallback) — se o :root do site não estiver carregado ====== */
+    /* ====== TOKENS (fallback) - se o :root do site não estiver carregado ====== */
     :root{
       --bg:#07070b;
       --fg:#f4f4f8;
@@ -149,6 +149,9 @@
       .pilot{display:none}
     }
   </style>
+
+  <!-- Chart.js garantido uma vez no index -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body>
@@ -202,7 +205,7 @@
   <div id="r_objetivos"></div>
 
 <script>
-  async function carregarBloco(id, arquivo){
+  async function carregarBloco(id, arquivo, initFnName){
     const alvo = document.getElementById(id);
 
     function executarScriptsDentro(container){
@@ -244,8 +247,10 @@
       // Executa scripts que vierem dentro do bloco carregado
       await executarScriptsDentro(alvo);
 
-      // Se o bloco expuser um init, chama por convenção
-      const initName = "initBloco_" + id;
+      // Chama init do bloco:
+      // 1) se initFnName foi passado, usa ele
+      // 2) senão, usa a convenção initBloco_<id>
+      const initName = initFnName || ("initBloco_" + id);
       if(typeof window[initName] === "function"){
         window[initName]();
       }
@@ -261,7 +266,9 @@
 
   carregarBloco("intro", "blocks/01-intro.html");
   carregarBloco("metodologia", "blocks/02-metodologia.html");
-  carregarBloco("r_objetivos", "blocks/03-R-objetivos.html");
+
+  // Bloco 03: usa init explícito (ajuste aqui se o nome for outro)
+  carregarBloco("r_objetivos", "blocks/03-R-objetivos.html", "initBloco_objetivos");
 </script>
 
 </body>
