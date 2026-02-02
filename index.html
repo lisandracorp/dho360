@@ -3,10 +3,10 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>DHO 360º</title>
+  <title>DHO 360º | Piloto</title>
 
   <style>
-    /* ====== TOKENS (fallback)  — se o :root do site não estiver carregado ====== */
+    /* ====== TOKENS (fallback) — se o :root do site não estiver carregado ====== */
     :root{
       --bg:#07070b;
       --fg:#f4f4f8;
@@ -25,53 +25,43 @@
       --neonP1: rgba(236,72,153,.10);
     }
 
-    html, body{ height:100%; }
+    html, body{
+      height:100%;
+    }
 
-    /* IMPORTANT: deixa transparente para o fundo do html aparecer */
-    html{ background: transparent !important; }
+    /* ====== BASE mínima ====== */
     body{
       margin:0;
       font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
       color: var(--fg);
+
+      /* IMPORTANT: deixa transparente para o backdrop aparecer sempre */
       background: transparent !important;
       overflow-x:hidden;
     }
 
-    /* ====== FUNDO NEON ====== */
-    html::before{
-      content:"";
+    /* Camada fixa de fundo (não pode ser sobrescrita por CSS dos blocos) */
+    .siteBackdrop{
       position: fixed;
       inset: 0;
-      z-index: -2;
+      z-index: -999;
       pointer-events: none;
+
       background:
         radial-gradient(900px 520px at 22% 12%, var(--neonP1), transparent 60%),
         radial-gradient(980px 560px at 72% 18%, var(--neonV1), transparent 62%),
         radial-gradient(860px 520px at 42% 82%, var(--neonV2), transparent 64%),
         linear-gradient(180deg, var(--bg0) 0%, var(--bg1) 40%, var(--bg2) 100%);
     }
-    html::after{
+
+    /* Vinheta/profundidade extra */
+    .siteBackdrop::after{
       content:"";
-      position: fixed;
-      inset: 0;
-      z-index: -1;
-      pointer-events: none;
+      position:absolute;
+      inset:0;
       background:
         radial-gradient(1200px 900px at 50% 50%, rgba(0,0,0,.72), rgba(0,0,0,.92));
-    }
-
-    /* wrappers comuns */
-    .block,
-    section.block,
-    article.block{
-      background: transparent !important;
-      background-color: transparent !important;
-    }
-
-    /* containers onde você injeta os blocos */
-    #intro, #metodologia, #r_objetivos, #r_objetivosNeg, #r_motivacoes{
-      background: transparent !important;
-      background-color: transparent !important;
+      mix-blend-mode: normal;
     }
 
     a{
@@ -200,11 +190,14 @@
     }
   </style>
 
-  <!-- Chart.js uma vez no index -->
+  <!-- Chart.js uma vez no index (padrão do projeto) -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body>
+
+  <!-- Fundo neon fixo do site -->
+  <div class="siteBackdrop" aria-hidden="true"></div>
 
   <header>
     <div class="navWrap">
@@ -257,141 +250,101 @@
   <!-- Bloco 04 - Resultados: Objetivos (Negócios) -->
   <div id="r_objetivosNeg"></div>
 
-  <!-- Bloco 05 - Resultados: Motivações -->
-  <div id="r_motivacoes"></div>
+<script>
+  async function carregarBloco({ url, targetId, initFnName }) {
+    const host = document.getElementById(targetId);
+    if (!host) {
+      console.warn(`[loader] targetId não encontrado: ${targetId}`);
+      return;
+    }
 
-  <script>
-    // =====================================================================
-    // Loader compatível com GitHub Pages (repo em subpasta) + Chart.js seguro
-    // =====================================================================
+    const marker = `data-bloco="${targetId}"`;
 
-    const blocoCache = new Map();
+    document.querySelectorAll(`style[${marker}]`).forEach(el => el.remove());
+    document.querySelectorAll(`script[${marker}]`).forEach(el => el.remove());
 
-    function getBasePath(){
-      // Ex.: /dho360/index.html -> /dho360
-      const p = location.pathname;
-      return p.endsWith("/") ? p.slice(0, -1) : p.replace(/\/[^\/]*$/, "");
+    try{
+      if (window.Chart && typeof Chart.getChart === "function") {
+        host.querySelectorAll("canvas").forEach((c) => {
+          const ch = Chart.getChart(c);
+          if (ch && typeof ch.destroy === "function") ch.destroy();
+        });
+      }
+    }catch(e){
+      console.warn("[loader] falha ao destruir charts antigos:", e);
     }
 
     function nextFrame(){
       return new Promise(resolve => requestAnimationFrame(resolve));
     }
 
-    async function carregarBloco({ url, targetId, initFnName }) {
-      const host = document.getElementById(targetId);
-      if (!host) {
-        console.warn(`[loader] targetId não encontrado: ${targetId}`);
-        return;
-      }
+    function appendScriptAndWait(scriptEl){
+      return new Promise((resolve, reject) => {
+        const s = document.createElement("script");
+        s.setAttribute("data-bloco", targetId);
 
-      const marker = `data-bloco="${targetId}"`;
+        for (const attr of scriptEl.attributes) s.setAttribute(attr.name, attr.value);
 
-      // remove styles/scripts previamente injetados desse bloco
-      document.querySelectorAll(`style[${marker}]`).forEach(el => el.remove());
-      document.querySelectorAll(`script[${marker}]`).forEach(el => el.remove());
-
-      // destrói charts existentes dentro do host (evita conflitos Chart.js)
-      try{
-        if (window.Chart && typeof Chart.getChart === "function") {
-          host.querySelectorAll("canvas").forEach((c) => {
-            const ch = Chart.getChart(c);
-            if (ch && typeof ch.destroy === "function") ch.destroy();
-          });
-        }
-      }catch(e){
-        console.warn("[loader] falha ao destruir charts antigos:", e);
-      }
-
-      function appendScriptAndWait(scriptEl){
-        return new Promise((resolve, reject) => {
-          const s = document.createElement("script");
-          s.setAttribute("data-bloco", targetId);
-
-          // copia atributos (mantendo ordem), exceto data-bloco
-          for (const attr of scriptEl.attributes) {
-            if (attr.name === "data-bloco") continue;
-            s.setAttribute(attr.name, attr.value);
-          }
-
-          if (scriptEl.src) {
-            s.async = false;
-            s.onload = () => resolve();
-            s.onerror = (err) => reject(err);
-            s.src = scriptEl.src;
-            document.body.appendChild(s);
-          } else {
-            s.textContent = scriptEl.textContent || "";
-            document.body.appendChild(s);
-            requestAnimationFrame(() => resolve());
-          }
-        });
-      }
-
-      try{
-        if (blocoCache.has(url)) {
-          host.innerHTML = blocoCache.get(url);
-          // tenta init mesmo em cache (se existir)
-          if (initFnName && typeof window[initFnName] === "function") {
-            try { window[initFnName](); } catch(e) { console.error(e); }
-          }
-          return;
+        if (scriptEl.src) {
+          s.src = scriptEl.src;
+          s.async = false;
+          s.onload = () => resolve();
+          s.onerror = (err) => reject(err);
+        } else {
+          s.textContent = scriptEl.textContent || "";
+          resolve();
         }
 
-        const res = await fetch(url, { cache: "no-store" });
-        if(!res.ok) throw new Error(`Falha ao carregar ${url}: ${res.status}`);
-
-        const html = await res.text();
-        const doc = new DOMParser().parseFromString(html, "text/html");
-
-        host.innerHTML = doc.body.innerHTML;
-        blocoCache.set(url, doc.body.innerHTML);
-
-        // injeta styles do bloco
-        doc.querySelectorAll("style").forEach(styleEl => {
-          const st = document.createElement("style");
-          st.setAttribute("data-bloco", targetId);
-          st.textContent = styleEl.textContent || "";
-          document.head.appendChild(st);
-        });
-
-        // injeta scripts do bloco (na ordem)
-        const scripts = Array.from(doc.querySelectorAll("script"));
-        for (const old of scripts) {
-          await appendScriptAndWait(old);
-        }
-
-        await nextFrame();
-        await nextFrame();
-
-        // init opcional (não trava se não existir)
-        if (initFnName) {
-          const fn = window[initFnName];
-          if (typeof fn === "function") {
-            try { fn(); }
-            catch (e) { console.error(`[loader] erro ao executar ${initFnName}:`, e); }
-          } else {
-            console.warn(`[loader] initFn não encontrada: ${initFnName}`);
-          }
-        }
-
-      }catch(err){
-        console.error(err);
-        host.innerHTML =
-          '<section style="max-width:1100px;margin:24px auto;padding:0 20px;color:var(--muted)">' +
-          'Não foi possível carregar o arquivo ' + url +
-          '</section>';
-      }
+        document.body.appendChild(s);
+      });
     }
 
-    const BASE = getBasePath();
+    try{
+      const res = await fetch(url, { cache: "no-store" });
+      if(!res.ok) throw new Error("Falha ao carregar " + url + ": " + res.status);
 
-    // ⚠️ URLs exatamente como seu repo
-    carregarBloco({ url: `${BASE}/blocks/01-intro.html`,          targetId: "intro",          initFnName: "initBloco_intro" });
-    carregarBloco({ url: `${BASE}/blocks/02-metodologia.html`,    targetId: "metodologia",    initFnName: "initBloco_metodologia" });
-    carregarBloco({ url: `${BASE}/blocks/03-R-objetivos.html`,    targetId: "r_objetivos",    initFnName: "initBloco_objetivos" });
-    carregarBloco({ url: `${BASE}/blocks/04-R-objetivosNeg.html`, targetId: "r_objetivosNeg", initFnName: "initBloco_objetivosNeg" });
-    carregarBloco({ url: `${BASE}/blocks/05-R-motivacoes.html`,   targetId: "r_motivacoes",   initFnName: "initBloco_motivacoes" });
-  </script>
+      const html = await res.text();
+      const doc = new DOMParser().parseFromString(html, "text/html");
+
+      host.innerHTML = doc.body.innerHTML;
+
+      doc.querySelectorAll("style").forEach(styleEl => {
+        const s = document.createElement("style");
+        s.setAttribute("data-bloco", targetId);
+        s.textContent = styleEl.textContent || "";
+        document.head.appendChild(s);
+      });
+
+      const scripts = Array.from(doc.querySelectorAll("script"));
+      for (const old of scripts) {
+        await appendScriptAndWait(old);
+      }
+
+      await nextFrame();
+      await nextFrame();
+
+      const fn = window[initFnName];
+      if (typeof fn === "function") {
+        try { fn(); }
+        catch (e) { console.error(`[loader] erro ao executar ${initFnName}:`, e); }
+      } else {
+        console.warn(`[loader] initFn não encontrada: ${initFnName}`);
+      }
+
+    }catch(err){
+      console.error(err);
+      host.innerHTML =
+        '<section style="max-width:1100px;margin:24px auto;padding:0 20px;color:var(--muted)">' +
+        'Não foi possível carregar o arquivo ' + url +
+        '</section>';
+    }
+  }
+
+  carregarBloco({ url: "blocks/01-intro.html", targetId: "intro", initFnName: "initBloco_intro" });
+  carregarBloco({ url: "blocks/02-metodologia.html", targetId: "metodologia", initFnName: "initBloco_metodologia" });
+  carregarBloco({ url: "blocks/03-R-objetivos.html", targetId: "r_objetivos", initFnName: "initBloco_objetivos" });
+  carregarBloco({ url: "blocks/04-R-objetivosNeg.html", targetId: "r_objetivosNeg", initFnName: "initBloco_objetivosNeg" });
+</script>
 
 </body>
 </html>
