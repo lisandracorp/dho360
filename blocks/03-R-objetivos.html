@@ -17,6 +17,7 @@
     </header>
 
     <div class="dho-objetivos-grid">
+      <!-- Card A: Pizza -->
       <article class="dho-card dho-card--chart" aria-label="Distribuição dos objetivos por área da vida">
         <div class="dho-card-head">
           <h3 class="dho-card-title">Em que área da vida esses objetivos moram?</h3>
@@ -39,6 +40,7 @@
         </p>
       </article>
 
+      <!-- Card B: Ranking com revelação progressiva -->
       <article class="dho-card dho-card--rank" aria-label="Fatores mais importantes para desenvolver">
         <div class="dho-card-head">
           <h3 class="dho-card-title">O que as pessoas acreditam que precisam desenvolver?</h3>
@@ -48,63 +50,74 @@
           </p>
         </div>
 
-        <ol class="dho-rank" id="dhoObjetivosRank">
-          <li class="dho-rank-item dho-rank-item--top">
-            <span class="dho-rank-n">1</span>
-            <div class="dho-rank-txt">
-              <p class="dho-rank-title">Corpo e ambiente</p>
-              <p class="dho-rank-desc">Condições e recursos adequados (saúde, tempo, ferramentas, rede de apoio) para agir.</p>
-            </div>
-          </li>
+        <div class="dho-rank-wrap" id="dhoRankWrap">
+          <ol class="dho-rank" id="dhoObjetivosRank">
+            <li class="dho-rank-item dho-rank-item--top" data-rank="1">
+              <span class="dho-rank-n">1</span>
+              <div class="dho-rank-txt">
+                <p class="dho-rank-title">Corpo e ambiente</p>
+                <p class="dho-rank-desc">Condições e recursos adequados (saúde, tempo, ferramentas, rede de apoio) para agir.</p>
+              </div>
+            </li>
 
-          <li class="dho-rank-item dho-rank-item--top">
-            <span class="dho-rank-n">2</span>
-            <div class="dho-rank-txt">
-              <p class="dho-rank-title">Habilidades</p>
-              <p class="dho-rank-desc">Mais conhecimento sobre si e sobre o mundo, e aplicação prática no dia a dia.</p>
-            </div>
-          </li>
+            <li class="dho-rank-item dho-rank-item--top is-hidden" data-rank="2">
+              <span class="dho-rank-n">2</span>
+              <div class="dho-rank-txt">
+                <p class="dho-rank-title">Habilidades</p>
+                <p class="dho-rank-desc">Mais conhecimento sobre si e sobre o mundo, e aplicação prática no dia a dia.</p>
+              </div>
+            </li>
 
-          <li class="dho-rank-item dho-rank-item--top">
-            <span class="dho-rank-n">3</span>
-            <div class="dho-rank-txt">
-              <p class="dho-rank-title">Comportamento</p>
-              <p class="dho-rank-desc">Entender padrões que ajudam (ou travam) produtividade, consistência e novas ações.</p>
-            </div>
-          </li>
+            <li class="dho-rank-item dho-rank-item--top is-hidden" data-rank="3">
+              <span class="dho-rank-n">3</span>
+              <div class="dho-rank-txt">
+                <p class="dho-rank-title">Comportamento</p>
+                <p class="dho-rank-desc">Entender padrões que ajudam (ou travam) produtividade, consistência e novas ações.</p>
+              </div>
+            </li>
 
-          <li class="dho-rank-item">
-            <span class="dho-rank-n">4</span>
-            <div class="dho-rank-txt">
-              <p class="dho-rank-title">Crenças e valores</p>
-              <p class="dho-rank-desc">Clarear o que se acredita e valoriza para agir com coerência.</p>
-            </div>
-          </li>
+            <li class="dho-rank-item is-hidden" data-rank="4">
+              <span class="dho-rank-n">4</span>
+              <div class="dho-rank-txt">
+                <p class="dho-rank-title">Crenças e valores</p>
+                <p class="dho-rank-desc">Clarear o que se acredita e valoriza para agir com coerência.</p>
+              </div>
+            </li>
 
-          <li class="dho-rank-item">
-            <span class="dho-rank-n">5</span>
-            <div class="dho-rank-txt">
-              <p class="dho-rank-title">Visão e missão</p>
-              <p class="dho-rank-desc">Definir propósito, futuro desejado e escolher como viver isso.</p>
-            </div>
-          </li>
+            <li class="dho-rank-item is-hidden" data-rank="5">
+              <span class="dho-rank-n">5</span>
+              <div class="dho-rank-txt">
+                <p class="dho-rank-title">Visão e missão</p>
+                <p class="dho-rank-desc">Definir propósito, futuro desejado e escolher como viver isso.</p>
+              </div>
+            </li>
 
-          <li class="dho-rank-item">
-            <span class="dho-rank-n">6</span>
-            <div class="dho-rank-txt">
-              <p class="dho-rank-title">Legado</p>
-              <p class="dho-rank-desc">Gerar impacto positivo e duradouro em pessoas, times e sociedade.</p>
-            </div>
-          </li>
+            <li class="dho-rank-item is-hidden" data-rank="6">
+              <span class="dho-rank-n">6</span>
+              <div class="dho-rank-txt">
+                <p class="dho-rank-title">Legado</p>
+                <p class="dho-rank-desc">Gerar impacto positivo e duradouro em pessoas, times e sociedade.</p>
+              </div>
+            </li>
 
-          <li class="dho-rank-item">
-            <span class="dho-rank-n">7</span>
-            <div class="dho-rank-txt">
-              <p class="dho-rank-title">Identidade</p>
-              <p class="dho-rank-desc">Compreender papéis e expressão autêntica de quem se é.</p>
-            </div>
-          </li>
-        </ol>
+            <li class="dho-rank-item is-hidden" data-rank="7">
+              <span class="dho-rank-n">7</span>
+              <div class="dho-rank-txt">
+                <p class="dho-rank-title">Identidade</p>
+                <p class="dho-rank-desc">Compreender papéis e expressão autêntica de quem se é.</p>
+              </div>
+            </li>
+          </ol>
+
+          <div class="dho-rank-cta">
+            <button class="dho-btn" id="dhoRankNextBtn" type="button">
+              Descobrir o Top 2
+            </button>
+            <p class="dho-rank-hint" id="dhoRankHint">
+              Dica: clique para abrir o próximo nível do ranking.
+            </p>
+          </div>
+        </div>
 
         <div class="dho-mini-insight">
           <p class="dho-mini-insight-title">Uma leitura prática</p>
@@ -222,7 +235,6 @@
     padding-top: 6px;
   }
 
-  /* IMPORTANTE: dá altura real para o canvas renderizar bem */
   .dho-chart-canvas {
     border: 1px solid rgba(255,255,255,0.10);
     background: rgba(0,0,0,0.18);
@@ -294,10 +306,14 @@
     color: rgba(255,255,255,0.70);
   }
 
+  .dho-rank-wrap {
+    margin-top: 10px;
+  }
+
   .dho-rank {
     list-style: none;
     padding: 0;
-    margin: 10px 0 0 0;
+    margin: 0;
     display: grid;
     gap: 8px;
   }
@@ -340,6 +356,54 @@
   .dho-rank-desc {
     margin: 3px 0 0 0;
     font-size: 12.8px;
+    line-height: 1.45;
+    color: rgba(255,255,255,0.70);
+  }
+
+  /* Revelação progressiva */
+  .is-hidden { display: none; }
+
+  .dho-rank-cta {
+    margin-top: 10px;
+    display: grid;
+    gap: 6px;
+  }
+
+  .dho-btn {
+    width: 100%;
+    border: 1px solid rgba(255,255,255,0.12);
+    background: rgba(255,255,255,0.06);
+    color: rgba(255,255,255,0.92);
+    border-radius: 14px;
+    padding: 11px 12px;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    cursor: pointer;
+    box-shadow: 0 10px 24px rgba(0,0,0,0.22);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    transition: transform 0.12s ease, background 0.12s ease, border-color 0.12s ease;
+  }
+
+  .dho-btn:hover {
+    transform: translateY(-1px);
+    background: rgba(255,255,255,0.08);
+    border-color: rgba(255,255,255,0.16);
+  }
+
+  .dho-btn:active {
+    transform: translateY(0px);
+  }
+
+  .dho-btn:disabled {
+    cursor: default;
+    opacity: 0.65;
+    transform: none;
+  }
+
+  .dho-rank-hint {
+    margin: 0;
+    font-size: 12.5px;
     line-height: 1.45;
     color: rgba(255,255,255,0.70);
   }
@@ -433,74 +497,115 @@
 <script>
   window.initBloco_objetivos = function initBloco_objetivos() {
     try {
+      // 1) Chart.js
       if (!window.Chart) {
         console.warn("[Bloco objetivos] Chart.js não encontrado. Garanta o CDN no index.html.");
-        return;
-      }
+      } else {
+        const dataPizza = [
+          { label: "Trabalho e carreira", sub: "carreira, propósito, renda", value: 45, color: "rgba(180,130,255,0.95)" },
+          { label: "Autodesenvolvimento e saúde", sub: "saúde, intelecto, equilíbrio emocional", value: 28, color: "rgba(150,170,255,0.92)" },
+          { label: "Bem-estar e sentido", sub: "hobbies, felicidade, espiritualidade", value: 17, color: "rgba(210,170,255,0.85)" },
+          { label: "Relações", sub: "família, social, conjugal", value: 10, color: "rgba(255,255,255,0.72)" }
+        ];
 
-      const dataPizza = [
-        { label: "Trabalho e carreira", sub: "carreira, propósito, renda", value: 45, color: "rgba(180,130,255,0.95)" },
-        { label: "Autodesenvolvimento e saúde", sub: "saúde, intelecto, equilíbrio emocional", value: 28, color: "rgba(150,170,255,0.92)" },
-        { label: "Bem-estar e sentido", sub: "hobbies, felicidade, espiritualidade", value: 17, color: "rgba(210,170,255,0.85)" },
-        { label: "Relações", sub: "família, social, conjugal", value: 10, color: "rgba(255,255,255,0.72)" }
-      ];
-
-      const legendaEl = document.getElementById("dhoObjetivosLegenda");
-      if (legendaEl) {
-        legendaEl.innerHTML = dataPizza.map(item => `
-          <div class="dho-legend-item">
-            <span class="dho-legend-dot" style="background:${item.color}"></span>
-            <div>
-              <p class="dho-legend-label">${item.label}</p>
-              <p class="dho-legend-sub">${item.sub}</p>
+        const legendaEl = document.getElementById("dhoObjetivosLegenda");
+        if (legendaEl) {
+          legendaEl.innerHTML = dataPizza.map(item => `
+            <div class="dho-legend-item">
+              <span class="dho-legend-dot" style="background:${item.color}"></span>
+              <div>
+                <p class="dho-legend-label">${item.label}</p>
+                <p class="dho-legend-sub">${item.sub}</p>
+              </div>
+              <div class="dho-legend-pct">${item.value}%</div>
             </div>
-            <div class="dho-legend-pct">${item.value}%</div>
-          </div>
-        `).join("");
-      }
+          `).join("");
+        }
 
-      const canvas = document.getElementById("dhoObjetivosPizza");
-      if (!canvas) return;
+        const canvas = document.getElementById("dhoObjetivosPizza");
+        if (canvas) {
+          if (canvas._chartInstance) canvas._chartInstance.destroy();
 
-      if (canvas._chartInstance) canvas._chartInstance.destroy();
-
-      const ctx = canvas.getContext("2d");
-
-      const chart = new Chart(ctx, {
-        type: "doughnut",
-        data: {
-          labels: dataPizza.map(d => d.label),
-          datasets: [{
-            data: dataPizza.map(d => d.value),
-            backgroundColor: dataPizza.map(d => d.color),
-            borderColor: "rgba(255,255,255,0.10)",
-            borderWidth: 1.2,
-            hoverOffset: 6
-          }]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          cutout: "62%",
-          animation: { duration: 650 },
-          plugins: {
-            legend: { display: false },
-            tooltip: {
-              backgroundColor: "rgba(10,10,14,0.92)",
-              borderColor: "rgba(255,255,255,0.10)",
-              borderWidth: 1,
-              titleColor: "rgba(255,255,255,0.92)",
-              bodyColor: "rgba(255,255,255,0.85)",
-              padding: 10,
-              callbacks: {
-                label: (context) => ` ${context.raw}%`
+          const ctx = canvas.getContext("2d");
+          const chart = new Chart(ctx, {
+            type: "doughnut",
+            data: {
+              labels: dataPizza.map(d => d.label),
+              datasets: [{
+                data: dataPizza.map(d => d.value),
+                backgroundColor: dataPizza.map(d => d.color),
+                borderColor: "rgba(255,255,255,0.10)",
+                borderWidth: 1.2,
+                hoverOffset: 6
+              }]
+            },
+            options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              cutout: "62%",
+              animation: { duration: 650 },
+              plugins: {
+                legend: { display: false },
+                tooltip: {
+                  backgroundColor: "rgba(10,10,14,0.92)",
+                  borderColor: "rgba(255,255,255,0.10)",
+                  borderWidth: 1,
+                  titleColor: "rgba(255,255,255,0.92)",
+                  bodyColor: "rgba(255,255,255,0.85)",
+                  padding: 10,
+                  callbacks: { label: (context) => ` ${context.raw}%` }
+                }
               }
             }
-          }
-        }
-      });
+          });
 
-      canvas._chartInstance = chart;
+          canvas._chartInstance = chart;
+        }
+      }
+
+      // 2) Ranking progressivo
+      const wrap = document.getElementById("dhoRankWrap");
+      const btn = document.getElementById("dhoRankNextBtn");
+      const hint = document.getElementById("dhoRankHint");
+      const list = document.getElementById("dhoObjetivosRank");
+
+      if (!wrap || !btn || !list) return;
+
+      // Evita duplicar listener se o init rodar novamente
+      if (wrap.dataset.bound === "1") {
+        // Mesmo assim, garante que estado visual está consistente
+      } else {
+        wrap.dataset.bound = "1";
+        btn.addEventListener("click", () => {
+          const hidden = list.querySelector(".dho-rank-item.is-hidden");
+          if (hidden) {
+            hidden.classList.remove("is-hidden");
+
+            const nextHidden = list.querySelector(".dho-rank-item.is-hidden");
+            if (nextHidden) {
+              const nextRank = nextHidden.getAttribute("data-rank");
+              btn.textContent = `Descobrir o Top ${nextRank}`;
+              if (hint) hint.textContent = "Dica: clique para abrir o próximo nível do ranking.";
+            } else {
+              btn.textContent = "Ranking completo";
+              btn.disabled = true;
+              if (hint) hint.textContent = "Pronto: agora o ranking está totalmente aberto.";
+            }
+          }
+        });
+      }
+
+      // Estado inicial do botão baseado no primeiro hidden (Top 2)
+      const firstHidden = list.querySelector(".dho-rank-item.is-hidden");
+      if (firstHidden) {
+        const r = firstHidden.getAttribute("data-rank");
+        btn.textContent = `Descobrir o Top ${r}`;
+        btn.disabled = false;
+      } else {
+        btn.textContent = "Ranking completo";
+        btn.disabled = true;
+        if (hint) hint.textContent = "Pronto: agora o ranking está totalmente aberto.";
+      }
 
     } catch (err) {
       console.error("[Bloco objetivos] Erro ao inicializar:", err);
