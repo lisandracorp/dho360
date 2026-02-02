@@ -27,34 +27,28 @@
 
     html, body{ height:100%; }
 
-    /* IMPORTANT: não deixa nenhum background “matar” o fundo neon */
-    html{
-      background: transparent !important;
-    }
+    /* IMPORTANT: deixa transparente para o fundo do html aparecer */
+    html{ background: transparent !important; }
     body{
       margin:0;
       font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
       color: var(--fg);
       background: transparent !important;
       overflow-x:hidden;
-      position: relative;
-      z-index: 0;
     }
 
-    /* ====== FUNDO NEON: aplicado no html (garantia total) ====== */
+    /* ====== FUNDO NEON (garantia total) ====== */
     html::before{
       content:"";
       position: fixed;
       inset: 0;
       z-index: -2;
       pointer-events: none;
-
       background:
         radial-gradient(900px 520px at 22% 12%, var(--neonP1), transparent 60%),
         radial-gradient(980px 560px at 72% 18%, var(--neonV1), transparent 62%),
         radial-gradient(860px 520px at 42% 82%, var(--neonV2), transparent 64%),
         linear-gradient(180deg, var(--bg0) 0%, var(--bg1) 40%, var(--bg2) 100%);
-      background-attachment: fixed;
     }
 
     /* vinheta/profundidade */
@@ -64,9 +58,24 @@
       inset: 0;
       z-index: -1;
       pointer-events: none;
-
       background:
         radial-gradient(1200px 900px at 50% 50%, rgba(0,0,0,.72), rgba(0,0,0,.92));
+    }
+
+    /* ====== CHAVE: se seus blocos desenham “tela preta”, isso mata o neon.
+       Então forçamos APENAS os wrappers externos comuns a serem transparentes.
+       (cards internos continuam podendo ter fundo próprio) ====== */
+    .block,
+    section.block,
+    article.block{
+      background: transparent !important;
+      background-color: transparent !important;
+    }
+
+    /* containers onde você injeta os blocos */
+    #intro, #metodologia, #r_objetivos, #r_objetivosNeg{
+      background: transparent !important;
+      background-color: transparent !important;
     }
 
     a{
@@ -311,7 +320,6 @@
 
       host.innerHTML = doc.body.innerHTML;
 
-      // styles do bloco vão pro head (mas html/body continuam transparentes por !important)
       doc.querySelectorAll("style").forEach(styleEl => {
         const s = document.createElement("style");
         s.setAttribute("data-bloco", targetId);
