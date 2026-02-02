@@ -208,11 +208,12 @@
   <div id="r_objetivosNeg"></div>
 
 <script>
-  // Loader robusto por bloco:
+  // Loader robusto por bloco (padrão DHO 360):
   // 1) injeta HTML
   // 2) clona <style> para <head>
-  // 3) executa <script> (recriado no DOM)
-  // 4) chama init explicitamente
+  // 3) executa <script> na ordem (aguarda scripts com src)
+  // 4) destrói charts antigos do bloco (evita “sumir gráfico”)
+  // 5) chama init explicitamente após layout estabilizar
   async function carregarBloco({ url, targetId, initFnName }) {
     const host = document.getElementById(targetId);
     if (!host) {
@@ -220,26 +221,62 @@
       return;
     }
 
-    // evita duplicar styles/scripts do mesmo bloco em recargas
     const marker = `data-bloco="${targetId}"`;
 
     // remove versões antigas do bloco (styles e scripts marcados)
     document.querySelectorAll(`style[${marker}]`).forEach(el => el.remove());
     document.querySelectorAll(`script[${marker}]`).forEach(el => el.remove());
 
+    // destrói charts existentes dentro do host (evita conflitos Chart.js)
+    try{
+      if (window.Chart && typeof Chart.getChart === "function") {
+        host.querySelectorAll("canvas").forEach((c) => {
+          const ch = Chart.getChart(c);
+          if (ch && typeof ch.destroy === "function") ch.destroy();
+        });
+      }
+    }catch(e){
+      console.warn("[loader] falha ao destruir charts antigos:", e);
+    }
+
+    function nextFrame(){
+      return new Promise(resolve => requestAnimationFrame(resolve));
+    }
+
+    function appendScriptAndWait(scriptEl){
+      return new Promise((resolve, reject) => {
+        const s = document.createElement("script");
+        s.setAttribute("data-bloco", targetId);
+
+        // mantém atributos
+        for (const attr of scriptEl.attributes) s.setAttribute(attr.name, attr.value);
+
+        if (scriptEl.src) {
+          s.src = scriptEl.src;
+          s.async = false;
+          s.onload = () => resolve();
+          s.onerror = (err) => reject(err);
+        } else {
+          s.textContent = scriptEl.textContent || "";
+          // inline executa imediatamente ao anexar
+          resolve();
+        }
+
+        document.body.appendChild(s);
+      });
+    }
+
     try{
       const res = await fetch(url, { cache: "no-store" });
       if(!res.ok) throw new Error("Falha ao carregar " + url + ": " + res.status);
 
       const html = await res.text();
-
-      // parse do HTML
       const doc = new DOMParser().parseFromString(html, "text/html");
 
-      // 1) Injeta somente o body (conteúdo do bloco)
+      // injeta conteúdo do bloco
       host.innerHTML = doc.body.innerHTML;
 
-      // 2) Clona <style> para o <head> para garantir aplicação
+      // clona styles para o head
       doc.querySelectorAll("style").forEach(styleEl => {
         const s = document.createElement("style");
         s.setAttribute("data-bloco", targetId);
@@ -247,35 +284,24 @@
         document.head.appendChild(s);
       });
 
-      // 3) Recria e executa <script>
+      // executa scripts do bloco na ordem (aguarda scripts externos)
       const scripts = Array.from(doc.querySelectorAll("script"));
       for (const old of scripts) {
-        const s = document.createElement("script");
-        s.setAttribute("data-bloco", targetId);
-
-        // mantém atributos se existirem
-        for (const attr of old.attributes) s.setAttribute(attr.name, attr.value);
-
-        if (old.src) {
-          s.src = old.src;
-          s.async = false;
-        } else {
-          s.textContent = old.textContent || "";
-        }
-
-        document.body.appendChild(s);
+        await appendScriptAndWait(old);
       }
 
-      // 4) Chama init explicitamente (se existir)
-      setTimeout(() => {
-        const fn = window[initFnName];
-        if (typeof fn === "function") {
-          try { fn(); }
-          catch (e) { console.error(`[loader] erro ao executar ${initFnName}:`, e); }
-        } else {
-          console.warn(`[loader] initFn não encontrada: ${initFnName}`);
-        }
-      }, 0);
+      // espera o layout estabilizar (canvas responsivo agradece)
+      await nextFrame();
+      await nextFrame();
+
+      // chama init do bloco explicitamente
+      const fn = window[initFnName];
+      if (typeof fn === "function") {
+        try { fn(); }
+        catch (e) { console.error(`[loader] erro ao executar ${initFnName}:`, e); }
+      } else {
+        console.warn(`[loader] initFn não encontrada: ${initFnName}`);
+      }
 
     }catch(err){
       console.error(err);
