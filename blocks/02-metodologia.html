@@ -2,11 +2,9 @@
   <div class="dho-met-wrap">
 
     <header class="dho-met-header">
-      <!-- (1) Removido: "DHO 360º | PILOTO" -->
       <h2 id="dho-met-title" class="dho-met-title">Metodologia do Piloto</h2>
 
-      <!-- (3) Agora ocupa 100% da largura do quadro -->
-      <p class="dho-met-subtitle">
+      <p class="dho-met-subtitle" id="dhoMetIntro">
         Este piloto combinou survey e entrevistas para capturar sinais iniciais, padrões recorrentes e hipóteses de desenvolvimento a serem aprofundadas na próxima fase.
       </p>
     </header>
@@ -20,46 +18,32 @@
         </p>
       </article>
 
+      <!-- (3) Substitui o card "Público" pelo card de pontos de inflexão -->
       <article class="dho-met-card" role="listitem">
-        <p class="dho-met-card-label">Público</p>
+        <p class="dho-met-card-label">Pontos de inflexão do piloto</p>
 
-        <!-- (4) Novo layout sem sobreposição: nome completo + abreviação + % -->
-        <div class="dho-met-publico" aria-label="Distribuição por público">
-          <div class="dho-met-publico-item dho-met-pro">
-            <div class="dho-met-publico-left">
-              <span class="dho-met-publico-name">Profissionais no geral</span>
-              <span class="dho-met-publico-tag">(PRO)</span>
-            </div>
-            <span class="dho-met-publico-val">56%</span>
+        <div class="dho-met-inflexao">
+          <div class="dho-met-inflexao-top">
+            <span class="dho-met-inflexao-badge">10 temáticas</span>
+            <span class="dho-met-inflexao-hint">Servem como “sessões” para leitura ao longo da página</span>
           </div>
 
-          <div class="dho-met-publico-item dho-met-lid">
-            <div class="dho-met-publico-left">
-              <span class="dho-met-publico-name">Lideranças</span>
-              <span class="dho-met-publico-tag">(LID)</span>
-            </div>
-            <span class="dho-met-publico-val">19%</span>
-          </div>
-
-          <div class="dho-met-publico-item dho-met-neg">
-            <div class="dho-met-publico-left">
-              <span class="dho-met-publico-name">Negócios</span>
-              <span class="dho-met-publico-tag">(NEG)</span>
-            </div>
-            <span class="dho-met-publico-val">19%</span>
-          </div>
-
-          <div class="dho-met-publico-item dho-met-rh">
-            <div class="dho-met-publico-left">
-              <span class="dho-met-publico-name">Recursos Humanos</span>
-              <span class="dho-met-publico-tag">(RH)</span>
-            </div>
-            <span class="dho-met-publico-val">6%</span>
-          </div>
+          <ul class="dho-met-inflexao-list" aria-label="Temáticas do piloto">
+            <li>Clareza de objetivos e direção de carreira</li>
+            <li>Prioridades de desenvolvimento e aprendizagem</li>
+            <li>Liderança: expectativas e comportamento percebido</li>
+            <li>Autonomia, responsabilidade e tomada de decisão</li>
+            <li>Reconhecimento: meritocracia e justiça percebida</li>
+            <li>Carga, energia e sustentabilidade do ritmo de trabalho</li>
+            <li>Comunicação, alinhamento e ruído entre áreas</li>
+            <li>Feedback: frequência, qualidade e segurança psicológica</li>
+            <li>Cultura: valores praticados vs. declarados</li>
+            <li>Tecnologia e IA: apoio real vs. sobrecarga</li>
+          </ul>
         </div>
 
         <p class="dho-met-small dho-met-muted">
-          Base do piloto, para leitura exploratória.
+          Leitura exploratória: as temáticas indicam onde há tensão, contraste ou oportunidade de intervenção.
         </p>
       </article>
 
@@ -83,16 +67,51 @@
           <p class="dho-met-p">Distribuição por público (PRO, LID, NEG, RH).</p>
         </div>
 
-        <div class="dho-met-chart-row">
-          <div class="dho-met-chart dho-met-chart-donut">
-            <canvas id="dhoChartAmostraDonut" role="img" aria-label="Gráfico donut: composição da amostra"></canvas>
+        <!-- (4) Gráfico centralizado + legenda embaixo -->
+        <div class="dho-met-comp">
+          <div class="dho-met-comp-chart">
+            <div class="dho-met-chart dho-met-chart-donut">
+              <canvas id="dhoChartAmostraDonut" role="img" aria-label="Gráfico donut: composição da amostra"></canvas>
+            </div>
           </div>
 
-          <div class="dho-met-legend" aria-label="Legenda do gráfico">
-            <div class="dho-met-legend-item"><span class="dho-met-swatch dho-met-sw-pro"></span><div><div class="dho-met-legend-top"><span class="dho-met-legend-name">PRO</span><span class="dho-met-legend-val">56%</span></div><p class="dho-met-legend-desc">Profissionais</p></div></div>
-            <div class="dho-met-legend-item"><span class="dho-met-swatch dho-met-sw-lid"></span><div><div class="dho-met-legend-top"><span class="dho-met-legend-name">LID</span><span class="dho-met-legend-val">19%</span></div><p class="dho-met-legend-desc">Lideranças</p></div></div>
-            <div class="dho-met-legend-item"><span class="dho-met-swatch dho-met-sw-neg"></span><div><div class="dho-met-legend-top"><span class="dho-met-legend-name">NEG</span><span class="dho-met-legend-val">19%</span></div><p class="dho-met-legend-desc">Negócios</p></div></div>
-            <div class="dho-met-legend-item"><span class="dho-met-swatch dho-met-sw-rh"></span><div><div class="dho-met-legend-top"><span class="dho-met-legend-name">RH</span><span class="dho-met-legend-val">6%</span></div><p class="dho-met-legend-desc">Recursos Humanos</p></div></div>
+          <!-- (2) Legenda com o design “laranja” + quadradinho colorido -->
+          <div class="dho-met-keylist" aria-label="Legenda do gráfico: composição da amostra">
+            <div class="dho-met-keyitem dho-met-pro">
+              <div class="dho-met-keyleft">
+                <span class="dho-met-keysq dho-met-sw-pro" aria-hidden="true"></span>
+                <span class="dho-met-keyname">Profissionais no geral</span>
+                <span class="dho-met-keytag">(PRO)</span>
+              </div>
+              <span class="dho-met-keyval">56%</span>
+            </div>
+
+            <div class="dho-met-keyitem dho-met-lid">
+              <div class="dho-met-keyleft">
+                <span class="dho-met-keysq dho-met-sw-lid" aria-hidden="true"></span>
+                <span class="dho-met-keyname">Lideranças</span>
+                <span class="dho-met-keytag">(LID)</span>
+              </div>
+              <span class="dho-met-keyval">19%</span>
+            </div>
+
+            <div class="dho-met-keyitem dho-met-neg">
+              <div class="dho-met-keyleft">
+                <span class="dho-met-keysq dho-met-sw-neg" aria-hidden="true"></span>
+                <span class="dho-met-keyname">Negócios</span>
+                <span class="dho-met-keytag">(NEG)</span>
+              </div>
+              <span class="dho-met-keyval">19%</span>
+            </div>
+
+            <div class="dho-met-keyitem dho-met-rh">
+              <div class="dho-met-keyleft">
+                <span class="dho-met-keysq dho-met-sw-rh" aria-hidden="true"></span>
+                <span class="dho-met-keyname">Recursos Humanos</span>
+                <span class="dho-met-keytag">(RH)</span>
+              </div>
+              <span class="dho-met-keyval">6%</span>
+            </div>
           </div>
         </div>
       </article>
@@ -149,7 +168,6 @@
     --bg0: #23142f;
     --bg1: #2a1637;
 
-    /* (2) Ajuste do “quadro”: mais alinhado ao fundo, menos escuro */
     --wrapTop: rgba(255,255,255,0.06);
     --wrapBot: rgba(255,255,255,0.04);
 
@@ -176,8 +194,6 @@
   .dho-met .dho-met-wrap{
     max-width: 980px;
     margin: 0 auto;
-
-    /* (2) antes era um gradiente mais fechado; agora é um “glass” suave */
     background: linear-gradient(180deg, var(--wrapTop), var(--wrapBot));
     border: 1px solid var(--stroke);
     border-radius: 22px;
@@ -197,7 +213,6 @@
     color: var(--text);
   }
 
-  /* (3) remove limite, ocupa toda extensão */
   .dho-met .dho-met-subtitle{
     margin: 10px 0 0;
     max-width: none;
@@ -231,58 +246,50 @@
   .dho-met .dho-met-dot{ margin: 0 6px; color: var(--muted2); }
   .dho-met .dho-met-muted{ color: var(--muted2); }
 
-  /* (4) Público - novo layout */
-  .dho-met .dho-met-publico{
-    display: grid;
-    gap: 10px;
+  /* (3) Pontos de inflexão */
+  .dho-met .dho-met-inflexao{
     margin-top: 10px;
-  }
-
-  .dho-met .dho-met-publico-item{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
     padding: 10px 10px;
     border-radius: 14px;
     border: 1px solid rgba(255,255,255,0.10);
     background: rgba(0,0,0,0.10);
   }
 
-  .dho-met .dho-met-publico-left{
+  .dho-met .dho-met-inflexao-top{
     display: flex;
     align-items: baseline;
-    gap: 8px;
-    min-width: 0;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 8px;
   }
 
-  .dho-met .dho-met-publico-name{
-    font-size: 13px;
+  .dho-met .dho-met-inflexao-badge{
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
     color: var(--text);
-    font-weight: 650;
+    background: rgba(255,255,255,0.10);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 999px;
+    padding: 5px 8px;
     white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
   }
 
-  .dho-met .dho-met-publico-tag{
+  .dho-met .dho-met-inflexao-hint{
     font-size: 12px;
     color: var(--muted2);
-    white-space: nowrap;
+    line-height: 1.3;
+    text-align: right;
   }
 
-  .dho-met .dho-met-publico-val{
-    font-size: 14px;
-    font-weight: 850;
-    letter-spacing: -0.01em;
-    white-space: nowrap;
+  .dho-met .dho-met-inflexao-list{
+    margin: 0;
+    padding-left: 18px;
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.55;
   }
-
-  /* borda/sutileza por grupo (opcional, ajuda leitura) */
-  .dho-met .dho-met-pro{ border-left: 3px solid var(--pro); }
-  .dho-met .dho-met-lid{ border-left: 3px solid var(--lid); }
-  .dho-met .dho-met-neg{ border-left: 3px solid var(--neg); }
-  .dho-met .dho-met-rh{  border-left: 3px solid var(--rh);  }
+  .dho-met .dho-met-inflexao-list li{ margin: 6px 0; }
 
   .dho-met .dho-met-bullets{
     margin: 10px 0 0;
@@ -299,6 +306,7 @@
     gap: 12px;
     margin-top: 10px;
   }
+
   .dho-met .dho-met-panel{
     grid-column: span 6;
     border: 1px solid var(--stroke);
@@ -306,21 +314,36 @@
     background: var(--card2);
     padding: 16px 14px 14px;
   }
+
   .dho-met .dho-met-panel-head{ margin-bottom: 10px; }
   .dho-met .dho-met-h3{ margin: 0; font-size: 16px; letter-spacing: -0.01em; }
   .dho-met .dho-met-p{ margin: 6px 0 0; font-size: 13px; color: var(--muted); line-height: 1.5; }
 
-  .dho-met .dho-met-chart-row{
-    display: grid;
-    grid-template-columns: 220px 1fr;
-    gap: 14px;
-    align-items: center;
-    margin-top: 12px;
+  /* (4) Composição: centralizar gráfico + legenda embaixo */
+  .dho-met .dho-met-comp{
+    margin-top: 10px;
   }
 
-  .dho-met .dho-met-chart{ width: 100%; position: relative; }
-  .dho-met .dho-met-chart-donut{ height: 220px; }
-  .dho-met .dho-met-chart-bar{ height: 300px; }
+  .dho-met .dho-met-comp-chart{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 8px 0 10px;
+  }
+
+  .dho-met .dho-met-chart{
+    width: 100%;
+    position: relative;
+  }
+
+  .dho-met .dho-met-chart-donut{
+    height: 240px;
+    max-width: 360px;
+  }
+
+  .dho-met .dho-met-chart-bar{
+    height: 300px;
+  }
 
   .dho-met canvas{
     display: block;
@@ -328,29 +351,80 @@
     height: 100% !important;
   }
 
-  .dho-met .dho-met-legend{ display: grid; gap: 10px; }
-  .dho-met .dho-met-legend-item{
-    display: flex;
-    align-items: flex-start;
+  /* (2) Legenda no design “laranja” + quadradinho colorido */
+  .dho-met .dho-met-keylist{
+    display: grid;
     gap: 10px;
+    margin-top: 8px;
+  }
+
+  .dho-met .dho-met-keyitem{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
     padding: 10px 10px;
     border-radius: 14px;
     border: 1px solid rgba(255,255,255,0.10);
     background: rgba(0,0,0,0.10);
   }
-  .dho-met .dho-met-swatch{ width: 12px; height: 12px; border-radius: 4px; margin-top: 4px; flex: 0 0 12px; }
+
+  .dho-met .dho-met-keyleft{
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    min-width: 0;
+  }
+
+  .dho-met .dho-met-keysq{
+    width: 12px;
+    height: 12px;
+    border-radius: 4px;
+    flex: 0 0 12px;
+    margin-right: 2px;
+  }
+
+  .dho-met .dho-met-keyname{
+    font-size: 13px;
+    color: var(--text);
+    font-weight: 650;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .dho-met .dho-met-keytag{
+    font-size: 12px;
+    color: var(--muted2);
+    white-space: nowrap;
+  }
+
+  .dho-met .dho-met-keyval{
+    font-size: 14px;
+    font-weight: 850;
+    letter-spacing: -0.01em;
+    white-space: nowrap;
+  }
+
+  /* cores por grupo */
+  .dho-met .dho-met-pro{ border-left: 3px solid var(--pro); }
+  .dho-met .dho-met-lid{ border-left: 3px solid var(--lid); }
+  .dho-met .dho-met-neg{ border-left: 3px solid var(--neg); }
+  .dho-met .dho-met-rh{  border-left: 3px solid var(--rh);  }
+
   .dho-met .dho-met-sw-pro{ background: var(--pro); }
   .dho-met .dho-met-sw-lid{ background: var(--lid); }
   .dho-met .dho-met-sw-neg{ background: var(--neg); }
-  .dho-met .dho-met-sw-rh{  background: var(--rh); }
+  .dho-met .dho-met-sw-rh{  background: var(--rh);  }
 
-  .dho-met .dho-met-legend-top{ display: flex; justify-content: space-between; gap: 12px; align-items: baseline; }
-  .dho-met .dho-met-legend-name{ font-weight: 700; font-size: 13px; }
-  .dho-met .dho-met-legend-val{ font-weight: 800; font-size: 13px; color: var(--text); }
-  .dho-met .dho-met-legend-desc{ margin: 4px 0 0; font-size: 12px; color: var(--muted2); }
+  .dho-met .dho-met-note{
+    margin: 10px 0 0;
+    font-size: 12px;
+    color: var(--muted2);
+    line-height: 1.5;
+  }
 
-  .dho-met .dho-met-note{ margin: 10px 0 0; font-size: 12px; color: var(--muted2); line-height: 1.5; }
-
+  /* Details */
   .dho-met .dho-met-details{
     margin-top: 12px;
     border: 1px solid var(--stroke);
@@ -358,6 +432,7 @@
     background: rgba(255,255,255,0.06);
     overflow: hidden;
   }
+
   .dho-met .dho-met-summary{
     list-style: none;
     cursor: pointer;
@@ -370,6 +445,7 @@
     font-size: 14px;
     user-select: none;
   }
+
   .dho-met .dho-met-summary::-webkit-details-marker{ display: none; }
 
   .dho-met .dho-met-summary-icon{
@@ -381,6 +457,7 @@
     position: relative;
     flex: 0 0 30px;
   }
+
   .dho-met .dho-met-summary-icon::before,
   .dho-met .dho-met-summary-icon::after{
     content: "";
@@ -392,21 +469,25 @@
     background: rgba(255,255,255,0.85);
     transform: translate(-50%, -50%);
   }
+
   .dho-met .dho-met-summary-icon::after{
     transform: translate(-50%, -50%) rotate(90deg);
   }
+
   .dho-met details[open] .dho-met-summary-icon::after{ opacity: 0; }
 
   .dho-met .dho-met-details-body{
     border-top: 1px solid rgba(255,255,255,0.10);
     padding: 14px 14px 14px;
   }
+
   .dho-met .dho-met-details-kpis{
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 10px;
     margin-top: 10px;
   }
+
   .dho-met .dho-met-details-kpi{
     border: 1px solid rgba(255,255,255,0.10);
     border-radius: 14px;
@@ -417,16 +498,31 @@
     justify-content: space-between;
     gap: 10px;
   }
+
   .dho-met .dho-met-details-kpi-label{ font-size: 12px; color: var(--muted); }
   .dho-met .dho-met-details-kpi-val{ font-size: 18px; font-weight: 850; letter-spacing: -0.02em; }
+
+  /* (1) Mobile: justificar texto introdutório */
+  @media (max-width: 680px){
+    .dho-met .dho-met-subtitle{
+      text-align: justify;
+      text-justify: inter-word;
+    }
+  }
 
   @media (max-width: 980px){
     .dho-met .dho-met-card:nth-child(1),
     .dho-met .dho-met-card:nth-child(2),
     .dho-met .dho-met-card:nth-child(3){ grid-column: span 12; }
+
     .dho-met .dho-met-panel{ grid-column: span 12; }
-    .dho-met .dho-met-chart-row{ grid-template-columns: 1fr; }
     .dho-met .dho-met-chart-bar{ height: 280px; }
+
+    .dho-met .dho-met-inflexao-top{
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .dho-met .dho-met-inflexao-hint{ text-align: left; }
   }
 </style>
 
