@@ -1,145 +1,77 @@
-<section class="dho-objetivos" aria-labelledby="dho-objetivos-title">
+<section class="dho-objetivos">
   <div class="dho-objetivos-wrap">
 
     <header class="dho-objetivos-header">
       <p class="dho-kicker">BLOCO 1 | OBJETIVOS E PRIORIDADES DE DESENVOLVIMENTO</p>
 
-      <h2 id="dho-objetivos-title" class="dho-title">
+      <h2 class="dho-title">
         Quando se sabe qual é o objetivo, o próximo passo é priorizar por onde começar.
       </h2>
 
       <p class="dho-subtitle">
-        É unânime: 100% dos respondentes descreveram seus objetivos a serem alcançados, ou seja, todos têm um ponto de chegada claro.
-        Os relatos traçam um caminho para a conquista de estabilidade (profissional, emocional e financeira) até alta realização
-        (liderança, legado e impacto). Primeiro segurança, depois expansão.
-        Então o que se perguntou foi: onde a energia está concentrada, e qual é o top aspecto da vida para desenvolver-se e chegar lá!
+        É unânime: 100% dos respondentes descreveram seus objetivos a serem alcançados, ou seja,
+        todos têm um ponto de chegada claro. Os relatos traçam um caminho para a conquista de
+        estabilidade (profissional, emocional e financeira) até alta realização (liderança,
+        legado e impacto). Primeiro segurança, depois expansão.
+        Então o que se perguntou foi: onde a energia está concentrada, e qual é o top aspecto
+        da vida para desenvolver-se e chegar lá!
       </p>
     </header>
 
-    <!-- ===================== -->
-    <!-- QUADRO: ÁREA DA VIDA -->
-    <!-- ===================== -->
-    <article class="dho-card dho-card--center" aria-label="Distribuição dos objetivos por área da vida">
-      <div class="dho-card-head">
-        <h3 class="dho-card-title">
-          Em que área da vida os objetivos dos respondentes se enquadram?
-        </h3>
-      </div>
+    <!-- ÁREA DA VIDA -->
+    <article class="dho-card dho-center">
+      <h3 class="dho-card-title">
+        Em que área da vida os objetivos dos respondentes se enquadram?
+      </h3>
 
       <div class="dho-chart-row">
-        <div class="dho-chart-canvas dho-plain-surface">
-          <canvas id="dhoObjetivosPizza" aria-label="Gráfico de pizza"></canvas>
+        <div class="dho-chart-canvas">
+          <canvas id="dhoObjetivosPizza"></canvas>
         </div>
-
-        <div class="dho-legend dho-plain-surface" id="dhoObjetivosLegenda"></div>
+        <div class="dho-legend" id="dhoObjetivosLegenda"></div>
       </div>
 
       <p class="dho-footnote">
-        A maior parte dos objetivos se concentra no campo profissional, mas há uma concentração relevante ligada
-        à saúde, mente e equilíbrio: um fio condutor que começa a revelar o tema da coerência entre desempenho
-        e qualidade de vida.
+        A maior parte dos objetivos se concentra no campo profissional, mas há uma concentração
+        relevante ligada à saúde, mente e equilíbrio: um fio condutor que começa a revelar o tema
+        da coerência entre desempenho e qualidade de vida.
       </p>
     </article>
 
-    <!-- ===================== -->
-    <!-- QUADRO: RANKING -->
-    <!-- ===================== -->
-    <article class="dho-rank-card dho-card--center" aria-label="Ranking de iniciativas de desenvolvimento">
-      <div class="dho-card-head">
-        <h3 class="dho-card-title">Ranking de iniciativas de desenvolvimento</h3>
-      </div>
+    <!-- RANKING -->
+    <article class="dho-center">
+      <h3 class="dho-card-title">Ranking de iniciativas de desenvolvimento</h3>
 
-      <div class="dho-rank-wrap" id="dhoRankWrap">
-        <ol class="dho-rank" id="dhoObjetivosRank">
-          <li class="dho-rank-item dho-rank-item--top" data-rank="1">
-            <span class="dho-rank-n">1</span>
-            <div>
-              <p class="dho-rank-title">Corpo e ambiente</p>
-              <p class="dho-rank-desc">Condições e recursos adequados para agir.</p>
-            </div>
-          </li>
+      <ol class="dho-rank" id="dhoObjetivosRank">
+        <li class="dho-rank-item">1 · Corpo e ambiente<br><span>Condições e recursos adequados para agir.</span></li>
+        <li class="dho-rank-item is-hidden">2 · Habilidades<br><span>Conhecimento e aplicação prática.</span></li>
+        <li class="dho-rank-item is-hidden">3 · Comportamento<br><span>Padrões de ação e consistência.</span></li>
+        <li class="dho-rank-item is-hidden">4 · Crenças e valores<br><span>Coerência entre intenção e ação.</span></li>
+        <li class="dho-rank-item is-hidden">5 · Visão e missão<br><span>Direção e sentido.</span></li>
+        <li class="dho-rank-item is-hidden">6 · Legado<br><span>Impacto duradouro.</span></li>
+        <li class="dho-rank-item is-hidden">7 · Identidade<br><span>Expressão autêntica.</span></li>
+      </ol>
 
-          <li class="dho-rank-item dho-rank-item--top is-hidden" data-rank="2">
-            <span class="dho-rank-n">2</span>
-            <div>
-              <p class="dho-rank-title">Habilidades</p>
-              <p class="dho-rank-desc">Conhecimento e aplicação prática.</p>
-            </div>
-          </li>
+      <button class="dho-btn dho-btn--glow" id="dhoRankNextBtn">
+        Descobrir o Top 2
+      </button>
 
-          <li class="dho-rank-item dho-rank-item--top is-hidden" data-rank="3">
-            <span class="dho-rank-n">3</span>
-            <div>
-              <p class="dho-rank-title">Comportamento</p>
-              <p class="dho-rank-desc">Padrões de ação e consistência.</p>
-            </div>
-          </li>
-
-          <li class="dho-rank-item is-hidden" data-rank="4">
-            <span class="dho-rank-n">4</span>
-            <div>
-              <p class="dho-rank-title">Crenças e valores</p>
-              <p class="dho-rank-desc">Coerência entre intenção e ação.</p>
-            </div>
-          </li>
-
-          <li class="dho-rank-item is-hidden" data-rank="5">
-            <span class="dho-rank-n">5</span>
-            <div>
-              <p class="dho-rank-title">Visão e missão</p>
-              <p class="dho-rank-desc">Direção e sentido.</p>
-            </div>
-          </li>
-
-          <li class="dho-rank-item is-hidden" data-rank="6">
-            <span class="dho-rank-n">6</span>
-            <div>
-              <p class="dho-rank-title">Legado</p>
-              <p class="dho-rank-desc">Impacto duradouro.</p>
-            </div>
-          </li>
-
-          <li class="dho-rank-item is-hidden" data-rank="7">
-            <span class="dho-rank-n">7</span>
-            <div>
-              <p class="dho-rank-title">Identidade</p>
-              <p class="dho-rank-desc">Expressão autêntica.</p>
-            </div>
-          </li>
-        </ol>
-
-        <div class="dho-rank-cta">
-          <button class="dho-btn dho-btn--glow" id="dhoRankNextBtn" type="button">
-            Descobrir o Top 2
-          </button>
-
-          <div class="dho-rank-final" id="dhoRankFinal">
-            <p class="dho-rank-final-q">
-              E para você, qual é seu Top 1 hoje para o seu desenvolvimento?
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <!-- TEXTO SÍNTESE (SEM CARD) -->
       <p class="dho-highlight-text">
         No contexto atual, os respondentes escolhem priorizar o desenvolvimento das condições,
         habilidades e comportamento para agir.
       </p>
+
+      <p class="dho-final-question" id="dhoRankFinal">
+        E para você, qual é seu Top 1 hoje para o seu desenvolvimento?
+      </p>
     </article>
 
-    <!-- ===================== -->
     <!-- REFLEXÕES -->
-    <!-- ===================== -->
-    <aside class="dho-insight-box dho-insight-center">
-      <h3 class="dho-insight-title">Reflexões</h3>
-      <ul class="dho-insight-list">
-        <li>
-          Se o foco está no trabalho, o que ainda precisa de cuidado para sustentar esse desempenho?
-        </li>
-        <li>
-          Priorizar a base é estratégia ou resposta a um excesso acumulado?
-        </li>
+    <aside class="dho-insight-box">
+      <h3>Reflexões</h3>
+      <ul>
+        <li>O que hoje sustenta (ou drena) o seu desempenho?</li>
+        <li>Priorizar a base é estratégia ou necessidade?</li>
       </ul>
     </aside>
 
@@ -147,56 +79,83 @@
 </section>
 
 <style>
-  .dho-objetivos-wrap { max-width: 1100px; margin: 0 auto; }
+.dho-objetivos { padding: 32px 16px; color: rgba(255,255,255,0.9); }
+.dho-objetivos-wrap { max-width: 1100px; margin: 0 auto; }
+.dho-kicker { font-size: 12px; letter-spacing: .12em; opacity: .7; }
+.dho-title { font-size: 32px; margin: 8px 0 12px; }
+.dho-subtitle { max-width: 980px; line-height: 1.6; opacity: .85; }
 
-  .dho-card--center,
-  .dho-rank-card.dho-card--center {
-    margin: 0 auto 28px auto;
-    max-width: 980px;
-  }
+.dho-center { max-width: 980px; margin: 32px auto; }
 
-  .dho-highlight-text {
-    margin-top: 18px;
-    font-size: 15px;
-    line-height: 1.6;
-    text-align: center;
-    color: rgba(235, 210, 255, 0.95);
-    font-weight: 600;
-    letter-spacing: 0.01em;
-  }
+.dho-card { padding: 20px 0; }
+.dho-card-title { font-size: 18px; margin-bottom: 16px; }
 
-  .dho-insight-center {
-    margin: 0 auto;
-    max-width: 660px;
-    background: rgba(255, 140, 190, 0.10);
-  }
+.dho-chart-row { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
 
-  .dho-plain-surface {
-    background: transparent !important;
-    border: 0 !important;
-    padding: 0 !important;
-  }
+.dho-legend div { margin-bottom: 8px; }
+
+.dho-footnote { margin-top: 16px; opacity: .85; }
+
+.dho-rank { list-style: none; padding: 0; }
+.dho-rank-item { margin-bottom: 14px; }
+.dho-rank-item span { opacity: .75; }
+
+.is-hidden { display: none; }
+
+.dho-btn {
+  margin-top: 12px;
+  padding: 12px 16px;
+  border-radius: 14px;
+  background: rgba(180,140,255,0.25);
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+.dho-highlight-text {
+  margin-top: 20px;
+  font-weight: 600;
+  color: rgba(230,200,255,0.95);
+  text-align: center;
+}
+
+.dho-final-question {
+  margin-top: 16px;
+  text-align: center;
+  color: rgba(255,190,220,0.95);
+  font-weight: 600;
+  display: none;
+}
+
+.dho-insight-box {
+  max-width: 660px;
+  margin: 40px auto 0;
+  background: rgba(255,140,190,0.12);
+  padding: 20px;
+  border-radius: 18px;
+}
 </style>
 
 <script>
-  window.initBloco_objetivos = function () {
-    const btn = document.getElementById("dhoRankNextBtn");
-    const list = document.getElementById("dhoObjetivosRank");
-    const finalBox = document.getElementById("dhoRankFinal");
+window.initBloco_objetivos = function () {
+  const btn = document.getElementById("dhoRankNextBtn");
+  const items = document.querySelectorAll("#dhoObjetivosRank .is-hidden");
+  const final = document.getElementById("dhoRankFinal");
 
-    btn.addEventListener("click", () => {
-      const next = list.querySelector(".is-hidden");
-      if (next) {
-        next.classList.remove("is-hidden");
-        const remaining = list.querySelector(".is-hidden");
-        btn.textContent = remaining
-          ? `Descobrir o Top ${remaining.dataset.rank}`
-          : "Ranking completo";
-        if (!remaining) {
-          btn.disabled = true;
-          finalBox.style.display = "block";
-        }
-      }
-    });
+  let index = 0;
+
+  btn.onclick = () => {
+    if (index < items.length) {
+      items[index].classList.remove("is-hidden");
+      index++;
+      btn.textContent = index < items.length
+        ? `Descobrir o Top ${index + 2}`
+        : "Ranking completo";
+    }
+    if (index === items.length) {
+      btn.disabled = true;
+      final.style.display = "block";
+    }
   };
+};
 </script>
