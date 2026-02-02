@@ -110,12 +110,18 @@
           </ol>
 
           <div class="dho-rank-cta">
-            <button class="dho-btn" id="dhoRankNextBtn" type="button">
+            <button class="dho-btn dho-btn--glow" id="dhoRankNextBtn" type="button">
               Descobrir o Top 2
             </button>
             <p class="dho-rank-hint" id="dhoRankHint">
               Dica: clique para abrir o próximo nível do ranking.
             </p>
+
+            <div class="dho-rank-final" id="dhoRankFinal" aria-live="polite">
+              <p class="dho-rank-final-q">
+                E para você, qual é seu Top 1 hoje para o seu desenvolvimento?
+              </p>
+            </div>
           </div>
         </div>
 
@@ -152,7 +158,7 @@
 
 <style>
   .dho-objetivos { padding: 28px 16px; }
-  .dho-objetivos-wrap { max-width: 980px; margin: 0 auto; }
+  .dho-objetivos-wrap { max-width: 1100px; margin: 0 auto; }
 
   .dho-kicker {
     margin: 0 0 10px 0;
@@ -306,9 +312,7 @@
     color: rgba(255,255,255,0.70);
   }
 
-  .dho-rank-wrap {
-    margin-top: 10px;
-  }
+  .dho-rank-wrap { margin-top: 10px; }
 
   .dho-rank {
     list-style: none;
@@ -360,7 +364,6 @@
     color: rgba(255,255,255,0.70);
   }
 
-  /* Revelação progressiva */
   .is-hidden { display: none; }
 
   .dho-rank-cta {
@@ -369,36 +372,66 @@
     gap: 6px;
   }
 
+  /* Botão lilás claro com "shimmer" suave */
   .dho-btn {
     width: 100%;
-    border: 1px solid rgba(255,255,255,0.12);
-    background: rgba(255,255,255,0.06);
-    color: rgba(255,255,255,0.92);
+    border: 1px solid rgba(206, 182, 255, 0.26);
     border-radius: 14px;
     padding: 11px 12px;
-    font-weight: 700;
+    font-weight: 800;
     letter-spacing: 0.01em;
     cursor: pointer;
+    color: rgba(255,255,255,0.94);
+    background: rgba(165, 125, 255, 0.16);
     box-shadow: 0 10px 24px rgba(0,0,0,0.22);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
     transition: transform 0.12s ease, background 0.12s ease, border-color 0.12s ease;
+    position: relative;
+    overflow: hidden;
   }
 
   .dho-btn:hover {
     transform: translateY(-1px);
-    background: rgba(255,255,255,0.08);
-    border-color: rgba(255,255,255,0.16);
+    background: rgba(175, 140, 255, 0.20);
+    border-color: rgba(220, 200, 255, 0.34);
   }
 
-  .dho-btn:active {
-    transform: translateY(0px);
-  }
+  .dho-btn:active { transform: translateY(0px); }
 
   .dho-btn:disabled {
     cursor: default;
-    opacity: 0.65;
+    opacity: 0.70;
     transform: none;
+  }
+
+  .dho-btn--glow::after {
+    content: "";
+    position: absolute;
+    inset: -40%;
+    background: linear-gradient(
+      110deg,
+      transparent 0%,
+      rgba(245, 235, 255, 0.06) 35%,
+      rgba(245, 235, 255, 0.22) 50%,
+      rgba(245, 235, 255, 0.06) 65%,
+      transparent 100%
+    );
+    transform: translateX(-55%) rotate(8deg);
+    animation: dhoShimmer 3.6s ease-in-out infinite;
+    pointer-events: none;
+    filter: blur(0.2px);
+  }
+
+  @keyframes dhoShimmer {
+    0%   { transform: translateX(-60%) rotate(8deg); opacity: 0.0; }
+    18%  { opacity: 0.55; }
+    50%  { transform: translateX(60%) rotate(8deg); opacity: 0.35; }
+    100% { transform: translateX(60%) rotate(8deg); opacity: 0.0; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .dho-btn--glow::after { animation: none; }
   }
 
   .dho-rank-hint {
@@ -406,6 +439,25 @@
     font-size: 12.5px;
     line-height: 1.45;
     color: rgba(255,255,255,0.70);
+  }
+
+  /* Pergunta final, aparece só ao concluir */
+  .dho-rank-final {
+    display: none;
+    border-radius: 14px;
+    padding: 10px 12px;
+    border: 1px solid rgba(255,255,255,0.10);
+    background: rgba(255,255,255,0.05);
+    margin-top: 6px;
+  }
+
+  .dho-rank-final.is-visible { display: block; }
+
+  .dho-rank-final-q {
+    margin: 0;
+    font-size: 13px;
+    line-height: 1.55;
+    color: rgba(255,255,255,0.85);
   }
 
   .dho-mini-insight {
@@ -568,14 +620,17 @@
       const btn = document.getElementById("dhoRankNextBtn");
       const hint = document.getElementById("dhoRankHint");
       const list = document.getElementById("dhoObjetivosRank");
+      const finalBox = document.getElementById("dhoRankFinal");
 
       if (!wrap || !btn || !list) return;
 
+      // Estado inicial: garante que a pergunta final esteja oculta
+      if (finalBox) finalBox.classList.remove("is-visible");
+
       // Evita duplicar listener se o init rodar novamente
-      if (wrap.dataset.bound === "1") {
-        // Mesmo assim, garante que estado visual está consistente
-      } else {
+      if (wrap.dataset.bound !== "1") {
         wrap.dataset.bound = "1";
+
         btn.addEventListener("click", () => {
           const hidden = list.querySelector(".dho-rank-item.is-hidden");
           if (hidden) {
@@ -589,21 +644,26 @@
             } else {
               btn.textContent = "Ranking completo";
               btn.disabled = true;
+              btn.classList.remove("dho-btn--glow");
               if (hint) hint.textContent = "Pronto: agora o ranking está totalmente aberto.";
+              if (finalBox) finalBox.classList.add("is-visible");
             }
           }
         });
       }
 
-      // Estado inicial do botão baseado no primeiro hidden (Top 2)
+      // Ajusta botão conforme primeiro hidden
       const firstHidden = list.querySelector(".dho-rank-item.is-hidden");
       if (firstHidden) {
         const r = firstHidden.getAttribute("data-rank");
         btn.textContent = `Descobrir o Top ${r}`;
         btn.disabled = false;
+        btn.classList.add("dho-btn--glow");
       } else {
         btn.textContent = "Ranking completo";
         btn.disabled = true;
+        btn.classList.remove("dho-btn--glow");
+        if (finalBox) finalBox.classList.add("is-visible");
         if (hint) hint.textContent = "Pronto: agora o ranking está totalmente aberto.";
       }
 
