@@ -1,1 +1,596 @@
+<!-- ======================================================================
+BLOCO 1 | OBJETIVOS E PRIORIDADES DE DESENVOLVIMENTO
+Arquivo sugerido: /blocos/bloco1_objetivos.html >> o que realmente ficou foi "03-R-objetivos.html"
+Integração: carregue via fetch() e depois chame window.initBloco_objetivos()
+Dependência externa: Chart.js (CDN) no index.html
+====================================================================== -->
+
+<section class="dho-objetivos" aria-labelledby="dho-objetivos-title">
+  <div class="dho-objetivos-wrap">
+
+    <header class="dho-objetivos-header">
+      <p class="dho-kicker">BLOCO 1 | OBJETIVOS E PRIORIDADES DE DESENVOLVIMENTO</p>
+
+      <h2 id="dho-objetivos-title" class="dho-title">
+        Quando se sabe qual é o objetivo, o próximo passo é priorizar por onde começar.
+      </h2>
+
+      <p class="dho-subtitle">
+        É unânime: 100% dos respondentes têm objetivos. O que muda não é “ter um norte”, e sim
+        transformar esse norte em prioridade praticável. Os relatos caminham de estabilidade
+        (profissional, emocional e financeira) até alta realização (liderança, legado e impacto).
+        Em outras palavras: primeiro segurança, depois expansão.
+      </p>
+    </header>
+
+    <div class="dho-objetivos-grid">
+      <!-- Card A: Pizza -->
+      <article class="dho-card dho-card--chart" aria-label="Distribuição dos objetivos por área da vida">
+        <div class="dho-card-head">
+          <h3 class="dho-card-title">Em que área da vida esses objetivos moram?</h3>
+          <p class="dho-card-note">
+            Quando a energia se concentra no eixo de “trabalho e carreira”, pode ser sinal de
+            busca por base, previsibilidade e sustentação do restante da vida.
+          </p>
+        </div>
+
+        <div class="dho-chart-row">
+          <div class="dho-chart-canvas">
+            <canvas id="dhoObjetivosPizza" width="420" height="420" aria-label="Gráfico de pizza"></canvas>
+          </div>
+
+          <div class="dho-legend" id="dhoObjetivosLegenda" aria-label="Legenda do gráfico">
+            <!-- preenchida via JS -->
+          </div>
+        </div>
+
+        <p class="dho-footnote">
+          Leitura rápida: foco profissional alto pode ser ambição, mas também pode ser “primeiro eu organizo a base, depois eu amplio”.
+        </p>
+      </article>
+
+      <!-- Card B: Ranking -->
+      <article class="dho-card dho-card--rank" aria-label="Fatores mais importantes para desenvolver">
+        <div class="dho-card-head">
+          <h3 class="dho-card-title">O que as pessoas acreditam que precisam desenvolver?</h3>
+          <p class="dho-card-note">
+            O ranking começa por condições e recursos antes de chegar em identidade e legado.
+            Isso costuma indicar pragmatismo: o objetivo existe, mas o corpo e o contexto precisam acompanhar.
+          </p>
+        </div>
+
+        <ol class="dho-rank" id="dhoObjetivosRank">
+          <li class="dho-rank-item dho-rank-item--top">
+            <span class="dho-rank-n">1</span>
+            <div class="dho-rank-txt">
+              <p class="dho-rank-title">Corpo e ambiente</p>
+              <p class="dho-rank-desc">Condições e recursos adequados (saúde, tempo, ferramentas, rede de apoio) para agir.</p>
+            </div>
+          </li>
+
+          <li class="dho-rank-item dho-rank-item--top">
+            <span class="dho-rank-n">2</span>
+            <div class="dho-rank-txt">
+              <p class="dho-rank-title">Habilidades</p>
+              <p class="dho-rank-desc">Mais conhecimento sobre si e sobre o mundo, e aplicação prática no dia a dia.</p>
+            </div>
+          </li>
+
+          <li class="dho-rank-item dho-rank-item--top">
+            <span class="dho-rank-n">3</span>
+            <div class="dho-rank-txt">
+              <p class="dho-rank-title">Comportamento</p>
+              <p class="dho-rank-desc">Entender padrões que ajudam (ou travam) produtividade, consistência e novas ações.</p>
+            </div>
+          </li>
+
+          <li class="dho-rank-item">
+            <span class="dho-rank-n">4</span>
+            <div class="dho-rank-txt">
+              <p class="dho-rank-title">Crenças e valores</p>
+              <p class="dho-rank-desc">Clarear o que se acredita e valoriza para agir com coerência.</p>
+            </div>
+          </li>
+
+          <li class="dho-rank-item">
+            <span class="dho-rank-n">5</span>
+            <div class="dho-rank-txt">
+              <p class="dho-rank-title">Visão e missão</p>
+              <p class="dho-rank-desc">Definir propósito, futuro desejado e escolher como viver isso.</p>
+            </div>
+          </li>
+
+          <li class="dho-rank-item">
+            <span class="dho-rank-n">6</span>
+            <div class="dho-rank-txt">
+              <p class="dho-rank-title">Legado</p>
+              <p class="dho-rank-desc">Gerar impacto positivo e duradouro em pessoas, times e sociedade.</p>
+            </div>
+          </li>
+
+          <li class="dho-rank-item">
+            <span class="dho-rank-n">7</span>
+            <div class="dho-rank-txt">
+              <p class="dho-rank-title">Identidade</p>
+              <p class="dho-rank-desc">Compreender papéis e expressão autêntica de quem se é.</p>
+            </div>
+          </li>
+        </ol>
+
+        <div class="dho-mini-insight">
+          <p class="dho-mini-insight-title">Uma leitura prática</p>
+          <p class="dho-mini-insight-text">
+            Se a base (condição) não existe, habilidade vira teoria. Se a habilidade não vira prática,
+            comportamento não muda. E sem consistência, propósito vira só intenção.
+          </p>
+        </div>
+      </article>
+    </div>
+
+    <aside class="dho-insight-box" aria-label="Reflexões orientadas pelos dados">
+      <h3 class="dho-insight-title">Reflexões para leitura (sem pressa)</h3>
+      <ul class="dho-insight-list">
+        <li>
+          Se 45% do foco está em <strong>trabalho e carreira</strong>, o que ainda precisa ficar mais seguro
+          (saúde, relações, bem-estar) para sustentar esse objetivo sem custo invisível?
+        </li>
+        <li>
+          O ranking começa em <strong>corpo e ambiente</strong> e termina em <strong>identidade</strong>.
+          Isso é maturidade estratégica… ou um sinal de sobrecarga que está pedindo reorganização do contexto?
+        </li>
+      </ul>
+      <p class="dho-insight-close">
+        Em termos de desenvolvimento, a sequência sugerida pelo dado é simples:
+        <span class="dho-seq">condição → habilidade → comportamento → alinhamento interno → visão</span>.
+      </p>
+    </aside>
+
+  </div>
+</section>
+
+<style>
+  /* =========================
+     BLOCO 1 | OBJETIVOS
+     ========================= */
+
+  .dho-objetivos {
+    padding: 28px 16px;
+  }
+
+  .dho-objetivos-wrap {
+    max-width: 1060px;
+    margin: 0 auto;
+  }
+
+  .dho-kicker {
+    margin: 0 0 10px 0;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-size: 12px;
+    color: rgba(255,255,255,0.70);
+  }
+
+  .dho-title {
+    margin: 0 0 10px 0;
+    font-size: clamp(22px, 2.3vw, 34px);
+    line-height: 1.15;
+    color: #F5F5F7;
+    font-weight: 700;
+  }
+
+  .dho-subtitle {
+    margin: 0;
+    max-width: 980px;
+    font-size: 15.5px;
+    line-height: 1.65;
+    color: rgba(255,255,255,0.85);
+  }
+
+  .dho-objetivos-grid {
+    margin-top: 18px;
+    display: grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    gap: 14px;
+  }
+
+  .dho-card {
+    border: 1px solid rgba(255,255,255,0.10);
+    background: rgba(255,255,255,0.07);
+    border-radius: 18px;
+    padding: 14px 14px 12px 14px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .dho-card::before {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    background: radial-gradient(900px 280px at 20% 0%, rgba(180,130,255,0.14), transparent 60%),
+                radial-gradient(700px 260px at 80% 20%, rgba(130,160,255,0.10), transparent 55%);
+    pointer-events: none;
+    opacity: 0.9;
+  }
+
+  .dho-card > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  .dho-card-head {
+    margin-bottom: 10px;
+  }
+
+  .dho-card-title {
+    margin: 0 0 6px 0;
+    font-size: 16px;
+    font-weight: 700;
+    color: #F5F5F7;
+    letter-spacing: 0.01em;
+  }
+
+  .dho-card-note {
+    margin: 0;
+    font-size: 13.5px;
+    line-height: 1.55;
+    color: rgba(255,255,255,0.70);
+  }
+
+  .dho-chart-row {
+    display: grid;
+    grid-template-columns: 1fr 0.9fr;
+    gap: 12px;
+    align-items: center;
+    padding-top: 6px;
+  }
+
+  .dho-chart-canvas {
+    border: 1px solid rgba(255,255,255,0.10);
+    background: rgba(0,0,0,0.18);
+    border-radius: 16px;
+    padding: 10px;
+    min-height: 320px;
+    display: grid;
+    place-items: center;
+  }
+
+  .dho-legend {
+    border: 1px solid rgba(255,255,255,0.10);
+    background: rgba(0,0,0,0.12);
+    border-radius: 16px;
+    padding: 12px;
+  }
+
+  .dho-legend-item {
+    display: grid;
+    grid-template-columns: 10px 1fr auto;
+    gap: 10px;
+    align-items: start;
+    padding: 8px 6px;
+    border-radius: 12px;
+  }
+
+  .dho-legend-item + .dho-legend-item {
+    margin-top: 6px;
+  }
+
+  .dho-legend-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-top: 4px;
+    box-shadow: 0 0 0 2px rgba(255,255,255,0.08);
+  }
+
+  .dho-legend-label {
+    font-size: 13.5px;
+    line-height: 1.35;
+    color: rgba(255,255,255,0.85);
+    margin: 0;
+  }
+
+  .dho-legend-sub {
+    font-size: 12px;
+    line-height: 1.35;
+    color: rgba(255,255,255,0.70);
+    margin: 2px 0 0 0;
+  }
+
+  .dho-legend-pct {
+    font-variant-numeric: tabular-nums;
+    font-weight: 700;
+    color: #F5F5F7;
+    font-size: 13.5px;
+    opacity: 0.95;
+  }
+
+  .dho-footnote {
+    margin: 10px 0 0 0;
+    font-size: 12.5px;
+    line-height: 1.5;
+    color: rgba(255,255,255,0.70);
+  }
+
+  .dho-rank {
+    list-style: none;
+    padding: 0;
+    margin: 10px 0 0 0;
+    display: grid;
+    gap: 8px;
+  }
+
+  .dho-rank-item {
+    display: grid;
+    grid-template-columns: 30px 1fr;
+    gap: 10px;
+    padding: 10px 10px;
+    border-radius: 14px;
+    border: 1px solid rgba(255,255,255,0.10);
+    background: rgba(0,0,0,0.12);
+  }
+
+  .dho-rank-item--top {
+    border-color: rgba(255,255,255,0.14);
+    background: linear-gradient(180deg, rgba(180,130,255,0.10), rgba(0,0,0,0.12));
+  }
+
+  .dho-rank-n {
+    width: 28px;
+    height: 28px;
+    border-radius: 10px;
+    display: grid;
+    place-items: center;
+    border: 1px solid rgba(255,255,255,0.12);
+    background: rgba(255,255,255,0.06);
+    color: rgba(255,255,255,0.92);
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .dho-rank-title {
+    margin: 0;
+    font-size: 13.5px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.92);
+  }
+
+  .dho-rank-desc {
+    margin: 3px 0 0 0;
+    font-size: 12.8px;
+    line-height: 1.45;
+    color: rgba(255,255,255,0.70);
+  }
+
+  .dho-mini-insight {
+    margin-top: 10px;
+    border-radius: 16px;
+    padding: 12px;
+    border: 1px solid rgba(255,255,255,0.10);
+    background: rgba(255,255,255,0.05);
+  }
+
+  .dho-mini-insight-title {
+    margin: 0 0 6px 0;
+    font-size: 12px;
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.70);
+  }
+
+  .dho-mini-insight-text {
+    margin: 0;
+    font-size: 13px;
+    line-height: 1.55;
+    color: rgba(255,255,255,0.85);
+  }
+
+  .dho-insight-box {
+    margin-top: 14px;
+    border-radius: 18px;
+    padding: 14px;
+    border: 1px solid rgba(255,255,255,0.10);
+    background: rgba(255,255,255,0.06);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.22);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .dho-insight-box::before {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    background: radial-gradient(820px 260px at 10% 0%, rgba(160,120,255,0.14), transparent 60%),
+                radial-gradient(700px 240px at 90% 20%, rgba(120,170,255,0.10), transparent 55%);
+    pointer-events: none;
+    opacity: 0.85;
+  }
+
+  .dho-insight-box > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  .dho-insight-title {
+    margin: 0 0 8px 0;
+    font-size: 14.5px;
+    font-weight: 700;
+    color: #F5F5F7;
+  }
+
+  .dho-insight-list {
+    margin: 0;
+    padding-left: 18px;
+    display: grid;
+    gap: 8px;
+    color: rgba(255,255,255,0.85);
+    font-size: 13.5px;
+    line-height: 1.55;
+  }
+
+  .dho-insight-close {
+    margin: 10px 0 0 0;
+    font-size: 13px;
+    line-height: 1.55;
+    color: rgba(255,255,255,0.85);
+  }
+
+  .dho-seq {
+    color: rgba(255,255,255,0.92);
+    font-weight: 700;
+  }
+
+  /* Responsivo */
+  @media (max-width: 920px) {
+    .dho-objetivos-grid {
+      grid-template-columns: 1fr;
+    }
+    .dho-chart-row {
+      grid-template-columns: 1fr;
+    }
+    .dho-chart-canvas {
+      min-height: 280px;
+    }
+  }
+
+  @media (max-width: 520px) {
+    .dho-subtitle {
+      text-align: justify;
+    }
+  }
+</style>
+
+<script>
+  // =========================
+  // BLOCO 1 | OBJETIVOS (init)
+  // =========================
+  window.initBloco_objetivos = function initBloco_objetivos() {
+    try {
+      if (!window.Chart) {
+        console.warn("[Bloco objetivos] Chart.js não encontrado. Inclua o CDN no index.html.");
+        return;
+      }
+
+      const dataPizza = [
+        {
+          key: "trabalho",
+          label: "Trabalho e carreira",
+          sub: "carreira, propósito, renda",
+          value: 45,
+          color: "rgba(180,130,255,0.95)"
+        },
+        {
+          key: "auto",
+          label: "Autodesenvolvimento e saúde",
+          sub: "saúde, intelecto, equilíbrio emocional",
+          value: 28,
+          color: "rgba(150,170,255,0.92)"
+        },
+        {
+          key: "bemestar",
+          label: "Bem-estar e sentido",
+          sub: "hobbies, felicidade, espiritualidade",
+          value: 17,
+          color: "rgba(210,170,255,0.85)"
+        },
+        {
+          key: "relacoes",
+          label: "Relações",
+          sub: "família, social, conjugal",
+          value: 10,
+          color: "rgba(255,255,255,0.72)"
+        }
+      ];
+
+      // 1) Render legenda HTML (custom)
+      const legendaEl = document.getElementById("dhoObjetivosLegenda");
+      if (legendaEl) {
+        legendaEl.innerHTML = dataPizza.map(item => {
+          return `
+            <div class="dho-legend-item">
+              <span class="dho-legend-dot" style="background:${item.color}"></span>
+              <div>
+                <p class="dho-legend-label">${item.label}</p>
+                <p class="dho-legend-sub">${item.sub}</p>
+              </div>
+              <div class="dho-legend-pct">${item.value}%</div>
+            </div>
+          `;
+        }).join("");
+      }
+
+      // 2) Chart.js - Pizza
+      const canvas = document.getElementById("dhoObjetivosPizza");
+      if (!canvas) return;
+
+      // Evita duplicar chart se init rodar mais de uma vez
+      if (canvas._chartInstance) {
+        canvas._chartInstance.destroy();
+      }
+
+      const ctx = canvas.getContext("2d");
+      const chart = new Chart(ctx, {
+        type: "doughnut",
+        data: {
+          labels: dataPizza.map(d => d.label),
+          datasets: [{
+            data: dataPizza.map(d => d.value),
+            backgroundColor: dataPizza.map(d => d.color),
+            borderColor: "rgba(255,255,255,0.10)",
+            borderWidth: 1.2,
+            hoverOffset: 6
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          cutout: "62%",
+          animation: {
+            duration: 650
+          },
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              backgroundColor: "rgba(10,10,14,0.92)",
+              borderColor: "rgba(255,255,255,0.10)",
+              borderWidth: 1,
+              titleColor: "rgba(255,255,255,0.92)",
+              bodyColor: "rgba(255,255,255,0.85)",
+              padding: 10,
+              callbacks: {
+                label: function(context) {
+                  const value = context.raw;
+                  return ` ${value}%`;
+                }
+              }
+            }
+          }
+        }
+      });
+
+      // Guarda instância para destruir em reinits
+      canvas._chartInstance = chart;
+
+      // Ajuste de altura do canvas container para responsividade
+      const canvasWrap = canvas.closest(".dho-chart-canvas");
+      if (canvasWrap) {
+        const setH = () => {
+          const w = canvasWrap.clientWidth;
+          const h = Math.max(260, Math.min(360, Math.round(w * 0.86)));
+          canvasWrap.style.minHeight = h + "px";
+          canvas.style.height = (h - 20) + "px";
+        };
+        setH();
+        window.addEventListener("resize", setH, { passive: true });
+      }
+
+    } catch (err) {
+      console.error("[Bloco objetivos] Erro ao inicializar:", err);
+    }
+  };
+</script>
 
