@@ -15,18 +15,19 @@
       --violet2:#a855f7;
       --violet3:#e9d5ff;
 
-      /* ====== FUNDO (roxo/lilás escuro estilo print) ====== */
-      --bg0:#04040a;
-      --bg1:#060612;
-      --bg2:#09091a;
+      /* ====== FUNDO (mais visível: roxo/lilás + menos preto) ====== */
+      --bg0:#05050c;
+      --bg1:#070717;
+      --bg2:#0b0b22;
 
-      /* “glows” suaves (preto predominante) */
-      --glowV1: rgba(168,85,247,.22);  /* lilás */
-      --glowV2: rgba(124,58,237,.18);  /* roxo */
-      --glowP1: rgba(236,72,153,.10);  /* pink bem sutil */
+      /* glows mais presentes */
+      --glowV1: rgba(168,85,247,.35);  /* lilás */
+      --glowV2: rgba(124,58,237,.30);  /* roxo */
+      --glowP1: rgba(236,72,153,.18);  /* pink sutil */
 
-      --deep:  rgba(0,0,0,.78);
-      --deep2: rgba(0,0,0,.92);
+      /* vinheta bem mais leve (pra não apagar o site) */
+      --deep:  rgba(0,0,0,.35);
+      --deep2: rgba(0,0,0,.72);
     }
 
     html, body{ height:100%; }
@@ -39,22 +40,25 @@
       overflow-x:hidden;
     }
 
-    /* ====== BACKGROUND GLOBAL (igual ao clima do print) ====== */
+    /* ====== BACKGROUND GLOBAL (ajustado para não ficar preto demais) ====== */
     html::before{
       content:"";
       position: fixed;
       inset: 0;
       z-index: -2;
       pointer-events: none;
-
       background:
-        /* vinheta base (já deixa “cinema”) */
-        radial-gradient(1200px 900px at 50% 45%, rgba(0,0,0,.35), rgba(0,0,0,.92)),
+        /* base com leve “ar roxo” (sem virar claro) */
+        radial-gradient(1200px 900px at 50% 45%, rgba(124,58,237,.10), rgba(0,0,0,.60)),
 
-        /* manchas/arcos roxo-lilás */
-        radial-gradient(980px 700px at 14% 30%, var(--glowP1), transparent 62%),
-        radial-gradient(1050px 760px at 86% 22%, var(--glowV1), transparent 64%),
-        radial-gradient(1180px 820px at 55% 92%, var(--glowV2), transparent 66%),
+        /* manchas/arcos roxo-lilás (mais fortes) */
+        radial-gradient(1200px 900px at 12% 28%, var(--glowP1), transparent 62%),
+        radial-gradient(1400px 980px at 88% 18%, var(--glowV1), transparent 64%),
+        radial-gradient(1500px 1050px at 55% 92%, var(--glowV2), transparent 66%),
+
+        /* reforço lateral (dá o efeito do wallpaper do print) */
+        radial-gradient(900px 700px at 0% 70%, rgba(168,85,247,.22), transparent 70%),
+        radial-gradient(900px 700px at 100% 35%, rgba(124,58,237,.18), transparent 72%),
 
         /* base escura contínua */
         linear-gradient(180deg, var(--bg0) 0%, var(--bg1) 45%, var(--bg2) 100%);
@@ -66,13 +70,11 @@
       inset: 0;
       z-index: -1;
       pointer-events: none;
-
       background:
-        /* vinheta forte + profundidade */
-        radial-gradient(1200px 900px at 50% 50%, var(--deep), var(--deep2)),
-
-        /* bloom central muito leve (sofisticado) */
-        radial-gradient(900px 320px at 50% 52%, rgba(168,85,247,.07), transparent 70%);
+        /* vinheta mais leve */
+        radial-gradient(1400px 1000px at 50% 50%, var(--deep), var(--deep2)),
+        /* “névoa” central bem sutil: melhora leitura */
+        radial-gradient(1000px 420px at 50% 52%, rgba(233,213,255,.10), transparent 72%);
     }
 
     .block,
@@ -202,7 +204,6 @@
     }
     .ctaTop:hover{
       transform: translateY(-1px);
-      border Attachment: translateY(-1px);
       border-color: rgba(233,213,255,.55);
       background: linear-gradient(180deg, rgba(124,58,237,.34), rgba(168,85,247,.18));
     }
@@ -271,15 +272,12 @@
       return;
     }
 
-    // seletor robusto
     const styleSel = `style[data-bloco="${targetId}"]`;
     const scriptSel = `script[data-bloco="${targetId}"]`;
 
-    // limpa css/js do bloco anterior
     document.querySelectorAll(styleSel).forEach(el => el.remove());
     document.querySelectorAll(scriptSel).forEach(el => el.remove());
 
-    // destrói charts existentes dentro do host
     try{
       if (window.Chart && typeof Chart.getChart === "function") {
         host.querySelectorAll("canvas").forEach((c) => {
@@ -297,7 +295,6 @@
       return new Promise((resolve, reject) => {
         const s = document.createElement("script");
 
-        // copia atributos, mas garante que data-bloco seja o nosso
         for (const attr of scriptEl.attributes) {
           if (attr.name.toLowerCase() === "data-bloco") continue;
           s.setAttribute(attr.name, attr.value);
@@ -306,12 +303,11 @@
 
         if (scriptEl.src) {
           s.src = scriptEl.src;
-          s.async = false; // preserva ordem
+          s.async = false;
           s.onload = () => resolve();
           s.onerror = (err) => reject(err);
           document.body.appendChild(s);
         } else {
-          // inline: executa ao inserir
           s.textContent = scriptEl.textContent || "";
           document.body.appendChild(s);
           resolve();
@@ -326,11 +322,9 @@
       const html = await res.text();
       const doc = new DOMParser().parseFromString(html, "text/html");
 
-      // injeta conteúdo do body (fallback se vier vazio)
       const bodyHTML = doc.body && doc.body.innerHTML ? doc.body.innerHTML : (doc.documentElement?.innerHTML || "");
       host.innerHTML = bodyHTML;
 
-      // injeta styles do bloco
       doc.querySelectorAll("style").forEach(styleEl => {
         const s = document.createElement("style");
         s.setAttribute("data-bloco", targetId);
@@ -338,17 +332,14 @@
         document.head.appendChild(s);
       });
 
-      // injeta scripts em ordem
       const scripts = Array.from(doc.querySelectorAll("script"));
       for (const old of scripts) {
         await appendScriptAndWait(old);
       }
 
-      // aguarda layout
       await nextFrame();
       await nextFrame();
 
-      // chama init do bloco
       const fn = window[initFnName];
       if (typeof fn === "function") {
         try { fn(); }
