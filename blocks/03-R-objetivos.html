@@ -25,7 +25,7 @@
 
         <div class="dho-chart-row">
           <div class="dho-chart-canvas dho-plain-surface">
-            <div class="dho-chart-box" aria-hidden="true">
+            <div class="dho-chart-box" aria-label="Área do gráfico">
               <canvas id="dhoObjetivosPizza" aria-label="Gráfico de pizza"></canvas>
             </div>
           </div>
@@ -149,7 +149,7 @@
   .dho-objetivos { padding: 28px 16px; }
   .dho-objetivos-wrap { max-width: 980px; margin: 0 auto; }
 
-  .dho-kicker {
+  .dho-kicker{
     margin: 0 0 10px 0;
     letter-spacing: 0.12em;
     text-transform: uppercase;
@@ -157,7 +157,7 @@
     color: rgba(255,255,255,0.70);
   }
 
-  .dho-title {
+  .dho-title{
     margin: 0 0 10px 0;
     font-size: clamp(22px, 2.3vw, 34px);
     line-height: 1.15;
@@ -165,7 +165,7 @@
     font-weight: 700;
   }
 
-  .dho-subtitle {
+  .dho-subtitle{
     margin: 0;
     max-width: 980px;
     font-size: 15.5px;
@@ -174,7 +174,7 @@
     text-align: justify;
   }
 
-  .dho-objetivos-grid {
+  .dho-objetivos-grid{
     margin-top: 18px;
     display: grid;
     grid-template-columns: 1.05fr 0.95fr;
@@ -182,7 +182,7 @@
     align-items: start;
   }
 
-  .dho-card {
+  .dho-card{
     border: 1px solid rgba(255,255,255,0.10);
     background: rgba(255,255,255,0.07);
     border-radius: 18px;
@@ -194,7 +194,7 @@
     overflow: hidden;
   }
 
-  .dho-card::before {
+  .dho-card::before{
     content: "";
     position: absolute;
     inset: -1px;
@@ -205,11 +205,10 @@
     opacity: 0.9;
   }
 
-  .dho-card > * { position: relative; z-index: 1; }
+  .dho-card > *{ position: relative; z-index: 1; }
+  .dho-card-head{ margin-bottom: 10px; }
 
-  .dho-card-head { margin-bottom: 10px; }
-
-  .dho-card-title {
+  .dho-card-title{
     margin: 0 0 6px 0;
     font-size: 16px;
     font-weight: 700;
@@ -217,7 +216,7 @@
     letter-spacing: 0.01em;
   }
 
-  .dho-card-note {
+  .dho-card-note{
     margin: 0;
     font-size: 13.5px;
     line-height: 1.55;
@@ -225,7 +224,7 @@
     text-align: justify;
   }
 
-  .dho-chart-row {
+  .dho-chart-row{
     display: grid;
     grid-template-columns: 1fr 0.9fr;
     gap: 12px;
@@ -233,7 +232,7 @@
     padding-top: 6px;
   }
 
-  .dho-plain-surface {
+  .dho-plain-surface{
     border: 0 !important;
     background: transparent !important;
     padding: 0 !important;
@@ -242,32 +241,38 @@
     box-shadow: none !important;
   }
 
-  /* ✅ NOVO: “chart box” quadrado e centralizado (evita corte no mobile) */
+  /* ✅ TAMANHO REAL E CONTROLADO DO DONUT */
+  .dho-objetivos{
+    --pizzaSize: 320px; /* desktop */
+  }
+
   .dho-chart-canvas{
+    width: 100%;
     display: grid;
     place-items: center;
-    width: 100%;
   }
 
   .dho-chart-box{
-    width: min(360px, 100%);
-    aspect-ratio: 1 / 1;
-    position: relative;
+    width: min(var(--pizzaSize), 100%);
+    height: min(var(--pizzaSize), 100%);
+    max-width: 100%;
+    max-height: 100%;
     display: grid;
     place-items: center;
+    position: relative;
+    margin: 0 auto;
   }
 
+  /* canvas ocupa o box e não “vaza” */
   #dhoObjetivosPizza{
-    position: absolute;
-    inset: 0;
     width: 100% !important;
     height: 100% !important;
     display: block;
   }
 
-  .dho-legend { padding: 0; }
+  .dho-legend{ padding: 0; }
 
-  .dho-legend-item {
+  .dho-legend-item{
     display: grid;
     grid-template-columns: 10px 1fr auto;
     gap: 10px;
@@ -275,13 +280,13 @@
     padding: 8px 0;
   }
 
-  .dho-legend-item + .dho-legend-item {
+  .dho-legend-item + .dho-legend-item{
     border-top: 1px solid rgba(255,255,255,0.08);
     margin-top: 6px;
     padding-top: 10px;
   }
 
-  .dho-legend-dot {
+  .dho-legend-dot{
     width: 10px;
     height: 10px;
     border-radius: 50%;
@@ -289,14 +294,14 @@
     box-shadow: 0 0 0 2px rgba(255,255,255,0.08);
   }
 
-  .dho-legend-label {
+  .dho-legend-label{
     font-size: 13.5px;
     line-height: 1.35;
     color: rgba(255,255,255,0.85);
     margin: 0;
   }
 
-  .dho-legend-sub {
+  .dho-legend-sub{
     font-size: 12px;
     line-height: 1.35;
     color: rgba(255,255,255,0.70);
@@ -304,7 +309,7 @@
     text-align: justify;
   }
 
-  .dho-legend-pct {
+  .dho-legend-pct{
     font-variant-numeric: tabular-nums;
     font-weight: 700;
     color: #F5F5F7;
@@ -312,7 +317,7 @@
     opacity: 0.95;
   }
 
-  .dho-footnote {
+  .dho-footnote{
     margin: 10px 0 0 0;
     font-size: 12.8px;
     line-height: 1.55;
@@ -320,7 +325,7 @@
     text-align: justify;
   }
 
-  .dho-rank-card {
+  .dho-rank-card{
     border: 0;
     background: transparent;
     border-radius: 0;
@@ -333,9 +338,9 @@
     grid-column: 1 / -1;
   }
 
-  .dho-rank-wrap { margin-top: 10px; }
+  .dho-rank-wrap{ margin-top: 10px; }
 
-  .dho-rank {
+  .dho-rank{
     list-style: none;
     padding: 0;
     margin: 0;
@@ -343,7 +348,7 @@
     gap: 8px;
   }
 
-  .dho-rank-item {
+  .dho-rank-item{
     display: grid;
     grid-template-columns: 30px 1fr;
     gap: 10px;
@@ -353,12 +358,12 @@
     background: rgba(0,0,0,0.12);
   }
 
-  .dho-rank-item--top {
+  .dho-rank-item--top{
     border-color: rgba(255,255,255,0.14);
     background: linear-gradient(180deg, rgba(180,130,255,0.10), rgba(0,0,0,0.12));
   }
 
-  .dho-rank-n {
+  .dho-rank-n{
     width: 28px;
     height: 28px;
     border-radius: 10px;
@@ -371,14 +376,14 @@
     font-variant-numeric: tabular-nums;
   }
 
-  .dho-rank-title {
+  .dho-rank-title{
     margin: 0;
     font-size: 13.5px;
     font-weight: 700;
     color: rgba(255,255,255,0.92);
   }
 
-  .dho-rank-desc {
+  .dho-rank-desc{
     margin: 3px 0 0 0;
     font-size: 12.8px;
     line-height: 1.45;
@@ -386,16 +391,15 @@
     text-align: justify;
   }
 
-  /* ✅ força o hidden mesmo com CSS externo */
-  .is-hidden { display: none !important; }
+  .is-hidden{ display: none !important; }
 
-  .dho-rank-cta {
+  .dho-rank-cta{
     margin-top: 10px;
     display: grid;
     gap: 6px;
   }
 
-  .dho-btn {
+  .dho-btn{
     width: 100%;
     border: 1px solid rgba(206, 182, 255, 0.26);
     border-radius: 14px;
@@ -413,21 +417,21 @@
     overflow: hidden;
   }
 
-  .dho-btn:hover {
+  .dho-btn:hover{
     transform: translateY(-1px);
     background: rgba(175, 140, 255, 0.20);
     border-color: rgba(220, 200, 255, 0.34);
   }
 
-  .dho-btn:active { transform: translateY(0px); }
+  .dho-btn:active{ transform: translateY(0px); }
 
-  .dho-btn:disabled {
+  .dho-btn:disabled{
     cursor: default;
     opacity: 0.70;
     transform: none;
   }
 
-  .dho-btn--glow::after {
+  .dho-btn--glow::after{
     content: "";
     position: absolute;
     inset: -40%;
@@ -442,21 +446,20 @@
     transform: translateX(-55%) rotate(8deg);
     animation: dhoShimmer 3.6s ease-in-out infinite;
     pointer-events: none;
-    filter: blur(0.2px);
   }
 
-  @keyframes dhoShimmer {
+  @keyframes dhoShimmer{
     0%   { transform: translateX(-60%) rotate(8deg); opacity: 0.0; }
     18%  { opacity: 0.55; }
     50%  { transform: translateX(60%) rotate(8deg); opacity: 0.35; }
     100% { transform: translateX(60%) rotate(8deg); opacity: 0.0; }
   }
 
-  @media (prefers-reduced-motion: reduce) {
-    .dho-btn--glow::after { animation: none; }
+  @media (prefers-reduced-motion: reduce){
+    .dho-btn--glow::after{ animation: none; }
   }
 
-  .dho-rank-hint {
+  .dho-rank-hint{
     margin: 0;
     font-size: 12.5px;
     line-height: 1.45;
@@ -464,7 +467,7 @@
     text-align: justify;
   }
 
-  .dho-rank-final {
+  .dho-rank-final{
     display: none;
     width: 40%;
     margin: 12px auto 0 auto;
@@ -475,9 +478,9 @@
     text-align: center;
   }
 
-  .dho-rank-final.is-visible { display: block; }
+  .dho-rank-final.is-visible{ display: block; }
 
-  .dho-rank-final-q {
+  .dho-rank-final-q{
     margin: 0;
     font-size: 14px;
     line-height: 1.45;
@@ -486,31 +489,16 @@
     text-align: center;
   }
 
-  .dho-insight-box {
-    width: 60%;
-    justify-self: center;
-    border-radius: 18px;
-    padding: 14px;
-    border: 1px solid rgba(255,255,255,0.10);
-    grid-column: 1 / -1;
-    background: rgba(255, 130, 180, 0.10);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.18);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    position: relative;
-    overflow: hidden;
-    margin-top: 6px;
-  }
-
   .dho-insight-box--flow{
     background: transparent !important;
     border-color: transparent !important;
     box-shadow: none !important;
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
+    grid-column: 1 / -1;
   }
 
-  .dho-flow-img{display:block;width:100%;max-width:100%;height:auto;margin:16px auto;}
+  .dho-flow-img{ display:block; width:100%; height:auto; margin:16px auto; }
 
   .dho-flow-title{
     margin: 0 0 10px 0;
@@ -530,19 +518,16 @@
     text-align: justify;
   }
 
-  .dho-flow-top{ margin-bottom: 16px; }
-  .dho-flow-bottom{ margin-top: 18px; }
-
-  @media (max-width: 920px) {
-    .dho-objetivos-grid { grid-template-columns: 1fr; }
-    .dho-chart-row { grid-template-columns: 1fr; }
-    .dho-chart-box { width: min(320px, 100%); } /* ✅ mobile/tablet: reduz sem cortar */
-    .dho-insight-box { width: 100%; justify-self: stretch; }
-    .dho-rank-final { width: 100%; }
+  /* Breakpoints do donut */
+  @media (max-width: 920px){
+    .dho-objetivos{ --pizzaSize: 280px; }
+    .dho-objetivos-grid{ grid-template-columns: 1fr; }
+    .dho-chart-row{ grid-template-columns: 1fr; }
+    .dho-rank-final{ width: 100%; }
   }
 
-  @media (max-width: 520px) {
-    .dho-chart-box { width: min(260px, 100%); } /* ✅ mobile pequeno */
+  @media (max-width: 520px){
+    .dho-objetivos{ --pizzaSize: 240px; }
   }
 
   .dho-objetivos-header{ position: static !important; }
@@ -585,6 +570,10 @@
 
         const canvas = root.querySelector("#dhoObjetivosPizza");
         if (canvas) {
+          // ✅ remove dimensões antigas do canvas (ajuda muito em render via fetch)
+          canvas.removeAttribute("width");
+          canvas.removeAttribute("height");
+
           if (canvas._chartInstance) canvas._chartInstance.destroy();
 
           const ctx = canvas.getContext("2d");
@@ -604,6 +593,7 @@
               responsive: true,
               maintainAspectRatio: false,
               cutout: "62%",
+              layout: { padding: 0 },
               animation: { duration: 650 },
               plugins: {
                 legend: { display: false },
@@ -621,10 +611,25 @@
           });
 
           canvas._chartInstance = chart;
+
+          // ✅ resize forçado (resolve 90% dos “cortes” em desktop/mobile)
+          const forceResize = () => {
+            try { chart.resize(); } catch(e) {}
+          };
+          requestAnimationFrame(forceResize);
+          setTimeout(forceResize, 60);
+          setTimeout(forceResize, 220);
+
+          // ✅ resize ao mudar viewport (debounce simples)
+          let t = null;
+          window.addEventListener("resize", () => {
+            clearTimeout(t);
+            t = setTimeout(forceResize, 120);
+          }, { passive: true });
         }
       }
 
-      // ===== 2) Ranking progressivo (reset forte + bind seguro) =====
+      // ===== 2) Ranking progressivo (mantido, com reset forte) =====
       const wrap = root.querySelector("#dhoRankWrap");
       const btn  = root.querySelector("#dhoRankNextBtn");
       const hint = root.querySelector("#dhoRankHint");
@@ -633,7 +638,6 @@
 
       if (!wrap || !btn || !list) return;
 
-      // ✅ reset: garante estado inicial SEMPRE (evita carregar já aberto)
       const items = Array.from(list.querySelectorAll(".dho-rank-item"));
       items.forEach(li => {
         const r = li.getAttribute("data-rank");
@@ -662,20 +666,16 @@
         if (finalBox) finalBox.classList.add("is-visible");
       };
 
-      // ✅ bind único por instância do bloco
       if (wrap.dataset.bound !== "1") {
         wrap.dataset.bound = "1";
-
         btn.addEventListener("click", () => {
           const hidden = getNextHidden();
           if (!hidden) return;
-
           hidden.classList.remove("is-hidden");
           syncButtonLabel();
         });
       }
 
-      // ✅ garante texto correto já ao carregar
       syncButtonLabel();
 
     } catch (err) {
