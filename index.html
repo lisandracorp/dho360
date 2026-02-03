@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>DHO 360º </title>
+  <title>DHO 360º | Piloto</title>
 
   <style>
     /* ====== TOKENS (fallback) — se o :root do site não estiver carregado ====== */
@@ -25,43 +25,53 @@
       --neonP1: rgba(236,72,153,.10);
     }
 
-    html, body{
-      height:100%;
-    }
+    html, body{ height:100%; }
 
-    /* ====== BASE mínima ====== */
+    /* IMPORTANT: deixa transparente para o fundo do html aparecer */
+    html{ background: transparent !important; }
     body{
       margin:0;
       font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
       color: var(--fg);
-
-      /* IMPORTANT: deixa transparente para o backdrop aparecer sempre */
       background: transparent !important;
       overflow-x:hidden;
     }
 
-    /* Camada fixa de fundo (não pode ser sobrescrita por CSS dos blocos) */
-    .siteBackdrop{
+    /* ====== FUNDO NEON (tentativa atual — você decidiu revisar depois) ====== */
+    html::before{
+      content:"";
       position: fixed;
       inset: 0;
-      z-index: -999;
+      z-index: -2;
       pointer-events: none;
-
       background:
         radial-gradient(900px 520px at 22% 12%, var(--neonP1), transparent 60%),
         radial-gradient(980px 560px at 72% 18%, var(--neonV1), transparent 62%),
         radial-gradient(860px 520px at 42% 82%, var(--neonV2), transparent 64%),
         linear-gradient(180deg, var(--bg0) 0%, var(--bg1) 40%, var(--bg2) 100%);
     }
-
-    /* Vinheta/profundidade extra */
-    .siteBackdrop::after{
+    html::after{
       content:"";
-      position:absolute;
-      inset:0;
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
       background:
         radial-gradient(1200px 900px at 50% 50%, rgba(0,0,0,.72), rgba(0,0,0,.92));
-      mix-blend-mode: normal;
+    }
+
+    /* wrappers comuns (mantidos como estavam na sua última versão) */
+    .block,
+    section.block,
+    article.block{
+      background: transparent !important;
+      background-color: transparent !important;
+    }
+
+    /* containers onde você injeta os blocos */
+    #intro, #metodologia, #r_objetivos, #r_objetivosNeg, #r_motivacoes{
+      background: transparent !important;
+      background-color: transparent !important;
     }
 
     a{
@@ -71,7 +81,7 @@
     }
     a:hover{ opacity:1; }
 
-    /* ====== HEADER ====== */
+    /* ====== HEADER (igual ao seu original) ====== */
     header{
       position: sticky;
       top: 0;
@@ -196,9 +206,6 @@
 
 <body>
 
-  <!-- Fundo neon fixo do site -->
-  <div class="siteBackdrop" aria-hidden="true"></div>
-
   <header>
     <div class="navWrap">
       <div class="navTop">
@@ -250,6 +257,9 @@
   <!-- Bloco 04 - Resultados: Objetivos (Negócios) -->
   <div id="r_objetivosNeg"></div>
 
+  <!-- Bloco 05 - Resultados: Motivações -->
+  <div id="r_motivacoes"></div>
+
 <script>
   async function carregarBloco({ url, targetId, initFnName }) {
     const host = document.getElementById(targetId);
@@ -263,6 +273,7 @@
     document.querySelectorAll(`style[${marker}]`).forEach(el => el.remove());
     document.querySelectorAll(`script[${marker}]`).forEach(el => el.remove());
 
+    // destrói charts existentes dentro do host (evita conflitos Chart.js)
     try{
       if (window.Chart && typeof Chart.getChart === "function") {
         host.querySelectorAll("canvas").forEach((c) => {
@@ -344,6 +355,9 @@
   carregarBloco({ url: "blocks/02-metodologia.html", targetId: "metodologia", initFnName: "initBloco_metodologia" });
   carregarBloco({ url: "blocks/03-R-objetivos.html", targetId: "r_objetivos", initFnName: "initBloco_objetivos" });
   carregarBloco({ url: "blocks/04-R-objetivosNeg.html", targetId: "r_objetivosNeg", initFnName: "initBloco_objetivosNeg" });
+
+  // NOVO: Bloco 05
+  carregarBloco({ url: "blocks/05-R-Motivacoes.html", targetId: "r_motivacoes", initFnName: "initBloco_motivacoes" });
 </script>
 
 </body>
