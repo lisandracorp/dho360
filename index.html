@@ -152,7 +152,7 @@
       gap:10px;
       flex-wrap:wrap;
       align-items:center;
-      justify-content:flex-end;
+      justify-content:flex-end; /* desktop mantém à direita */
     }
 
     .linksBottom a{
@@ -191,27 +191,27 @@
     }
     .ctaTop:active{ transform: translateY(0px); }
 
-    /* ====== MOBILE FIXES (o que você pediu) ====== */
+    /* ====== MOBILE FIXES + Centralizar botões do menu ====== */
     @media (max-width: 680px){
-      /* 1) Centraliza e evita “puxar” para a esquerda */
       .navWrap{ padding: 0 14px; }
 
-      /* 2) Permite quebrar linha e mantém CTA dentro do header */
       .navTop{
         flex-wrap: wrap;
         align-items: center;
       }
 
-      /* remove min-width que força overflow */
       .left{ min-width: 0; }
 
-      /* CTA vai para a linha de baixo, alinhada à direita, sem estourar */
       .ctaTop{
         margin-left: auto;
         width: auto;
       }
 
-      /* 3) Hosts com padding lateral consistente e centrados */
+      /* Centraliza os botões (Introdução / Metodologia) no mobile */
+      .linksBottom{
+        justify-content: center;
+      }
+
       #intro, #metodologia, #r_objetivos, #r_objetivosNeg, #r_motivacoes{
         width: 100%;
         max-width: 1100px;
@@ -264,7 +264,6 @@
         <nav class="linksBottom">
           <a href="#intro">Introdução</a>
           <a href="#metodologia">Metodologia</a>
-          <!-- ajuste global pedido: removidos "Amostra" e "Bloco 1" -->
         </nav>
       </div>
     </div>
