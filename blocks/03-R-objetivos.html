@@ -241,7 +241,7 @@
     box-shadow: none !important;
   }
 
-  /* ✅ TAMANHO REAL E CONTROLADO DO DONUT */
+  /* ✅ sizing real e previsível */
   .dho-objetivos{
     --pizzaSize: 320px; /* desktop */
   }
@@ -252,19 +252,19 @@
     place-items: center;
   }
 
+  /* ✅ nunca colapsa (min-height) + mantém quadrado (aspect-ratio) */
   .dho-chart-box{
     width: min(var(--pizzaSize), 100%);
-    height: min(var(--pizzaSize), 100%);
-    max-width: 100%;
-    max-height: 100%;
-    display: grid;
-    place-items: center;
+    aspect-ratio: 1 / 1;
+    min-height: min(var(--pizzaSize), 100vw);
     position: relative;
     margin: 0 auto;
   }
 
-  /* canvas ocupa o box e não “vaza” */
+  /* ✅ canvas ocupa o box e o Chart.js calcula certo */
   #dhoObjetivosPizza{
+    position: absolute;
+    inset: 0;
     width: 100% !important;
     height: 100% !important;
     display: block;
@@ -543,10 +543,32 @@
       const root = document.querySelector(".dho-objetivos");
       if (!root) return;
 
-      // ===== 1) Chart.js =====
-      if (!window.Chart) {
-        console.warn("[Bloco objetivos] Chart.js não encontrado. Garanta o CDN no index.html.");
-      } else {
+      // ========= util: carregar Chart.js com fallback =========
+      const ensureChart = () => new Promise((resolve) => {
+        if (window.Chart) return resolve(true);
+
+        // evita múltiplos injects
+        if (window.__dhoChartLoading === true) {
+          const t = setInterval(() => {
+            if (window.Chart) { clearInterval(t); resolve(true); }
+          }, 60);
+          setTimeout(() => { clearInterval(t); resolve(!!window.Chart); }, 2500);
+          return;
+        }
+
+        window.__dhoChartLoading = true;
+
+        const s = document.createElement("script");
+        // fallback mais “estável” em ambientes com tracking prevention
+        s.src = "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js";
+        s.async = true;
+        s.onload = () => resolve(true);
+        s.onerror = () => resolve(false);
+        document.head.appendChild(s);
+      });
+
+      // ========= 1) Pizza =========
+      const renderPizza = () => {
         const dataPizza = [
           { label: "Trabalho e carreira", sub: "carreira, propósito, renda", value: 45, color: "rgba(180,130,255,0.95)" },
           { label: "Autodesenvolvimento e saúde", sub: "saúde, intelecto, equilíbrio emocional", value: 28, color: "rgba(150,170,255,0.92)" },
@@ -569,114 +591,113 @@
         }
 
         const canvas = root.querySelector("#dhoObjetivosPizza");
-        if (canvas) {
-          // ✅ remove dimensões antigas do canvas (ajuda muito em render via fetch)
-          canvas.removeAttribute("width");
-          canvas.removeAttribute("height");
+        if (!canvas) return;
 
-          if (canvas._chartInstance) canvas._chartInstance.destroy();
+        // limpa dimensões “travadas” do canvas (muito comum quando já renderizou antes)
+        canvas.removeAttribute("width");
+        canvas.removeAttribute("height");
 
-          const ctx = canvas.getContext("2d");
-          const chart = new Chart(ctx, {
-            type: "doughnut",
-            data: {
-              labels: dataPizza.map(d => d.label),
-              datasets: [{
-                data: dataPizza.map(d => d.value),
-                backgroundColor: dataPizza.map(d => d.color),
+        if (canvas._chartInstance) canvas._chartInstance.destroy();
+
+        const ctx = canvas.getContext("2d");
+        const chart = new Chart(ctx, {
+          type: "doughnut",
+          data: {
+            labels: dataPizza.map(d => d.label),
+            datasets: [{
+              data: dataPizza.map(d => d.value),
+              backgroundColor: dataPizza.map(d => d.color),
+              borderColor: "rgba(255,255,255,0.10)",
+              borderWidth: 1.2,
+              hoverOffset: 6
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            cutout: "62%",
+            animation: { duration: 650 },
+            plugins: {
+              legend: { display: false },
+              tooltip: {
+                backgroundColor: "rgba(10,10,14,0.92)",
                 borderColor: "rgba(255,255,255,0.10)",
-                borderWidth: 1.2,
-                hoverOffset: 6
-              }]
-            },
-            options: {
-              responsive: true,
-              maintainAspectRatio: false,
-              cutout: "62%",
-              layout: { padding: 0 },
-              animation: { duration: 650 },
-              plugins: {
-                legend: { display: false },
-                tooltip: {
-                  backgroundColor: "rgba(10,10,14,0.92)",
-                  borderColor: "rgba(255,255,255,0.10)",
-                  borderWidth: 1,
-                  titleColor: "rgba(255,255,255,0.92)",
-                  bodyColor: "rgba(255,255,255,0.85)",
-                  padding: 10,
-                  callbacks: { label: (context) => ` ${context.raw}%` }
-                }
+                borderWidth: 1,
+                titleColor: "rgba(255,255,255,0.92)",
+                bodyColor: "rgba(255,255,255,0.85)",
+                padding: 10,
+                callbacks: { label: (context) => ` ${context.raw}%` }
               }
             }
-          });
+          }
+        });
 
-          canvas._chartInstance = chart;
+        canvas._chartInstance = chart;
 
-          // ✅ resize forçado (resolve 90% dos “cortes” em desktop/mobile)
-          const forceResize = () => {
-            try { chart.resize(); } catch(e) {}
-          };
-          requestAnimationFrame(forceResize);
-          setTimeout(forceResize, 60);
-          setTimeout(forceResize, 220);
+        // “assenta” sizing pós-layout (especialmente quando bloco entra via fetch)
+        const force = () => { try { chart.resize(); } catch(e){} };
+        requestAnimationFrame(force);
+        setTimeout(force, 80);
+        setTimeout(force, 260);
+      };
 
-          // ✅ resize ao mudar viewport (debounce simples)
-          let t = null;
-          window.addEventListener("resize", () => {
-            clearTimeout(t);
-            t = setTimeout(forceResize, 120);
-          }, { passive: true });
-        }
-      }
-
-      // ===== 2) Ranking progressivo (mantido, com reset forte) =====
+      // ========= 2) Ranking progressivo (o seu que funcionou) =========
       const wrap = root.querySelector("#dhoRankWrap");
       const btn  = root.querySelector("#dhoRankNextBtn");
       const hint = root.querySelector("#dhoRankHint");
       const list = root.querySelector("#dhoObjetivosRank");
       const finalBox = root.querySelector("#dhoRankFinal");
 
-      if (!wrap || !btn || !list) return;
-
-      const items = Array.from(list.querySelectorAll(".dho-rank-item"));
-      items.forEach(li => {
-        const r = li.getAttribute("data-rank");
-        if (r !== "1") li.classList.add("is-hidden");
-        else li.classList.remove("is-hidden");
-      });
-
-      if (finalBox) finalBox.classList.remove("is-visible");
-      btn.disabled = false;
-      btn.classList.add("dho-btn--glow");
-
-      const getNextHidden = () => list.querySelector(".dho-rank-item.is-hidden");
-
-      const syncButtonLabel = () => {
-        const nextHidden = getNextHidden();
-        if (nextHidden) {
-          const nextRank = nextHidden.getAttribute("data-rank");
-          btn.textContent = `Descobrir o Top ${nextRank}`;
-          if (hint) hint.textContent = "Dica: clique para abrir o próximo nível do ranking.";
-          return;
-        }
-        btn.textContent = "Ranking completo";
-        btn.disabled = true;
-        btn.classList.remove("dho-btn--glow");
-        if (hint) hint.textContent = "Pronto: agora o ranking está totalmente aberto.";
-        if (finalBox) finalBox.classList.add("is-visible");
-      };
-
-      if (wrap.dataset.bound !== "1") {
-        wrap.dataset.bound = "1";
-        btn.addEventListener("click", () => {
-          const hidden = getNextHidden();
-          if (!hidden) return;
-          hidden.classList.remove("is-hidden");
-          syncButtonLabel();
+      if (wrap && btn && list) {
+        const items = Array.from(list.querySelectorAll(".dho-rank-item"));
+        items.forEach(li => {
+          const r = li.getAttribute("data-rank");
+          if (r !== "1") li.classList.add("is-hidden");
+          else li.classList.remove("is-hidden");
         });
+
+        if (finalBox) finalBox.classList.remove("is-visible");
+        btn.disabled = false;
+        btn.classList.add("dho-btn--glow");
+
+        const getNextHidden = () => list.querySelector(".dho-rank-item.is-hidden");
+
+        const syncButtonLabel = () => {
+          const nextHidden = getNextHidden();
+          if (nextHidden) {
+            const nextRank = nextHidden.getAttribute("data-rank");
+            btn.textContent = `Descobrir o Top ${nextRank}`;
+            if (hint) hint.textContent = "Dica: clique para abrir o próximo nível do ranking.";
+            return;
+          }
+          btn.textContent = "Ranking completo";
+          btn.disabled = true;
+          btn.classList.remove("dho-btn--glow");
+          if (hint) hint.textContent = "Pronto: agora o ranking está totalmente aberto.";
+          if (finalBox) finalBox.classList.add("is-visible");
+        };
+
+        if (wrap.dataset.bound !== "1") {
+          wrap.dataset.bound = "1";
+          btn.addEventListener("click", () => {
+            const hidden = getNextHidden();
+            if (!hidden) return;
+            hidden.classList.remove("is-hidden");
+            syncButtonLabel();
+          });
+        }
+
+        syncButtonLabel();
       }
 
-      syncButtonLabel();
+      // ========= init chart (com fallback robusto) =========
+      ensureChart().then((ok) => {
+        if (!ok) {
+          console.warn("[Bloco objetivos] Não foi possível carregar Chart.js (CDN bloqueado).");
+          return;
+        }
+        renderPizza();
+      });
 
     } catch (err) {
       console.error("[Bloco objetivos] Erro ao inicializar:", err);
