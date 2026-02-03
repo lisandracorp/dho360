@@ -1,4 +1,4 @@
-<!doctype html>
+<!doctype html> 
 <html lang="pt-BR">
 <head>
   <meta charset="utf-8" />
@@ -103,6 +103,10 @@
       padding:10px 0 12px;
       border-top:1px solid rgba(255,255,255,.06);
       background: rgba(0,0,0,.08);
+
+      /* ✅ ajuste: centralizar o conjunto de links no desktop também */
+      display:flex;
+      justify-content:center;
     }
 
     .left{
@@ -152,7 +156,10 @@
       gap:10px;
       flex-wrap:wrap;
       align-items:center;
-      justify-content:flex-end; /* desktop mantém à direita */
+
+      /* ✅ ajuste: centralizar no desktop (antes era flex-end) */
+      justify-content:center;
+      width:100%;
     }
 
     .linksBottom a{
@@ -191,7 +198,7 @@
     }
     .ctaTop:active{ transform: translateY(0px); }
 
-    /* ====== MOBILE FIXES + Centralizar botões do menu ====== */
+    /* ====== MOBILE FIXES ====== */
     @media (max-width: 680px){
       .navWrap{ padding: 0 14px; }
 
@@ -207,10 +214,8 @@
         width: auto;
       }
 
-      /* Centraliza os botões (Introdução / Metodologia) no mobile */
-      .linksBottom{
-        justify-content: center;
-      }
+      /* (permanece centralizado no mobile) */
+      .linksBottom{ justify-content: center; }
 
       #intro, #metodologia, #r_objetivos, #r_objetivosNeg, #r_motivacoes, #onda2{
         width: 100%;
@@ -257,7 +262,6 @@
           </div>
         </div>
 
-        <!-- atualizado: agora carrega o bloco Participar_da_Onda2.html via loader -->
         <a class="ctaTop" href="#onda2">Participar da Onda 2</a>
       </div>
 
@@ -276,7 +280,6 @@
   <div id="r_objetivosNeg"></div>
   <div id="r_motivacoes"></div>
 
-  <!-- novo alvo do CTA -->
   <div id="onda2"></div>
 
 <script>
@@ -387,7 +390,6 @@
   carregarBloco({ url: "blocks/04-R-objetivosNeg.html", targetId: "r_objetivosNeg", initFnName: "initBloco_objetivosNeg" });
   carregarBloco({ url: "blocks/05-R-motivacoes.html", targetId: "r_motivacoes", initFnName: "initBloco_motivacoes" });
 
-  /* novo bloco: Participar da Onda 2 */
   carregarBloco({ url: "blocks/Participar_da_Onda2.html", targetId: "onda2", initFnName: "initBloco_onda2" });
 </script>
 
