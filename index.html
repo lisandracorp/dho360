@@ -15,7 +15,6 @@
       --violet2:#a855f7;
       --violet3:#e9d5ff;
 
-      /* ====== FUNDO ====== */
       --bg0:#05050c;
       --bg1:#070717;
       --bg2:#0b0b22;
@@ -29,8 +28,8 @@
     }
 
     html, body{ height:100%; }
-
     html{ background: transparent; }
+
     body{
       margin:0;
       font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
@@ -39,7 +38,6 @@
       overflow-x:hidden;
     }
 
-    /* ====== BACKGROUND GLOBAL ====== */
     html::before{
       content:"";
       position: fixed;
@@ -67,15 +65,9 @@
         radial-gradient(1000px 420px at 50% 52%, rgba(233,213,255,.10), transparent 72%);
     }
 
-    a{
-      color: var(--fg);
-      text-decoration:none;
-      opacity:.9;
-    }
+    a{ color: var(--fg); text-decoration:none; opacity:.9; }
     a:hover{ opacity:1; }
 
-    /* ====== HEADER (SOMENTE O HEADER DO SITE) ======
-       ✅ ajuste: não aplicar estilos em <header> dentro dos blocos */
     header.siteHeader{
       position: sticky;
       top: 0;
@@ -138,10 +130,7 @@
       align-items:baseline;
       flex-wrap:wrap;
     }
-    .brandName{
-      font-size:16px;
-      font-weight:800;
-    }
+    .brandName{ font-size:16px; font-weight:800; }
     .pilot{
       font-size:12px;
       color: var(--muted);
@@ -195,22 +184,11 @@
     }
     .ctaTop:active{ transform: translateY(0px); }
 
-    /* ====== MOBILE FIXES ====== */
     @media (max-width: 680px){
       .navWrap{ padding: 0 14px; }
-
-      .navTop{
-        flex-wrap: wrap;
-        align-items: center;
-      }
-
+      .navTop{ flex-wrap: wrap; align-items: center; }
       .left{ min-width: 0; }
-
-      .ctaTop{
-        margin-left: auto;
-        width: auto;
-      }
-
+      .ctaTop{ margin-left: auto; width: auto; }
       .linksBottom{ justify-content: center; }
 
       #intro, #metodologia, #r_objetivos, #r_objetivosNeg, #r_motivacoes, #onda2{
@@ -232,7 +210,6 @@
 
 <body>
 
-  <!-- ✅ ajuste: class aplicada para isolar o CSS do header do site -->
   <header class="siteHeader">
     <div class="navWrap">
       <div class="navTop">
@@ -362,12 +339,15 @@
       await nextFrame();
       await nextFrame();
 
-      const fn = window[initFnName];
-      if (typeof fn === "function") {
-        try { fn(); }
-        catch (e) { console.error(`[loader] erro ao executar ${initFnName}:`, e); }
-      } else {
-        console.warn(`[loader] initFn não encontrada: ${initFnName}`);
+      /* ✅ ajuste: só tenta chamar init se você informou um nome válido */
+      if (initFnName && typeof initFnName === "string" && initFnName.trim().length){
+        const fn = window[initFnName];
+        if (typeof fn === "function") {
+          try { fn(); }
+          catch (e) { console.error(`[loader] erro ao executar ${initFnName}:`, e); }
+        } else {
+          console.warn(`[loader] initFn não encontrada: ${initFnName}`);
+        }
       }
 
     }catch(err){
@@ -379,13 +359,20 @@
     }
   }
 
-  carregarBloco({ url: "blocks/01-intro.html", targetId: "intro", initFnName: "initBloco_intro" });
+  /* Intro sem init (não existe script no bloco) */
+  carregarBloco({ url: "blocks/01-intro.html", targetId: "intro", initFnName: "" });
+
   carregarBloco({ url: "blocks/02-metodologia.html", targetId: "metodologia", initFnName: "initBloco_metodologia" });
   carregarBloco({ url: "blocks/03-R-objetivos.html", targetId: "r_objetivos", initFnName: "initBloco_objetivos" });
   carregarBloco({ url: "blocks/04-R-objetivosNeg.html", targetId: "r_objetivosNeg", initFnName: "initBloco_objetivosNeg" });
   carregarBloco({ url: "blocks/05-R-motivacoes.html", targetId: "r_motivacoes", initFnName: "initBloco_motivacoes" });
 
-  carregarBloco({ url: "blocks/Participar_da_Onda2.html", targetId: "onda2", initFnName: "initBloco_onda2" });
+  /* ✅ Onda 2: nome correto conforme seu bloco */
+  carregarBloco({
+    url: "blocks/Participar_da_Onda2.html",
+    targetId: "onda2",
+    initFnName: "initBloco_Participar_da_Onda2"
+  });
 </script>
 
 </body>
