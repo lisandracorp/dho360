@@ -15,12 +15,18 @@
       --violet2:#a855f7;
       --violet3:#e9d5ff;
 
-      --bg0:#05050a;
-      --bg1:#070712;
-      --bg2:#0a0a1a;
-      --neonV1: rgba(168,85,247,.18);
-      --neonV2: rgba(124,58,237,.16);
-      --neonP1: rgba(236,72,153,.10);
+      /* ====== FUNDO (roxo/lilás escuro estilo print) ====== */
+      --bg0:#04040a;
+      --bg1:#060612;
+      --bg2:#09091a;
+
+      /* “glows” suaves (preto predominante) */
+      --glowV1: rgba(168,85,247,.22);  /* lilás */
+      --glowV2: rgba(124,58,237,.18);  /* roxo */
+      --glowP1: rgba(236,72,153,.10);  /* pink bem sutil */
+
+      --deep:  rgba(0,0,0,.78);
+      --deep2: rgba(0,0,0,.92);
     }
 
     html, body{ height:100%; }
@@ -33,26 +39,40 @@
       overflow-x:hidden;
     }
 
+    /* ====== BACKGROUND GLOBAL (igual ao clima do print) ====== */
     html::before{
       content:"";
       position: fixed;
       inset: 0;
       z-index: -2;
       pointer-events: none;
+
       background:
-        radial-gradient(900px 520px at 22% 12%, var(--neonP1), transparent 60%),
-        radial-gradient(980px 560px at 72% 18%, var(--neonV1), transparent 62%),
-        radial-gradient(860px 520px at 42% 82%, var(--neonV2), transparent 64%),
-        linear-gradient(180deg, var(--bg0) 0%, var(--bg1) 40%, var(--bg2) 100%);
+        /* vinheta base (já deixa “cinema”) */
+        radial-gradient(1200px 900px at 50% 45%, rgba(0,0,0,.35), rgba(0,0,0,.92)),
+
+        /* manchas/arcos roxo-lilás */
+        radial-gradient(980px 700px at 14% 30%, var(--glowP1), transparent 62%),
+        radial-gradient(1050px 760px at 86% 22%, var(--glowV1), transparent 64%),
+        radial-gradient(1180px 820px at 55% 92%, var(--glowV2), transparent 66%),
+
+        /* base escura contínua */
+        linear-gradient(180deg, var(--bg0) 0%, var(--bg1) 45%, var(--bg2) 100%);
     }
+
     html::after{
       content:"";
       position: fixed;
       inset: 0;
       z-index: -1;
       pointer-events: none;
+
       background:
-        radial-gradient(1200px 900px at 50% 50%, rgba(0,0,0,.72), rgba(0,0,0,.92));
+        /* vinheta forte + profundidade */
+        radial-gradient(1200px 900px at 50% 50%, var(--deep), var(--deep2)),
+
+        /* bloom central muito leve (sofisticado) */
+        radial-gradient(900px 320px at 50% 52%, rgba(168,85,247,.07), transparent 70%);
     }
 
     .block,
@@ -182,6 +202,7 @@
     }
     .ctaTop:hover{
       transform: translateY(-1px);
+      border Attachment: translateY(-1px);
       border-color: rgba(233,213,255,.55);
       background: linear-gradient(180deg, rgba(124,58,237,.34), rgba(168,85,247,.18));
     }
