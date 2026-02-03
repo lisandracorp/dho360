@@ -212,7 +212,7 @@
         justify-content: center;
       }
 
-      #intro, #metodologia, #r_objetivos, #r_objetivosNeg, #r_motivacoes{
+      #intro, #metodologia, #r_objetivos, #r_objetivosNeg, #r_motivacoes, #onda2{
         width: 100%;
         max-width: 1100px;
         margin: 0 auto;
@@ -257,6 +257,7 @@
           </div>
         </div>
 
+        <!-- atualizado: agora carrega o bloco Participar_da_Onda2.html via loader -->
         <a class="ctaTop" href="#onda2">Participar da Onda 2</a>
       </div>
 
@@ -274,6 +275,9 @@
   <div id="r_objetivos"></div>
   <div id="r_objetivosNeg"></div>
   <div id="r_motivacoes"></div>
+
+  <!-- novo alvo do CTA -->
+  <div id="onda2"></div>
 
 <script>
   async function carregarBloco({ url, targetId, initFnName }) {
@@ -382,6 +386,9 @@
   carregarBloco({ url: "blocks/03-R-objetivos.html", targetId: "r_objetivos", initFnName: "initBloco_objetivos" });
   carregarBloco({ url: "blocks/04-R-objetivosNeg.html", targetId: "r_objetivosNeg", initFnName: "initBloco_objetivosNeg" });
   carregarBloco({ url: "blocks/05-R-Motivacoes.html", targetId: "r_motivacoes", initFnName: "initBloco_motivacoes" });
+
+  /* novo bloco: Participar da Onda 2 */
+  carregarBloco({ url: "blocks/Participar_da_Onda2.html", targetId: "onda2", initFnName: "initBloco_onda2" });
 </script>
 
 </body>
