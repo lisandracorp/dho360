@@ -907,16 +907,22 @@
   grid-column: 1 / -1;
   width: min(860px, 100%);
   margin: 12px auto 6px;
-  border-radius: 16px;
-  border: 1px solid rgba(255,255,255,0.10);
-  background: rgba(255,255,255,0.03);
-  box-shadow: 0 10px 26px rgba(0,0,0,0.22);
-  overflow: hidden;
+
+  /* v22: quadro totalmente invisível */
+  border-radius: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  overflow: visible;
 }
 .dho-praticas-figure-img{
   display: block;
-  width: 100%;
+
+  /* v22: reduzir imagem em 35% */
+  width: 65%;
   height: auto;
+  margin: 0 auto;
+
   opacity: 0.95;
 }
 @media (max-width: 520px){
