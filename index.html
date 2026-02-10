@@ -27,7 +27,11 @@
       --deep2: rgba(0,0,0,.72);
     }
 
-    html, body{ height:100%; }
+    html, body{ height:100%; 
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
     html{ background: transparent; }
 
     body{
@@ -203,12 +207,53 @@
     @media (max-width: 900px){
       .pilot{display:none}
     }
-  </style>
+  
+    /* Rodapé (delicado e elegante) */
+    .dho-footer{
+      padding: 18px 16px 22px;
+      border-top: 1px solid rgba(255,255,255,.06);
+      background:
+        radial-gradient(900px 220px at 50% 0%, rgba(168,85,247,.10), transparent 60%),
+        rgba(0,0,0,.06);
+    }
+    .dho-footer-inner{
+      max-width: 1100px;
+      margin: 0 auto;
+      text-align: center;
+      color: rgba(255,255,255,.62);
+      font-size: 12.5px;
+      letter-spacing: .02em;
+    }
+    .dho-footer-inner span{
+      color: rgba(233,213,255,.78);
+    }
 
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  main{flex:1 0 auto;}
+
+    /* Marcas d'água (discretas) */
+    .dho-watermark-layer{
+      position: fixed;
+      inset: -20%;
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.07;
+      transform: rotate(-18deg);
+      background-image: url("data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20width=%22640%22%20height=%22240%22%20viewBox=%220%200%20640%20240%22%3E%0A%20%20%3Crect%20width=%22100%%22%20height=%22100%%22%20fill=%22transparent%22/%3E%0A%20%20%3Ctext%20x=%220%22%20y=%22130%22%20font-family=%22system-ui,-apple-system,Segoe%20UI,Roboto,Arial,sans-serif%22%0A%20%20%20%20%20%20%20%20font-size=%2218%22%20fill=%22rgba(255,255,255,0.18)%22%20letter-spacing=%221.2%22%3E%C2%A9%202026%20DHO%20360%20-%20O%20futuro%20do%20trabalho%20em%20Foco.%3C/text%3E%0A%3C/svg%3E");
+      background-repeat: repeat;
+      background-size: 640px 240px;
+      filter: blur(0.2px);
+    }
+
+    /* Garante que o conteúdo fique acima da marca d'água */
+    body > *{ position: relative; z-index: 1; }
+
+</style>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body>
+  <div class="dho-watermark-layer" aria-hidden="true"></div>
 
   <header class="siteHeader">
     <div class="navWrap">
@@ -380,6 +425,13 @@
     initFnName: "initBloco_Participar_da_Onda2"
   });
 </script>
+
+
+  <footer class="dho-footer" role="contentinfo" aria-label="Rodapé">
+    <div class="dho-footer-inner">
+      © 2026 <span>DHO 360</span> - O futuro do trabalho em Foco. Todos os direitos reservados.
+    </div>
+  </footer>
 
 </body>
 </html>
