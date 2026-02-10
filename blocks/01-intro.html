@@ -31,7 +31,7 @@
     }
 
     /* sem preenchimento de fundo nesta página */
-    html{ color-scheme: dark; background: transparent; }
+    html{ background: transparent; }
     body{
       margin:0;
       font-family: system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
@@ -62,7 +62,9 @@
       line-height: 1.7;
       text-align: justify;
       text-justify: inter-word;
-      hyphens: auto;
+      hyphens: none;
+      word-break: normal;
+overflow-wrap: normal;
     }
     .prose p{ margin: 0 0 12px; }
     .prose p:last-child{ margin-bottom: 0; }
@@ -249,7 +251,7 @@
       line-height: 1.6;
       text-align: justify;
       text-justify: inter-word;
-      hyphens: auto;
+      hyphens: none;
     }
     .intro-goal strong{
       color: var(--violet3);
