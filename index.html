@@ -15,16 +15,16 @@
       --violet2:#a855f7;
       --violet3:#e9d5ff;
 
-      --bg0:#05050c;
-      --bg1:#070717;
-      --bg2:#0b0b22;
+      --bg0:#0a0620;
+      --bg1:#120a2f;
+      --bg2:#1a0f3d;
 
       --glowV1: rgba(168,85,247,.35);
       --glowV2: rgba(124,58,237,.30);
       --glowP1: rgba(236,72,153,.18);
 
-      --veil1: rgba(0,0,0,.10);
-      --veil2: rgba(0,0,0,.22);
+      --veil1: rgba(0,0,0,.06);
+      --veil2: rgba(0,0,0,.10);
     }
 
     html, body{
@@ -56,7 +56,8 @@
         radial-gradient(1500px 1050px at 55% 92%, var(--glowV2), transparent 66%),
         radial-gradient(900px 700px at 0% 70%, rgba(168,85,247,.22), transparent 70%),
         radial-gradient(900px 700px at 100% 35%, rgba(124,58,237,.18), transparent 72%),
-        linear-gradient(180deg, var(--bg0) 0%, var(--bg1) 45%, var(--bg2) 100%);
+        radial-gradient(1200px 600px at 50% 0%, rgba(168,85,247,.22), transparent 68%),
+        linear-gradient(180deg, var(--bg0) 0%, var(--bg1) 35%, var(--bg2) 72%, var(--bg2) 100%);
     }
 
     html::after{
@@ -79,7 +80,7 @@
       left: 0;
       right: 0;
       z-index: 5000;
-      background: rgba(7,7,11,.62);
+      background: rgba(18,10,47,.52);
       backdrop-filter: blur(10px);
       border-bottom: 1px solid var(--line);
     }
@@ -102,7 +103,7 @@
     .navBottom{
       padding:10px 0 12px;
       border-top:1px solid rgba(255,255,255,.06);
-      background: rgba(0,0,0,.08);
+      background: rgba(168,85,247,.06);
       display:flex;
       justify-content:center;
     }
