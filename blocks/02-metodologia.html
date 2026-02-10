@@ -653,22 +653,6 @@
 </style>
 
 <script>
-  function ensureChartJS(){
-    if (window.Chart) return Promise.resolve();
-    if (window.__dhoChartJsPromise) return window.__dhoChartJsPromise;
-
-    window.__dhoChartJsPromise = new Promise((resolve, reject) => {
-      const s = document.createElement("script");
-      s.src = "https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js";
-      s.async = true;
-      s.onload = () => resolve();
-      s.onerror = () => reject(new Error("Falha ao carregar Chart.js"));
-      document.head.appendChild(s);
-    });
-
-    return window.__dhoChartJsPromise;
-  }
-
   function readMetColors(root){
     const css = getComputedStyle(root);
     const get = (v, fb) => (css.getPropertyValue(v).trim() || fb);
@@ -690,7 +674,7 @@
     }
   }
 
-  window.initBloco_metodologia = async function(){
+  window.initBloco_metodologia = function(){
     const root = document.querySelector(".dho-met");
     if(!root) return;
 
@@ -698,7 +682,11 @@
     const barEl   = root.querySelector("#dhoChartTrabalhoBar");
     if(!donutEl || !barEl) return;
 
-    await ensureChartJS();
+    // Chart.js deve ser carregado centralmente pelo index.html
+    if(!window.Chart){
+      console.warn("[DHO 360] Chart.js não encontrado. Carregue Chart.js (versão fixa) no index.html antes de inicializar o bloco Metodologia.");
+      return;
+    }
 
     destroyIfAny(donutEl);
     destroyIfAny(barEl);
@@ -769,10 +757,6 @@
       }
     });
   };
-
-  document.addEventListener("DOMContentLoaded", () => {
-    if (typeof window.initBloco_metodologia === "function") window.initBloco_metodologia();
-  });
 </script>
 
 </body>
