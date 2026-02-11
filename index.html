@@ -191,7 +191,7 @@
       .ctaTop{ margin-left: auto; width: auto; }
       .linksBottom{ justify-content: center; }
 
-      #intro, #metodologia, #r_objetivos, #r_objetivosNeg, #r_motivacoes, #onda2{
+      #intro, #metodologia, #r_objetivos, #r_objetivosNeg, #r_motivacoes, #r_praticas, #r_lideranca, #r_posicionamento, #conclusao, #onda2{
         width: 100%;
         max-width: 1100px;
         margin: 0 auto;
@@ -240,8 +240,16 @@
 
       <div class="navBottom">
         <nav class="linksBottom">
+
           <a href="#intro">Introdução</a>
           <a href="#metodologia">Metodologia</a>
+          <a href="#r_objetivos">Objetivos dos Trabalhadores</a>
+          <a href="#r_objetivosNeg">Objetivos do Negócio</a>
+          <a href="#r_motivacoes">Motivações Profissionais</a>
+          <a href="#r_praticas">Práticas de Gestão de Pessoas</a>
+          <a href="#r_lideranca">Desafios da Liderança</a>
+          <a href="#r_posicionamento">Posicionamento dos Trabalhadores</a>
+          <a href="#conclusao">Conclusão</a>
         </nav>
       </div>
     </div>
@@ -252,6 +260,10 @@
   <div id="r_objetivos"></div>
   <div id="r_objetivosNeg"></div>
   <div id="r_motivacoes"></div>
+  <div id="r_praticas"></div>
+  <div id="r_lideranca"></div>
+  <div id="r_posicionamento"></div>
+  <div id="conclusao"></div>
   <div id="onda2"></div>
 
 <script>
@@ -366,6 +378,12 @@
   carregarBloco({ url: "blocks/03-R-objetivos.html", targetId: "r_objetivos", initFnName: "initBloco_objetivos" });
   carregarBloco({ url: "blocks/04-R-objetivosNeg.html", targetId: "r_objetivosNeg", initFnName: "initBloco_objetivosNeg" });
   carregarBloco({ url: "blocks/05-R-motivacoes.html", targetId: "r_motivacoes", initFnName: "initBloco_motivacoes" });
+
+
+  carregarBloco({ url: "blocks/06-R-praticas.html", targetId: "r_praticas", initFnName: "initBloco_praticas" });
+  carregarBloco({ url: "blocks/07-R-lideranca.html", targetId: "r_lideranca", initFnName: "initBloco_lideranca" });
+  carregarBloco({ url: "blocks/08-R-posicionamento.html", targetId: "r_posicionamento", initFnName: "initBloco_posicionamento" });
+  carregarBloco({ url: "blocks/09-conclusao.html", targetId: "conclusao", initFnName: "initBloco_conclusao" });
 
   /* ✅ Onda 2: nome correto conforme seu bloco */
   carregarBloco({
