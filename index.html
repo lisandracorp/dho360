@@ -573,7 +573,37 @@
 
 
   
-    /* =========================
+    
+    /* ================================
+       Mobile clamps (anti "desktop zoom-out")
+       If any bloco injects min-width / fixed widths, mobile browsers may shrink the whole page.
+       These rules harden the layout to stay within the viewport.
+    ================================ */
+    html, body{ width:100%; max-width:100%; }
+    body{ min-width: 0 !important; }
+    header.siteHeader, .navWrap, main, footer{ max-width: 100%; }
+
+    /* Neutralize accidental min-widths coming from bloco styles */
+    [class$="-wrap"], [class*="-wrap "], [class*=" wrap"], .dho-card, .dho-card--chart, .dho-rank-card{
+      min-width: 0 !important;
+      max-width: 100%;
+    }
+
+    /* Force any embedded fixed-width containers to fit */
+    iframe, embed, object{ width:100%; max-width:100%; }
+
+    /* Keep long inline elements from forcing overflow */
+    .linksBottom, .brandText{ min-width: 0; }
+
+    @media (max-width: 760px){
+      .navWrap{ padding: 0 12px; }
+      .navTop{ gap: 10px; }
+      .linksBottom{ gap: 6px; }
+      .linksBottom a{ padding: 6px 9px; }
+    }
+
+
+/* =========================
        Modal — Dimensões (Editorial)
        ========================= */
     .dho-modalOverlay{
@@ -851,6 +881,40 @@
         if (cs && cs.maxWidth === "none") {
           // leave as-is; we only harden obvious overflow cases
         }
+
+
+    function hardClampOverflow(root){
+      try{
+        const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
+        if(!vw || !root) return;
+
+        // Clamp typical offenders
+        root.querySelectorAll("img, video, svg, canvas, iframe, embed, object").forEach((el)=>{
+          el.style.maxWidth = "100%";
+          if(el.tagName === "IFRAME" || el.tagName === "EMBED" || el.tagName === "OBJECT"){
+            if(!el.style.width) el.style.width = "100%";
+          }
+        });
+
+        // Any element wider than viewport: allow horizontal scroll instead of shrinking whole page
+        root.querySelectorAll("*").forEach((el)=>{
+          const r = el.getBoundingClientRect();
+          if(r && r.width > vw + 2){
+            // Prefer scroll container for tables/pre; otherwise clamp
+            const tag = el.tagName;
+            if(tag === "TABLE" || tag === "PRE"){
+              el.style.maxWidth = "100%";
+              el.style.overflowX = "auto";
+            }else{
+              el.style.maxWidth = "100%";
+              el.style.minWidth = "0";
+            }
+          }
+        });
+      }catch(e){
+        console.warn("[mobile] clamp overflow falhou:", e);
+      }
+    }
       });
     }
 
@@ -976,6 +1040,7 @@
         host.innerHTML = (doc.body && doc.body.innerHTML) ? doc.body.innerHTML : "";
 
         applyMobileGuards(host);
+        hardClampOverflow(host);
 
 
 
