@@ -7,6 +7,7 @@
 
   <style>
     :root{
+      --headerH: 78px;
       --bg:#07070b;
       --fg:#f4f4f8;
       --muted:#c7c7d6;
@@ -36,6 +37,7 @@
       color: var(--fg);
       background: transparent;
       overflow-x:hidden;
+      padding-top: var(--headerH);
     }
 
     html::before{
@@ -69,12 +71,20 @@
     a:hover{ opacity:1; }
 
     header.siteHeader{
-      position: sticky;
+      position: fixed;
       top: 0;
-      z-index: 98;
+      left: 0;
+      right: 0;
+      width: 100%;
+      z-index: 999;
       background: rgba(7,7,11,.62);
       backdrop-filter: blur(10px);
       border-bottom: 1px solid var(--line);
+    }
+
+    /* Ajuste para navegação com header fixo */
+    #intro, #metodologia, #r_objetivos, #r_objetivosNeg, #r_motivacoes, #r_praticas, #r_lideranca, #r_posicionamento, #conclusao, #onda2{
+      scroll-margin-top: calc(var(--headerH) + 16px);
     }
 
     .navWrap{
@@ -85,7 +95,7 @@
     }
 
     .navTop{
-      padding:12px 0;
+      padding:8px 0;
       display:flex;
       align-items:center;
       justify-content:space-between;
@@ -93,11 +103,29 @@
     }
 
     .navBottom{
-      padding:10px 0 12px;
-      border-top:1px solid rgba(255,255,255,.06);
-      background: rgba(0,0,0,.08);
+      position: relative;
+      padding:5px 0 7px;
+      background: rgba(0,0,0,.05);
       display:flex;
       justify-content:center;
+    }
+
+    .navBottom::before{
+      content:"";
+      position:absolute;
+      left:0;
+      right:0;
+      top:0;
+      height:1px;
+      background: linear-gradient(90deg,
+        transparent,
+        rgba(233,213,255,.16),
+        rgba(168,85,247,.32),
+        rgba(124,58,237,.22),
+        transparent
+      );
+      opacity: .95;
+      pointer-events:none;
     }
 
     .left{
@@ -148,7 +176,8 @@
       width:100%;
     }
 
-    .linksBottom a{
+    .linksBottom a,
+    .linksBottom button{
       font-size:13px;
       color: var(--muted);
       padding:6px 10px;
@@ -156,11 +185,130 @@
       transition: background .15s ease, color .15s ease;
       opacity: .95;
     }
-    .linksBottom a:hover{
+    .linksBottom a:hover,
+    .linksBottom button:hover{
       color: var(--fg);
       background: rgba(255,255,255,.05);
       opacity: 1;
     }
+
+    .linksBottom button{
+      appearance:none;
+      -webkit-appearance:none;
+      background: transparent;
+      border: 0;
+      cursor: pointer;
+      font-family: inherit;
+      line-height: 1;
+    }
+    .linksBottom a:focus-visible,
+    .linksBottom button:focus-visible{
+      outline: 2px solid rgba(168,85,247,.65);
+      outline-offset: 2px;
+    }
+
+    .is-hidden{ display:none !important; }
+
+    .dimBackdrop{
+      position: fixed;
+      inset: 0;
+      z-index: 140;
+      background: rgba(0,0,0,.48);
+      backdrop-filter: blur(6px);
+    }
+
+    .dimModal{
+      position: fixed;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 141;
+      width: min(560px, 92vw);
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.08);
+      box-shadow: 0 18px 44px rgba(0,0,0,0.45);
+      backdrop-filter: blur(14px);
+      padding: 12px;
+    }
+    .dimModal::before{
+      content:"";
+      position:absolute;
+      inset:-2px;
+      border-radius: 20px;
+      background:
+        radial-gradient(1100px 380px at 10% 0%, rgba(168,85,247,.18), transparent 55%),
+        radial-gradient(1000px 360px at 90% 10%, rgba(124,58,237,.12), transparent 55%),
+        radial-gradient(900px 420px at 50% 100%, rgba(233,213,255,.10), transparent 60%);
+      pointer-events:none;
+      z-index:0;
+    }
+    .dimModalHead, .dimModalBody{ position:relative; z-index:1; }
+    .dimModalHead{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding: 6px 8px 10px;
+      border-bottom: 1px solid rgba(255,255,255,0.10);
+    }
+    .dimModalTitle{
+      font-size: 14px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.75);
+      font-weight: 700;
+    }
+    .dimClose{
+      appearance:none;
+      -webkit-appearance:none;
+      background: rgba(0,0,0,0.18);
+      border: 1px solid rgba(255,255,255,0.10);
+      color: rgba(255,255,255,0.85);
+      border-radius: 12px;
+      width: 34px;
+      height: 34px;
+      cursor:pointer;
+      display:grid;
+      place-items:center;
+      font-size: 20px;
+      line-height: 1;
+      transition: transform .15s ease, background .15s ease, border-color .15s ease;
+    }
+    .dimClose:hover{
+      transform: translateY(-1px);
+      background: rgba(255,255,255,0.06);
+      border-color: rgba(255,255,255,0.18);
+    }
+    .dimModalBody{
+      padding: 12px 8px 4px;
+      display:grid;
+      gap: 8px;
+    }
+    .dimLink{
+      display:flex;
+      align-items:center;
+      gap: 10px;
+      padding: 10px 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.10);
+      background: rgba(0,0,0,0.12);
+      color: rgba(255,255,255,0.86);
+      font-size: 13.5px;
+      line-height: 1.25;
+      text-decoration:none;
+      transition: transform .15s ease, background .15s ease, border-color .15s ease;
+    }
+    .dimLink:hover{
+      transform: translateY(-1px);
+      background: rgba(255,255,255,0.06);
+      border-color: rgba(255,255,255,0.18);
+    }
+
+    @media (max-width: 520px){
+      .dimModal{ padding: 10px; border-radius: 16px; }
+      .dimLink{ padding: 10px 10px; }
+    }
+
 
     .ctaTop{
       border: 1px solid rgba(192,132,252,.35);
@@ -241,19 +389,34 @@
       <div class="navBottom">
         <nav class="linksBottom">
 
+          
           <a href="#intro">Introdução</a>
           <a href="#metodologia">Metodologia</a>
-          <a href="#r_objetivos">Objetivos dos Trabalhadores</a>
-          <a href="#r_objetivosNeg">Objetivos do Negócio</a>
-          <a href="#r_motivacoes">Motivações Profissionais</a>
-          <a href="#r_praticas">Práticas de Gestão de Pessoas</a>
-          <a href="#r_lideranca">Desafios da Liderança</a>
-          <a href="#r_posicionamento">Posicionamento dos Trabalhadores</a>
+          <button class="dimTrigger" type="button" aria-haspopup="dialog" aria-controls="dimModal" aria-expanded="false">Dimensões</button>
           <a href="#conclusao">Conclusão</a>
+        
         </nav>
       </div>
     </div>
   </header>
+  <!-- Modal: Dimensões -->
+  <div class="dimBackdrop is-hidden" id="dimBackdrop" aria-hidden="true"></div>
+  <div class="dimModal is-hidden" id="dimModal" role="dialog" aria-modal="true" aria-labelledby="dimTitle">
+    <div class="dimModalHead">
+      <div class="dimModalTitle" id="dimTitle">Dimensões</div>
+      <button class="dimClose" type="button" aria-label="Fechar">×</button>
+    </div>
+
+    <div class="dimModalBody">
+      <a class="dimLink" href="#r_objetivos">Objetivos dos Trabalhadores</a>
+      <a class="dimLink" href="#r_objetivosNeg">Objetivos do Negócio</a>
+      <a class="dimLink" href="#r_motivacoes">Motivações Profissionais</a>
+      <a class="dimLink" href="#r_praticas">Práticas de Gestão de Pessoas</a>
+      <a class="dimLink" href="#r_lideranca">Desafios da Liderança</a>
+      <a class="dimLink" href="#r_posicionamento">Posicionamento dos Trabalhadores</a>
+    </div>
+  </div>
+
 
   <div id="intro"></div>
   <div id="metodologia"></div>
@@ -267,6 +430,19 @@
   <div id="onda2"></div>
 
 <script>
+  // Mantém o espaçamento correto do conteúdo quando o header é fixo
+  (function(){
+    const header = document.querySelector('header.siteHeader');
+    if(!header) return;
+    const setHeaderH = () => {
+      const h = header.offsetHeight || 0;
+      document.documentElement.style.setProperty('--headerH', h + 'px');
+    };
+    requestAnimationFrame(setHeaderH);
+    window.addEventListener('resize', () => requestAnimationFrame(setHeaderH));
+    window.addEventListener('load', setHeaderH, { once:true });
+  })();
+
   async function carregarBloco({ url, targetId, initFnName }) {
     const host = document.getElementById(targetId);
     if (!host) {
@@ -391,6 +567,84 @@
     targetId: "onda2",
     initFnName: "initBloco_Participar_da_Onda2"
   });
+
+
+  /* Dimensões: modal de navegação */
+  (function(){
+    const btn = document.querySelector('.dimTrigger');
+    const modal = document.getElementById('dimModal');
+    const backdrop = document.getElementById('dimBackdrop');
+    const closeBtn = modal ? modal.querySelector('.dimClose') : null;
+
+    if(!btn || !modal || !backdrop || !closeBtn) return;
+
+    const focusablesSel = 'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])';
+    let lastFocus = null;
+
+    function openModal(){
+      lastFocus = document.activeElement;
+      modal.classList.remove('is-hidden');
+      backdrop.classList.remove('is-hidden');
+      btn.setAttribute('aria-expanded','true');
+      backdrop.setAttribute('aria-hidden','false');
+
+      const first = modal.querySelector('.dimLink');
+      (first || closeBtn).focus({ preventScroll:true });
+
+      document.addEventListener('keydown', onKeyDown);
+    }
+
+    function closeModal(){
+      modal.classList.add('is-hidden');
+      backdrop.classList.add('is-hidden');
+      btn.setAttribute('aria-expanded','false');
+      backdrop.setAttribute('aria-hidden','true');
+
+      document.removeEventListener('keydown', onKeyDown);
+
+      if(lastFocus && typeof lastFocus.focus === 'function'){
+        lastFocus.focus({ preventScroll:true });
+      }
+    }
+
+    function onKeyDown(e){
+      if(e.key === 'Escape'){
+        e.preventDefault();
+        closeModal();
+        return;
+      }
+
+      if(e.key === 'Tab'){
+        const focusables = Array.from(modal.querySelectorAll(focusablesSel)).filter(el => el.offsetParent !== null);
+        if(!focusables.length) return;
+
+        const first = focusables[0];
+        const last = focusables[focusables.length - 1];
+
+        if(e.shiftKey && document.activeElement === first){
+          e.preventDefault();
+          last.focus();
+        }else if(!e.shiftKey && document.activeElement === last){
+          e.preventDefault();
+          first.focus();
+        }
+      }
+    }
+
+    btn.addEventListener('click', () => {
+      const expanded = btn.getAttribute('aria-expanded') === 'true';
+      expanded ? closeModal() : openModal();
+    });
+
+    closeBtn.addEventListener('click', closeModal);
+    backdrop.addEventListener('click', closeModal);
+
+    modal.addEventListener('click', (e) => {
+      const link = e.target.closest('a.dimLink');
+      if(link) closeModal();
+    });
+  })();
+
 </script>
 
 </body>
