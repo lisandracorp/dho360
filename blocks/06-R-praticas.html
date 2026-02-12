@@ -1110,30 +1110,35 @@
     /* =========================
        FIX DO BOTÃO "COMO LER"
        Motivo provável do bug no index:
-       - IDs duplicados entre blocos fazem o handler apontar para o body de outro bloco (ou nenhum)
+       - o script pode não estar conseguindo "bindar" o clique quando há múltiplos blocos na mesma página
+         (IDs repetidos, funções sobrescritas, ou ordem de carregamento).
        Solução:
-       - bind por "escopo" (dentro do wrapper) e sem depender de id global
+       - usar delegação de eventos (1 listener global) e resolver o alvo por proximidade (closest),
+         sem depender de ID global e sem assumir apenas 1 bloco na página.
        ========================= */
-    const root = document.querySelector(".dho-praticas");
-    if(root){
-      const guideCards = Array.from(root.querySelectorAll(".dho-praticas-guide"));
-      guideCards.forEach((card, idx) => {
-        const btn = card.querySelector(".dho-praticas-guide-toggle");
-        const body = card.querySelector(".dho-praticas-guide-body");
-        if(!btn || !body) return;
+    if(!window.__dho_praticas_guide_bound){
+      window.__dho_praticas_guide_bound = true;
 
-        // garante aria-controls com id único (a11y) sem conflitar com outros blocos
+      document.addEventListener("click", (e) => {
+        const btn = e.target.closest(".dho-praticas-guide-toggle");
+        if(!btn) return;
+
+        const card = btn.closest(".dho-praticas-guide");
+        if(!card) return;
+
+        const body = card.querySelector(".dho-praticas-guide-body");
+        if(!body) return;
+
+        // a11y: garante um aria-controls único sem conflitar com outros blocos
         if(!body.id){
-          body.id = `dho-praticas-guide-body-${idx}-${Math.random().toString(16).slice(2)}`;
+          body.id = `dho-praticas-guide-body-${Math.random().toString(16).slice(2)}`;
         }
         btn.setAttribute("aria-controls", body.id);
 
-        btn.addEventListener("click", () => {
-          const expanded = btn.getAttribute("aria-expanded") === "true";
-          btn.setAttribute("aria-expanded", String(!expanded));
-          body.classList.toggle("is-hidden", expanded);
-        });
-      });
+        const expanded = btn.getAttribute("aria-expanded") === "true";
+        btn.setAttribute("aria-expanded", String(!expanded));
+        body.classList.toggle("is-hidden", expanded);
+      }, { passive: true });
     }
 
     renderHeat();
