@@ -298,11 +298,10 @@
       text-align: center;
     }
 
-    /* Tabela / heatmap: em mobile vira scroll horizontal */
+    /* Tabela / heatmap: em desktop mantém grade larga; em mobile vira cards (abaixo) */
     .heat-scroll{
       position: relative;
       overflow-x: auto;
-      /* Evita “travar” o scroll vertical quando o gesto começa sobre a área com rolagem horizontal */
       touch-action: pan-y;
       overscroll-behavior-x: contain;
       overscroll-behavior-y: auto;
@@ -340,6 +339,7 @@
       text-transform: uppercase;
       border-right: 1px solid rgba(255,255,255,0.06);
       text-align: left;
+      white-space: nowrap;
     }
     .heat-th:last-child{ border-right: none; }
     .heat-th:nth-child(n+2){ text-align:center; }
@@ -373,7 +373,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 6px;
+      gap: 8px;
       border-radius: 14px;
       padding: 6px 10px;
       border: 1px solid rgba(255,255,255,0.08);
@@ -386,15 +386,18 @@
       width: 100%;
       display: inline-flex;
       align-items: center;
-      justify-content: center;
+      justify-content: space-between;
       padding: 6px 10px;
-      border-radius: 999px;
+      border-radius: 14px;
       border: 1px solid rgba(255,255,255,0.10);
       background: rgba(0,0,0,0.10);
       color: var(--fg);
       font-size: 10.5px;
       font-weight: 700;
+      gap: 8px;
     }
+    .gap-pill .lab{ font-size: 10.5px; color: rgba(255,255,255,0.70); font-weight: 650; }
+    .gap-pill .val{ font-size: 10.5px; color: var(--fg); font-weight: 750; }
 
     /* Legend */
     .legend{
@@ -727,10 +730,8 @@
       text-align: center;
     }
 
-
     /* =========================
        Scroll performance guardrails
-       (alguns navegadores engasgam com blur + sombras grandes durante scroll)
        ========================= */
     .dho-praticas-wrap,
     .dho-praticas .card,
@@ -739,12 +740,10 @@
       contain: paint;
     }
 
-    /* A pseudo-sombra lateral do heat-scroll agora é absolute; garante contexto */
     .heat-scroll{ position: relative; }
 
     /* Responsive */
     @media (max-width: 920px){
-      /* Performance: reduz blur/sombras durante rolagem (principal fonte de travadas em mobile) */
       .dho-praticas-wrap{
         backdrop-filter: none;
         -webkit-backdrop-filter: none;
@@ -767,13 +766,90 @@
       .synth-arrow{ display: none; }
       .synth-note{ margin-left: 0; text-align: center; }
     }
+
     @media (max-width: 640px){
       .dho-praticas-wrap{ padding: 16px 14px; border-radius: 18px; }
       .heat-meta{ padding: 12px 12px 12px; }
       .dho-praticas-guide-toggle{ padding: 8px 10px; }
-      .heatbox .lab{ display: none; }
       .pratica{ font-size: 12.4px; }
       .dho-praticas-figure-img{ width: 86%; }
+    }
+
+    /* =========================
+       FIX MOBILE DO HEATMAP (evita “quebra”/colunas escondidas no smartphone)
+       - Mantém desktop com rolagem horizontal
+       - Em telas pequenas, transforma cada linha em “card” (2 colunas + título)
+       ========================= */
+    @media (max-width: 560px){
+      .heat-scroll{
+        overflow-x: visible;
+        background: transparent;
+      }
+      .heat-scroll::after{ display:none; }
+
+      .heat-head{ display:none; }
+
+      /* remove a largura mínima e vira lista com espaçamento */
+      .heat-body{
+        display: grid;
+        gap: 10px;
+        padding: 10px 10px 12px;
+      }
+
+      .heat-body .row{
+        min-width: 0 !important;
+        grid-template-columns: 1fr 1fr;
+        grid-template-areas:
+          "pratica pratica"
+          "rh lid"
+          "viv gap";
+        gap: 8px;
+        border: 1px solid rgba(255,255,255,0.10);
+        border-radius: 16px;
+        padding: 10px 10px;
+        background: rgba(0,0,0,0.10);
+      }
+
+      .heat-body .row .cell{
+        min-height: auto;
+        padding: 0;
+        border-right: none;
+        justify-content: stretch !important;
+      }
+
+      .heat-body .row .cell:nth-child(1){ grid-area: pratica; padding: 2px 2px 8px; }
+      .heat-body .row .cell:nth-child(2){ grid-area: rh; }
+      .heat-body .row .cell:nth-child(3){ grid-area: lid; }
+      .heat-body .row .cell:nth-child(4){ grid-area: viv; }
+      .heat-body .row .cell:nth-child(5){ grid-area: gap; }
+
+      .pratica{
+        font-size: 13px;
+        line-height: 1.25;
+      }
+
+      /* garante rótulo visível nos chips */
+      .heatbox{
+        padding: 8px 10px;
+      }
+      .heatbox .lab{
+        display: block !important;
+        font-size: 10px;
+      }
+      .heatbox .val{
+        font-size: 11px;
+      }
+
+      .gap-pill{
+        padding: 8px 10px;
+      }
+      .gap-pill .lab{
+        display: block;
+        font-size: 10px;
+      }
+      .gap-pill .val{
+        font-size: 11px;
+      }
     }
   </style>
 </head>
@@ -811,7 +887,6 @@
               </svg>
             </button>
 
-            <!-- IMPORTANTE: sem ID fixo (evita conflito quando vários blocos convivem no index) -->
             <div class="dho-praticas-guide-body is-hidden">
               <ul class="guide-list">
                 <li><span class="tag">RH promove</span> o quanto as práticas são promovidas institucionalmente na companhia atual.</li>
@@ -1052,7 +1127,7 @@
         c1.className = "cell";
         c1.innerHTML = `
           <div class="heatbox" style="background:${bgForValue(rh)}">
-            <span class="lab">Nível</span>
+            <span class="lab">RH promove</span>
             <span class="val">${rh}</span>
           </div>
         `;
@@ -1061,7 +1136,7 @@
         c2.className = "cell";
         c2.innerHTML = `
           <div class="heatbox" style="background:${bgForValue(lid)}">
-            <span class="lab">Nível</span>
+            <span class="lab">Liderança aplica</span>
             <span class="val">${lid}</span>
           </div>
         `;
@@ -1070,7 +1145,7 @@
         c3.className = "cell";
         c3.innerHTML = `
           <div class="heatbox" style="background:${bgForValue(t)}">
-            <span class="lab">Nível</span>
+            <span class="lab">Vivência</span>
             <span class="val">${fmt(t)}</span>
           </div>
         `;
@@ -1081,7 +1156,12 @@
         const gapBg = gap >= 2
           ? "linear-gradient(135deg, rgba(233,213,255,0.18), rgba(124,58,237,0.10))"
           : "rgba(0,0,0,0.10)";
-        c4.innerHTML = `<span class="gap-pill" style="background:${gapBg}">${gapTxt}</span>`;
+        c4.innerHTML = `
+          <span class="gap-pill" style="background:${gapBg}">
+            <span class="lab">Gap</span>
+            <span class="val">${gapTxt}</span>
+          </span>
+        `;
 
         row.appendChild(c0);
         row.appendChild(c1);
@@ -1107,15 +1187,7 @@
       });
     });
 
-    /* =========================
-       FIX DO BOTÃO "COMO LER"
-       Motivo provável do bug no index:
-       - o script pode não estar conseguindo "bindar" o clique quando há múltiplos blocos na mesma página
-         (IDs repetidos, funções sobrescritas, ou ordem de carregamento).
-       Solução:
-       - usar delegação de eventos (1 listener global) e resolver o alvo por proximidade (closest),
-         sem depender de ID global e sem assumir apenas 1 bloco na página.
-       ========================= */
+    /* Delegação do botão "Como ler" (sem conflito entre blocos) */
     if(!window.__dho_praticas_guide_bound){
       window.__dho_praticas_guide_bound = true;
 
@@ -1129,7 +1201,6 @@
         const body = card.querySelector(".dho-praticas-guide-body");
         if(!body) return;
 
-        // a11y: garante um aria-controls único sem conflitar com outros blocos
         if(!body.id){
           body.id = `dho-praticas-guide-body-${Math.random().toString(16).slice(2)}`;
         }
