@@ -964,7 +964,7 @@
 </section>
 
 <script>
-  window.initBloco_praticas = function initBloco_praticas(host){
+  window.initBloco_praticas = function initBloco_praticas(){
     const DATA = {
       practices: [
         "1:1 e Feedback Estruturado",
@@ -1001,12 +1001,12 @@
       return map[x];
     }
 
-    const elHeat = (root ? root.querySelector("#dho-praticas-heat") : document.getElementById("dho-praticas-heat"));
-    const elSynthRH = (root ? root.querySelector("#synth-rh") : document.getElementById("synth-rh"));
-    const elSynthTraj = (root ? root.querySelector("#synth-traj") : document.getElementById("synth-traj"));
-    const elSynthLid = (root ? root.querySelector("#synth-lid") : document.getElementById("synth-lid"));
+    const elHeat = document.getElementById("dho-praticas-heat");
+    const elSynthRH = document.getElementById("synth-rh");
+    const elSynthTraj = document.getElementById("synth-traj");
+    const elSynthLid = document.getElementById("synth-lid");
 
-    const toggles = Array.from((root || document).querySelectorAll(".toggle-btn"));
+    const toggles = Array.from(document.querySelectorAll(".dho-praticas .toggle-btn"));
     let view = "traj_avg";
 
     function getTraj(i){
@@ -1114,7 +1114,7 @@
        Solução:
        - bind por "escopo" (dentro do wrapper) e sem depender de id global
        ========================= */
-    const root = (host && host.querySelector) ? host.querySelector(".dho-praticas") : document.querySelector(".dho-praticas");
+    const root = document.querySelector(".dho-praticas");
     if(root){
       const guideCards = Array.from(root.querySelectorAll(".dho-praticas-guide"));
       guideCards.forEach((card, idx) => {
