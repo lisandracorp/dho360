@@ -302,16 +302,19 @@
     .heat-scroll{
       position: relative;
       overflow-x: auto;
-      overscroll-behavior: contain;
+      /* Evita “travar” o scroll vertical quando o gesto começa sobre a área com rolagem horizontal */
+      touch-action: pan-y;
+      overscroll-behavior-x: contain;
+      overscroll-behavior-y: auto;
       -webkit-overflow-scrolling: touch;
       background: rgba(0,0,0,0.06);
     }
     .heat-scroll::after{
       content:"";
-      position: sticky;
+      position: absolute;
       right: 0;
       top: 0;
-      height: 100%;
+      bottom: 0;
       width: 28px;
       display: block;
       pointer-events: none;
@@ -510,14 +513,13 @@
       box-shadow: 0 10px 18px rgba(0,0,0,0.18);
     }
 
-    
     .synth-step--rh,
     .synth-step--traj,
     .synth-step--lid{
       background: linear-gradient(135deg, var(--pitaya2), rgba(0,0,0,0.10));
       border-color: rgba(255,255,255,0.10);
     }
-.synth-k{
+    .synth-k{
       font-size: 20.33px;
       color: rgba(255,255,255,0.70);
       letter-spacing: .10em;
@@ -554,20 +556,18 @@
       font-size: 20.33px;
       line-height: 1.55;
       text-align: center;
-    
+
       grid-column: 1 / -1;
       width: 100%;
       justify-self: center;
-}
+    }
     .synth-note p{
       text-align: center !important;
- margin: 0; font-size: 20.33px; color: rgba(255,255,255,0.80); }
+      margin: 0; font-size: 20.33px; color: rgba(255,255,255,0.80);
+    }
 
     @media (max-width: 920px){
-      .synth-strip{
-        grid-template-columns: 1fr;
-        gap: 8px;
-      }
+      .synth-strip{ grid-template-columns: 1fr; gap: 8px; }
       .synth-arrow{ display: none; }
       .synth-note{ text-align: center; }
     }
@@ -727,12 +727,44 @@
       text-align: center;
     }
 
+
+    /* =========================
+       Scroll performance guardrails
+       (alguns navegadores engasgam com blur + sombras grandes durante scroll)
+       ========================= */
+    .dho-praticas-wrap,
+    .dho-praticas .card,
+    .persp,
+    .dho-praticas-cta{
+      contain: paint;
+    }
+
+    /* A pseudo-sombra lateral do heat-scroll agora é absolute; garante contexto */
+    .heat-scroll{ position: relative; }
+
     /* Responsive */
     @media (max-width: 920px){
+      /* Performance: reduz blur/sombras durante rolagem (principal fonte de travadas em mobile) */
+      .dho-praticas-wrap{
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+        box-shadow: 0 12px 28px rgba(0,0,0,0.32);
+      }
+      .dho-praticas-wrap::before{ opacity: .75; }
+
+      .dho-praticas .card,
+      .persp,
+      .dho-praticas-cta{
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+        box-shadow: 0 10px 22px rgba(0,0,0,0.22);
+      }
+
       .persp-grid{ grid-template-columns: 1fr; }
       .dho-praticas-figure{ width: min(var(--contentMax), 100%); }
       .dho-praticas-figure-img{ width: 78%; }
-      .synth-strip{ flex-wrap: wrap; }
+      .synth-strip{ grid-template-columns: 1fr; gap: 8px; }
+      .synth-arrow{ display: none; }
       .synth-note{ margin-left: 0; text-align: center; }
     }
     @media (max-width: 640px){
@@ -772,14 +804,15 @@
           </p>
 
           <div class="dho-praticas-guide card">
-            <button class="dho-praticas-guide-toggle" type="button" aria-expanded="false" aria-controls="dho-praticas-guide-body">
+            <button class="dho-praticas-guide-toggle" type="button" aria-expanded="false">
               <span>Como ler o gráfico a seguir</span>
               <svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                 <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
             </button>
 
-            <div id="dho-praticas-guide-body" class="dho-praticas-guide-body is-hidden">
+            <!-- IMPORTANTE: sem ID fixo (evita conflito quando vários blocos convivem no index) -->
+            <div class="dho-praticas-guide-body is-hidden">
               <ul class="guide-list">
                 <li><span class="tag">RH promove</span> o quanto as práticas são promovidas institucionalmente na companhia atual.</li>
                 <li><span class="tag">Liderança aplica</span> o quanto as práticas são efetivamente aplicadas no cotidiano da gestão.</li>
@@ -1071,17 +1104,36 @@
         btn.setAttribute("aria-selected", "true");
         view = btn.dataset.view || "traj_avg";
         renderHeat();
-      }, { passive: true });
+      });
     });
 
-    const guideBtn = document.querySelector(".dho-praticas-guide-toggle");
-    const guideBody = document.getElementById("dho-praticas-guide-body");
-    if(guideBtn && guideBody){
-      guideBtn.addEventListener("click", () => {
-        const expanded = guideBtn.getAttribute("aria-expanded") === "true";
-        guideBtn.setAttribute("aria-expanded", String(!expanded));
-        guideBody.classList.toggle("is-hidden", expanded);
-      }, { passive: true });
+    /* =========================
+       FIX DO BOTÃO "COMO LER"
+       Motivo provável do bug no index:
+       - IDs duplicados entre blocos fazem o handler apontar para o body de outro bloco (ou nenhum)
+       Solução:
+       - bind por "escopo" (dentro do wrapper) e sem depender de id global
+       ========================= */
+    const root = document.querySelector(".dho-praticas");
+    if(root){
+      const guideCards = Array.from(root.querySelectorAll(".dho-praticas-guide"));
+      guideCards.forEach((card, idx) => {
+        const btn = card.querySelector(".dho-praticas-guide-toggle");
+        const body = card.querySelector(".dho-praticas-guide-body");
+        if(!btn || !body) return;
+
+        // garante aria-controls com id único (a11y) sem conflitar com outros blocos
+        if(!body.id){
+          body.id = `dho-praticas-guide-body-${idx}-${Math.random().toString(16).slice(2)}`;
+        }
+        btn.setAttribute("aria-controls", body.id);
+
+        btn.addEventListener("click", () => {
+          const expanded = btn.getAttribute("aria-expanded") === "true";
+          btn.setAttribute("aria-expanded", String(!expanded));
+          body.classList.toggle("is-hidden", expanded);
+        });
+      });
     }
 
     renderHeat();
